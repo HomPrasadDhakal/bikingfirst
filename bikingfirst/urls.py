@@ -19,10 +19,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from travel import views as a
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    #=========================Route for front End=======================================
+
+#=========================Route for front End=======================================
     path('', a.FrontIndexPageView, name="frontendhome"),
+#=========================Route for Back End =======================================
+    path('dashboard/', a.BackEndPageView, name="backenddashbaord"),
+
+
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
