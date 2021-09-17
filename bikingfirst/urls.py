@@ -17,10 +17,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-
+from travel import views as a
 urlpatterns = [
     path('admin/', admin.site.urls),
-
+    #=========================Route for front End=======================================
+    path('', a.FrontIndexPageView, name="frontendhome"),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

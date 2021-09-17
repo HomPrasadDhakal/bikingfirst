@@ -1,3 +1,8 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+#===================================== views for bikingfirst front end =================================
+
+def FrontIndexPageView(request):
+    context = {}
+    return render(request,'site/index.html', context)
