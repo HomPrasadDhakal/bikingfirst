@@ -27,6 +27,11 @@ urlpatterns = [
     path('loginprocess/',a.LoginProcess, name="loginprocess"),
     path('logoutprocess/',a.logoutprocess, name="logoutprocess"),
     path('dashboard/', a.BackEndPageView, name="backenddashbaord"),
+#-----------------------Route for category-------------------------------------------
+    path('add_category/',a.AddCategory, name="addcategory"),
+    path('category_list/',a.CategorylistView, name="categorylist"),
+    path('delete_category/<str:pk>',a.DeleteCategoryView, name="deletecategory"),
+    path('update_category/<str:pk>',a.UpdatecategoryView, name="updatecategory"),
 
 
 

@@ -1,0 +1,92 @@
+{% extends 'admin/partials/layout.html' %}
+
+{% block title %}
+
+{% endblock title %}
+
+{% block header %}
+{% include 'admin/partials/header.html' %}
+{% endblock header %}
+
+{% block sidebar %}
+{% include 'admin/partials/sidebar.html' %}
+{% endblock sidebar %}
+
+{% block staticdata %}
+{% include 'admin/partials/staticdata.html' %}
+{% endblock staticdata %}
+
+{% block dashbaord %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Category List</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width: 10px">S.N</th>
+                            <th>Category</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in categorylist %}
+                        <tr>
+                            <td>{{ forloop.counter}}.</td>
+                            <td>{{ i.title }}</td>
+                            <td><a href="{% url 'updatecategory' i.id %}"><button class="btn btn-info btn-block"><i class="fas fa-edit"></i></button></a></td>
+                            <td>
+                                <a href="" data-toggle="modal" data-target="#deletemodal"><button class="btn btn-danger btn-block"><i class="fas fa-trash"></i></button></a>
+                                <!-- delete modal -->
+                                <div class="modal" tabindex="-1" role="dialog" id="deletemodal">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Do you really want to delete ?</h5>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>{{ i.title }}</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="{% url 'categorylist' %}"><button type="button"
+                                                        class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cancel</button></a>
+                                                <a href="{% url 'deletecategory' i.id %}"><button type="button" class="btn btn-danger">Delete</button></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- delete modal -->
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-right">
+                    <li class="page-item"><a class="page-link" href="#">«</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">»</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock dashbaord %}
+
+{% block footer %}
+{% include 'admin/partials/footer.html' %}
+{% endblock footer %}
+
+{% block script %}
+{% include 'admin/partials/script.html' %}
+{% endblock script %}
