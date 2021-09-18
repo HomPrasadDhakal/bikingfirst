@@ -1,100 +1,153 @@
 {% load static %}
 
- <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="{% url 'backenddashbaord' %}" class="brand-link">
-      <center><i class="fas fa-praying-hands"></i>WELCOME<i class="fas fa-praying-hands"></i></center>
-    </a>
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a href="{% url 'backenddashbaord' %}" class="brand-link">
+    <center><i class="fas fa-praying-hands"></i>WELCOME<i class="fas fa-praying-hands"></i></center>
+  </a>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="/static/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">{{ request.user.get_full_name }}</a>
-        </div>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar user panel (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <img src="/static/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
       </div>
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <li class="nav-header">CATEGORY & SUBCATEGORIES</li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class=" nav-icon fas fa-chevron-right"></i>
-              <p>
-                Category
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'addcategory' %}" class="nav-link">
-                  <i class="fas fa-plus-circle nav-icon"></i>
-                  <p>Add Category</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'categorylist' %}" class="nav-link">
-                  <i class="fas fa-eye nav-icon"></i>
-                  <p>View Category</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class=" nav-icon fas fa-chevron-right"></i>
-              <p>
-                Sub category
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'addsubcategory' %}" class="nav-link">
-                  <i class="fas fa-plus-circle nav-icon"></i>
-                  <p>Add sub Category</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'subcategorylist' %}" class="nav-link">
-                  <i class="fas fa-eye nav-icon"></i>
-                  <p>View sub Category</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class=" nav-icon fas fa-chevron-right"></i>
-              <p>
-                All category
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'addallcategory' %}" class="nav-link">
-                  <i class="fas fa-plus-circle nav-icon"></i>
-                  <p>Add all Category</p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="{% url 'allcategorylist' %}" class="nav-link">
-                  <i class="fas fa-eye nav-icon"></i>
-                  <p>View all Category</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-header">PACKAGES & BOOKING</li>
-          <li class="nav-header">MISCELLANEOUS</li>
-          <a href="{% url 'frontendhome' %}"><button class="btn btn-primary btn-block">View site</button></a>
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
+      <div class="info">
+        <a href="#" class="d-block">{{ request.user.get_full_name }}</a>
+      </div>
     </div>
-    <!-- /.sidebar -->
-  </aside>
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-header">CATEGORY & SUBCATEGORIES</li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class=" nav-icon fas fa-chevron-right"></i>
+            <p>
+              Category
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'addcategory' %}" class="nav-link">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Add Category</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'categorylist' %}" class="nav-link">
+                <i class="fas fa-eye nav-icon"></i>
+                <p>View Category</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class=" nav-icon fas fa-chevron-right"></i>
+            <p>
+              Sub category
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'addsubcategory' %}" class="nav-link">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Add sub Category</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'subcategorylist' %}" class="nav-link">
+                <i class="fas fa-eye nav-icon"></i>
+                <p>View sub Category</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class=" nav-icon fas fa-chevron-right"></i>
+            <p>
+              All category
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'addallcategory' %}" class="nav-link">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Add all Category</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'allcategorylist' %}" class="nav-link">
+                <i class="fas fa-eye nav-icon"></i>
+                <p>View all Category</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-header">PACKAGES & BOOKING</li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-hat-cowboy"></i>
+            <p>
+              Packages
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'addallcategory' %}" class="nav-link">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Add packages</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'allcategorylist' %}" class="nav-link">
+                <i class="fas fa-eye nav-icon"></i>
+                <p>View packages</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'allcategorylist' %}" class="nav-link">
+                <i class="fas fa-eye nav-icon"></i>
+                <p>View booking</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-header">INCLUSION</li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-info"></i>
+            <p>
+              Inclusion
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'addallcategory' %}" class="nav-link">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Add inclusion</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'allcategorylist' %}" class="nav-link">
+                <i class="fas fa-eye nav-icon"></i>
+                <p>View inclusion</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-header">MISCELLANEOUS</li>
+        <a href="{% url 'frontendhome' %}"><button class="btn btn-primary btn-block">View site</button></a>
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>
