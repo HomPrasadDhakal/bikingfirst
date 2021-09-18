@@ -165,3 +165,54 @@ def UpdateSubCategoryView(request, pk):
                 return redirect('subcategorylist')
         context = {'form':form}
     return render(request,"admin/subcategory/updatesubcategory.html", context)
+
+
+
+#=========================== views for all category============================================
+@login_required(login_url="loginpage")
+def AddAllCategoryView(request):
+    if request.user.is_superuser:
+        form = AddAllCategoryForm()
+        if request.method =="POST":
+            form = AddAllCategoryForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request,"successfully added all category")
+                return redirect('allcategorylist')
+            else:
+                messages.error(request,"cannot add allcategory please try again!!!")
+        context ={'form':form}
+    return render(request, "admin/allcategory/addallcategory.html", context)
+
+
+@login_required(login_url='loginpage')
+def allCategoryListView(request):
+    if request.user.is_superuser:
+        allcatlist = AllCategory.objects.all()
+        context= {'allcatlist':allcatlist}
+    return render(request,"admin/allcategory/allcategorylist.html", context)
+
+
+
+@login_required(login_url='loginpage')
+def DeleteSAllCateogryView(request, pk):
+    if request.user.is_superuser:
+        deleteallcat = AllCategory.objects.get(id=pk)
+        deleteallcat.delete()
+    return redirect('allcategorylist')
+
+
+
+@login_required(login_url="loginpage")
+def UpdateallCategoryView(request, pk):
+    if request.user.is_superuser:
+        allcat = AllCategory.objects.get(id=pk)
+        form = AddAllCategoryForm(instance=allcat)
+        if request.method == "POST":
+            form = AddAllCategoryForm(request.POST, instance=allcat)
+            if form.is_valid():
+                form.save()
+                messages.success(request,"successfully updated allcategory !!!")
+                return redirect('allcategorylist')
+        context = {'form':form}
+    return render(request,"admin/allcategory/updateallcategory.html", context)

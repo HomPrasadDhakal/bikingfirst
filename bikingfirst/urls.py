@@ -21,7 +21,11 @@ from travel import views as a
 urlpatterns = [
 
 #=========================Route for front End=======================================
+#=========================Route for front End=======================================
+#=========================Route for front End=======================================
     path('', a.FrontIndexPageView, name="frontendhome"),
+#=========================Route for Back End =======================================
+#=========================Route for Back End =======================================
 #=========================Route for Back End =======================================
     path('admin/', a.BackEndLogin, name="loginpage"),
     path('loginprocess/',a.LoginProcess, name="loginprocess"),
@@ -39,7 +43,11 @@ urlpatterns = [
     path('delete_sub_category/<str:pk>',a.DeleteSubCateogryView, name="deletesubcateogry"),
     path('update_sub_category/<str:pk>',a.UpdateSubCategoryView, name="updatesubcateogry"),
 
-#-----------------------Route for all category---------------------------------------------
+#-----------------------Route for all category--------------------------------------------- 
+    path('add_all_category/',a.AddAllCategoryView, name="addallcategory"),
+    path('all_category_list/',a.allCategoryListView, name="allcategorylist"),
+    path('delete_all_category/<str:pk>',a.DeleteSAllCateogryView, name="deleteallcategory"),
+    path('update_all_category/<str:pk>',a.UpdateallCategoryView, name="updateallcategory"),
 
 
 
