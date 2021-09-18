@@ -1,0 +1,105 @@
+{% extends 'admin/partials/layout.html' %}
+
+{% block title %}
+
+{% endblock title %}
+
+{% block header %}
+{% include 'admin/partials/header.html' %}
+{% endblock header %}
+
+{% block sidebar %}
+{% include 'admin/partials/sidebar.html' %}
+{% endblock sidebar %}
+
+{% block staticdata %}
+{% include 'admin/partials/staticdata.html' %}
+{% endblock staticdata %}
+
+{% block dashbaord %}
+{% for i in allblogs %}
+<div class="card-body">
+    <div class="row">
+        <div class="col-12 col-sm-6">
+            <h3 class="d-inline-block d-sm-none">{{ i.title }}</h3>
+            <div class="col-12">
+                <img src="{{ i.cover_image.url }}" class="product-image" alt="Product Image">
+            </div>
+        </div>
+        <div class="col-12 col-sm-6">
+            <h3 class="my-3">{{ i.title }}</h3>
+            <hr>
+            <h4 class="mt-3">Publish date: <small>{{ i.created_at }}</small></h4>
+            <hr>
+            <h4 class="mt-3">Update at: <small>{{ i.updated_at }}</small></h4>
+            <hr>
+            <h4 class="mt-3">Author: <small>{{ i.author.get_full_name }}</small></h4>
+            <hr>
+            <div class="mt-4">
+                <div class="btn btn-info btn-lg btn-flat">
+                    <i class="fas fa-edit fa-lg mr-2"></i>
+                    EDIT
+                </div>
+
+                <div class="btn btn-danger btn-lg btn-flat">
+                    <a href="{% url 'deleteblogs' i.id %}" class="confirm-delete" title="Delete"
+                        data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{i.id}}">
+                        <i class="fas fa-trash fa-lg mr-2"></i>
+                        DELETE
+                    </a>
+                </div>
+                    <!-- delete modal -->
+                    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" caller-id="" role="dialog"
+                        aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body confirm-delete">
+                                    Do you Really want to delete this ?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                                        id="confirmDeleteButtonModal">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- delete modal -->
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <nav class="w-100">
+            <div class="nav nav-tabs" id="product-tab" role="tablist">
+                <a class="nav-item nav-link active" id="product-desc-tab" data-toggle="tab" role="tab"
+                    aria-controls="product-desc" aria-selected="true">Description</a>
+            </div>
+        </nav>
+        <div class="tab-content p-3" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="product-desc" role="tabpanel" aria-labelledby="product-desc-tab">
+                {{ i.content|safe }}
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock dashbaord %}
+
+{% block footer %}
+{% include 'admin/partials/footer.html' %}
+{% endblock footer %}
+
+{% block script %}
+{% include 'admin/partials/script.html' %}
+<script>
+    $(document).on('click', '.confirm-delete', function () {
+        $("#confirmDeleteModal").attr("caller-id", $(this).attr("id"));
+    });
+
+    $(document).on('click', '#confirmDeleteButtonModal', function () {
+        var caller = $("#confirmDeleteButtonModal").closest(".modal").attr("caller-id");
+        window.location = $("#".concat(caller)).attr("href");
+    });
+</script>
+{% endblock script %}

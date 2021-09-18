@@ -10,8 +10,10 @@ from travel.forms import (
     AddSubCategoryForm,
     AddAllCategoryForm,
     AddInclusionForm,
+    AddBlogsForm,
 )
 from travel.models import (
+    Blogs,
     Category,
     SubCategory,
     AllCategory,
@@ -270,3 +272,59 @@ def UpdateInclusionView(request, pk):
                 return redirect('inclusionlist')
         context = {'form':form}
     return render(request,"admin/inclusion/updateinclusion.html", context)
+
+
+#=========================== views for blogs============================================
+
+
+@login_required(login_url="loginpage")
+def AddBlogsView(request):
+    if request.user.is_superuser:
+        form = AddBlogsForm()
+        if request.method =="POST":
+            form = AddBlogsForm(request.POST, request.FILES)
+            if form.is_valid():
+                blogs = form.save(commit=False)
+                blogs.author = request.user
+                blogs.save()
+                messages.success(request,"successfully added blogs")
+                return redirect('blogslist')
+            else:
+                messages.error(request,"cannot add blog please try again!!!")
+        context ={'form':form}
+    return render(request, "admin/blogs/addblogs.html", context)
+
+
+@login_required(login_url='loginpage')
+def BlogsListView(request):
+    if request.user.is_superuser:
+        allblogs = Blogs.objects.all().order_by("-created_at")
+        context= {'allblogs':allblogs}
+    return render(request,"admin/blogs/bloglist.html", context)
+
+
+
+@login_required(login_url='loginpage')
+def DeleteSBlogsView(request, pk):
+    if request.user.is_superuser:
+        deleteblogs = Blogs.objects.get(id=pk)
+        deleteblogs.delete()
+    return redirect('blogslist')
+
+
+
+@login_required(login_url="loginpage")
+def UpdateBlogsView(request, pk):
+    if request.user.is_superuser:
+        blog = Blogs.objects.get(id=pk)
+        form = AddBlogsForm(instance=blog)
+        if request.method == "POST":
+            form = AddBlogsForm(request.POST, instance=blog)
+            if form.is_valid():
+                form.save(commit=False)
+                blog = form.author == request.user
+                blog.save()
+                messages.success(request,"successfully updated blogs !!!")
+                return redirect('blogslist')
+        context = {'form':form}
+    return render(request,"admin/blogs/updateblogs.html", context)

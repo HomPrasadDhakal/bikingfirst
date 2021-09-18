@@ -49,11 +49,17 @@ urlpatterns = [
     path('delete_all_category/<str:pk>',a.DeleteSAllCateogryView, name="deleteallcategory"),
     path('update_all_category/<str:pk>',a.UpdateallCategoryView, name="updateallcategory"),
 
-#-----------------------Route for all category--------------------------------------------- 
+#-----------------------Route for Inclusion--------------------------------------------- 
     path('add_inclusion/',a.AddAllInslucionView, name="addinclusion"),
     path('inclusion_list/',a.InslucionListView, name="inclusionlist"),
     path('delete_inclusion/<str:pk>',a.DeleteSInclusionView, name="deleteinclusion"),
     path('update_inclusion/<str:pk>',a.UpdateInclusionView, name="updateinclusion"),
+
+#-----------------------Route for Blogs--------------------------------------------- 
+    path('add_blog/',a.AddBlogsView, name="addblogs"),
+    path('blogs_list/',a.BlogsListView, name="blogslist"),
+    path('delete_blogs/<str:pk>',a.DeleteSBlogsView, name="deleteblogs"),
+    path('update_blogs/<str:pk>',a.UpdateBlogsView, name="updateblogs"),
 
 
 

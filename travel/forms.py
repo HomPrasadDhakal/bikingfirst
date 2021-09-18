@@ -4,8 +4,9 @@ from travel.models import (
     SubCategory,
     AllCategory,
     Inclusion,
+    Blogs
 )
-
+from ckeditor.widgets import CKEditorWidget
 
 # forms for category
 class AddCategoryForm(forms.ModelForm):
@@ -59,3 +60,27 @@ class AddInclusionForm(forms.ModelForm):
     class Meta:
         model = Inclusion
         fields =['title',]
+
+
+# froms for blogs
+class AddBlogsForm(forms.ModelForm):
+    title = forms.CharField(max_length=255, required=True,
+        widget = forms.TextInput(attrs={
+            'class':'form-control',
+            'placeholder':'Please enter blog title'
+        })
+    )
+    content = forms.CharField(required=True,
+        widget=CKEditorWidget()
+    )
+    
+    cover_image = forms.FileField(required=True,
+        widget=forms.FileInput(attrs={
+            'class':'form-control'
+            }
+        )
+    )
+
+    class Meta:
+        model = Blogs
+        fields = ['title','content','cover_image']

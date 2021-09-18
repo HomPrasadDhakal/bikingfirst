@@ -89,7 +89,7 @@
             </li>
           </ul>
         </li>
-        <li class="nav-header">PACKAGES & BOOKING</li>
+        <li class="nav-header">PACKAGES & BLOGS</li>
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-hat-cowboy"></i>
@@ -115,6 +115,29 @@
               <a href="{% url 'allcategorylist' %}" class="nav-link">
                 <i class="fas fa-eye nav-icon"></i>
                 <p>View booking</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fab fa-blogger"></i>
+            <p>
+              Blogs
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'addblogs' %}" class="nav-link">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Add Blogs</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'blogslist' %}" class="nav-link">
+                <i class="fas fa-eye nav-icon"></i>
+                <p>View Blogs</p>
               </a>
             </li>
           </ul>

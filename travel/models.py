@@ -1,4 +1,6 @@
 from django.db import models
+from django.conf import settings
+from ckeditor.fields import RichTextField
 
 # MODELS FOR CATEGORY SUB CATEGORY & ALL CATEGORY
 
@@ -43,5 +45,18 @@ class Inclusion(models.Model):
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     
+    def __str__(self):
+        return self.title
+
+#MODELS FOR BLOGS
+class Blogs(models.Model):
+    title = models.CharField(max_length=500)
+    slug = models.SlugField(max_length=500)
+    content = RichTextField()
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    cover_image = models.FileField(upload_to="blogs_images", null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True)
+
     def __str__(self):
         return self.title
