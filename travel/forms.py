@@ -3,6 +3,7 @@ from travel.models import (
     Category,
     SubCategory,
     AllCategory,
+    Inclusion,
 )
 
 
@@ -45,3 +46,16 @@ class AddAllCategoryForm(forms.ModelForm):
         model = AllCategory
         fields =['category','sub_category','title']
 
+
+#froms for inclusion
+class AddInclusionForm(forms.ModelForm):
+    title = forms.CharField(max_length=255, required=True,
+        widget = forms.TextInput(attrs={
+            'class':'form-control',
+            'placeholder':'Please enter inclusion for different packages'
+        })
+    )
+   
+    class Meta:
+        model = Inclusion
+        fields =['title',]

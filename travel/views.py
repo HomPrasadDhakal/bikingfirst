@@ -9,11 +9,13 @@ from travel.forms import (
     AddCategoryForm,
     AddSubCategoryForm,
     AddAllCategoryForm,
+    AddInclusionForm,
 )
 from travel.models import (
     Category,
     SubCategory,
     AllCategory,
+    Inclusion,
 )
 
 
@@ -216,3 +218,55 @@ def UpdateallCategoryView(request, pk):
                 return redirect('allcategorylist')
         context = {'form':form}
     return render(request,"admin/allcategory/updateallcategory.html", context)
+
+
+#=========================== views for Inclusion============================================
+
+
+@login_required(login_url="loginpage")
+def AddAllInslucionView(request):
+    if request.user.is_superuser:
+        form = AddInclusionForm()
+        if request.method =="POST":
+            form = AddInclusionForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request,"successfully added inclusion")
+                return redirect('inclusionlist')
+            else:
+                messages.error(request,"cannot add inclusion please try again!!!")
+        context ={'form':form}
+    return render(request, "admin/inclusion/addinclusion.html", context)
+
+
+@login_required(login_url='loginpage')
+def InslucionListView(request):
+    if request.user.is_superuser:
+        allinclusion = Inclusion.objects.all()
+        context= {'allinclusion':allinclusion}
+    return render(request,"admin/inclusion/inclusionlist.html", context)
+
+
+
+@login_required(login_url='loginpage')
+def DeleteSInclusionView(request, pk):
+    if request.user.is_superuser:
+        deleteinclusion = Inclusion.objects.get(id=pk)
+        deleteinclusion.delete()
+    return redirect('inclusionlist')
+
+
+
+@login_required(login_url="loginpage")
+def UpdateInclusionView(request, pk):
+    if request.user.is_superuser:
+        allinc = Inclusion.objects.get(id=pk)
+        form = AddInclusionForm(instance=allinc)
+        if request.method == "POST":
+            form = AddInclusionForm(request.POST, instance=allinc)
+            if form.is_valid():
+                form.save()
+                messages.success(request,"successfully updated inclusion !!!")
+                return redirect('inclusionlist')
+        context = {'form':form}
+    return render(request,"admin/inclusion/updateinclusion.html", context)
