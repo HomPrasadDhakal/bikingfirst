@@ -23,7 +23,11 @@ urlpatterns = [
 #=========================Route for front End=======================================
     path('', a.FrontIndexPageView, name="frontendhome"),
 #=========================Route for Back End =======================================
+    path('admin/', a.BackEndLogin, name="loginpage"),
+    path('loginprocess/',a.LoginProcess, name="loginprocess"),
+    path('logoutprocess/',a.logoutprocess, name="logoutprocess"),
     path('dashboard/', a.BackEndPageView, name="backenddashbaord"),
+
 
 
 
