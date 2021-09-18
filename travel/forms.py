@@ -23,10 +23,10 @@ class AddSubCategoryForm(forms.ModelForm):
     title = forms.CharField(max_length=255, required=True,
         widget = forms.TextInput(attrs={
             'class':'form-control',
-            'placeholder':'Please enter blog title'
+            'placeholder':'Please enter subcategory title ',
+            'required': 'required',
         })
     )
-   
     class Meta:
         model = SubCategory
         fields =['category','title']

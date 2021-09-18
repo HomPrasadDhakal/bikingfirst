@@ -23,25 +23,26 @@
         <!-- general form elements -->
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Add category</h3>
+                <h3 class="card-title">Add Sub category</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form action="{% url 'addcategory' %}" method="POST" enctype="multipart/form-data">
+            <form action="{% url 'addsubcategory' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Title</label>
+                        <label for="exampleInputtitle1">Main Category</label>
+                        {{ form.category }}
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputtitle1">Title</label>
                         {{ form.title }}
                     </div>
-                    {% if form.errors %}
-                    <p class="help-block text-danger">{{error}}</p>
-                    {% endif %}
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-success btn-block">Add category</button>
+                    <button type="submit" class="btn btn-success btn-block">Sub Sub category</button>
                 </div>
             </form>
         </div>

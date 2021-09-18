@@ -4,11 +4,16 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.urls.base import clear_script_prefix
 from travel.forms import (
     AddCategoryForm,
+    AddSubCategoryForm,
+    AddAllCategoryForm,
 )
 from travel.models import (
     Category,
+    SubCategory,
+    AllCategory,
 )
 
 
@@ -111,6 +116,52 @@ def UpdatecategoryView(request, pk):
     return render(request, "admin/category/updatecategory.html", context)
 
 
+#=========================== views for sub category============================================
+
+@login_required(login_url="loginpage")
+def AddSubCategoryView(request):
+    if request.user.is_superuser:
+        form = AddSubCategoryForm()
+        if request.method =="POST":
+            form = AddSubCategoryForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request,"successfully added subcategory")
+                return redirect('subcategorylist')
+            else:
+                messages.error(request,"cannot add subcategory please try again!!!")
+        context ={'form':form}
+    return render(request, "admin/subcategory/addsubcategory.html", context)
+
+
+@login_required(login_url='loginpage')
+def SubCategoryListView(request):
+    if request.user.is_superuser:
+        subcatlist = SubCategory.objects.all()
+        context= {'subcatlist':subcatlist}
+    return render(request,"admin/subcategory/subcategorylist.html", context)
 
 
 
+
+@login_required(login_url='loginpage')
+def DeleteSubCateogryView(request, pk):
+    if request.user.is_superuser:
+        deletesubcat = SubCategory.objects.get(id=pk)
+        deletesubcat.delete()
+    return redirect('subcategorylist')
+
+
+@login_required(login_url="loginpage")
+def UpdateSubCategoryView(request, pk):
+    if request.user.is_superuser:
+        subcat = SubCategory.objects.get(id=pk)
+        form = AddSubCategoryForm(instance=subcat)
+        if request.method == "POST":
+            form = AddSubCategoryForm(request.POST, instance=subcat)
+            if form.is_valid():
+                form.save()
+                messages.success(request,"successfully updated subcategory !!!")
+                return redirect('subcategorylist')
+        context = {'form':form}
+    return render(request,"admin/subcategory/updatesubcategory.html", context)

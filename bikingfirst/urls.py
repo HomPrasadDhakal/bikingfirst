@@ -34,6 +34,12 @@ urlpatterns = [
     path('update_category/<str:pk>',a.UpdatecategoryView, name="updatecategory"),
 
 #-----------------------Route for sub category-------------------------------------------
+    path('add_sub_category/',a.AddSubCategoryView, name="addsubcategory"),
+    path('sub_category_list/',a.SubCategoryListView, name="subcategorylist"),
+    path('delete_sub_category/<str:pk>',a.DeleteSubCateogryView, name="deletesubcateogry"),
+    path('update_sub_category/<str:pk>',a.UpdateSubCategoryView, name="updatesubcateogry"),
+
+#-----------------------Route for all category---------------------------------------------
 
 
 

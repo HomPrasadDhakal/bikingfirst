@@ -10,7 +10,7 @@ class Category(models.Model):
 
 
     def __str__(self):
-        return self.tite
+        return self.title
     
 #MODELS FOR SUB CATEGORY
 class SubCategory(models.Model):
@@ -21,7 +21,7 @@ class SubCategory(models.Model):
 
 
     def __str__(self):
-        return self.tite
+        return self.title
 
 
 #MODELS FOR ALL CATEGORY
@@ -34,6 +34,6 @@ class AllCategory(models.Model):
 
 
     def __str__(self):
-        return self.tite
+        return self.title
 
     
