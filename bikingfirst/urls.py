@@ -33,6 +33,9 @@ urlpatterns = [
     path('delete_category/<str:pk>',a.DeleteCategoryView, name="deletecategory"),
     path('update_category/<str:pk>',a.UpdatecategoryView, name="updatecategory"),
 
+#-----------------------Route for sub category-------------------------------------------
+
+
 
 
 
