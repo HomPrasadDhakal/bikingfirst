@@ -68,6 +68,13 @@ urlpatterns = [
     path('update_imageslider/<str:pk>',a.UpdateSliderImgView, name="updateimageslider"),
 
 
+#-----------------------Route for imageslider--------------------------------------------- 
+    path('add_aboutus/',a.AddAboutusVIew, name="addaboutus"),
+    path('aboutus_list/',a.AboutusList, name="aboutuslist"),
+    path('delete_aboutus/<str:pk>',a.DeleteAboutusView, name="deleteaboutus"),
+    path('update_aboutus/<str:pk>',a.UpdateAboutusView, name="updateaboutus"),
+
+
 
 
 

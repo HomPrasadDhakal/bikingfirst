@@ -6,6 +6,7 @@ from travel.models import (
     Inclusion,
     Blogs,
     SliderImage,
+    AboutusDetail,
 )
 from ckeditor.widgets import CKEditorWidget
 
@@ -104,4 +105,24 @@ class SliderImgForm(forms.ModelForm):
     class Meta:
         model = SliderImage
         fields = ['title','image']
+
+
+# forms for aboutus
+class AboutUsForm(forms.ModelForm):
+    title = forms.CharField(max_length=255, required=True,
+        widget=forms.TextInput(attrs={'class':'form-control',
+          'placeholder':'Please enter about us title'}))
+
+    content = forms.CharField(required= True, 
+        widget=CKEditorWidget()
+    )
+    about_cover = forms.FileField(required=True,
+        widget=forms.FileInput( attrs={
+            'class':'form-control',
+        })
+    )
+
+    class Meta:
+        model = AboutusDetail
+        fields = ['title','content','about_cover']
     

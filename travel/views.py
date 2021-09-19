@@ -11,6 +11,7 @@ from travel.forms import (
     AddInclusionForm,
     AddBlogsForm,
     SliderImgForm,
+    AboutUsForm,
 )
 from travel.models import (
     Blogs,
@@ -19,6 +20,7 @@ from travel.models import (
     AllCategory,
     Inclusion,
     SliderImage,
+    AboutusDetail,
 )
 
 
@@ -371,7 +373,6 @@ def DeleteSLiderImgView(request, pk):
 
 
 
-
 @login_required(login_url="loginpage")
 def UpdateSliderImgView(request, pk):
     if request.user.is_superuser:
@@ -385,3 +386,55 @@ def UpdateSliderImgView(request, pk):
                 return redirect('imagesliderlist')
         context = {'form':form}
     return render(request,"admin/sliderimage/updatesliderimg.html", context)
+
+
+
+#=========================== views for about us  ============================================
+
+
+@login_required(login_url="loginpage")
+def AddAboutusVIew(request):
+    if request.user.is_superuser:
+        form = AboutUsForm()
+        if request.method =="POST":
+            form = AboutUsForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                messages.success(request,"successfully added aboutus")
+                return redirect('aboutuslist')
+            else:
+                messages.error(request,"cannot add aboutus please try again!!!")
+        context ={'form':form}
+    return render(request, "admin/aboutus/addaboutus.html", context)
+
+
+@login_required(login_url='loginpage')
+def AboutusList(request):
+    if request.user.is_superuser:
+        allaboutus = AboutusDetail.objects.all().order_by("-created_at")
+        context= {'allaboutus':allaboutus}
+    return render(request,"admin/aboutus/aboutuslist.html", context)
+
+
+
+@login_required(login_url='loginpage')
+def DeleteAboutusView(request, pk):
+    if request.user.is_superuser:
+        deleteaboutus = AboutusDetail.objects.get(id=pk)
+        deleteaboutus.delete()
+    return redirect('aboutuslist')
+
+
+@login_required(login_url="loginpage")
+def UpdateAboutusView(request, pk):
+    if request.user.is_superuser:
+        ab = AboutusDetail.objects.get(id=pk)
+        form = AboutUsForm(instance=ab)
+        if request.method == "POST":
+            form = AboutUsForm(request.POST, request.FILES, instance=ab)
+            if form.is_valid():
+                form.save()
+                messages.success(request,"successfully updated aboutus !!!")
+                return redirect('aboutuslist')
+    context = {'form':form}
+    return render(request,"admin/aboutus/updateaboutus.html", context)
