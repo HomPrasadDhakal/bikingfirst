@@ -95,3 +95,26 @@ class AboutusDetail(models.Model):
 
     def __str__(self):
         return self.title
+
+
+#MODELS FOR PACKAGES
+class Packages(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    gallary = models.FileField(upload_to="trip_photos")
+    category = models.ForeignKey(Category,on_delete=models.CASCADE)
+    sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
+    all_category = models.ForeignKey(AllCategory, on_delete=models.CASCADE)
+    Itinerary = models.TextField()
+    region = models.CharField(max_length=255)
+    duration = models.CharField(max_length=255)
+    starting_date = models.DateTimeField(null=True, blank=True)
+    ending_date = models.DateTimeField(null=True, blank=True)
+    Availability = models.BooleanField(default=False, null=True, blank=True)
+    inclusion  = models.ManyToManyField(Inclusion, related_name="package_inclusion")
+    price = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
