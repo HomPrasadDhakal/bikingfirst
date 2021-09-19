@@ -4,13 +4,13 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from django.urls.base import clear_script_prefix
 from travel.forms import (
     AddCategoryForm,
     AddSubCategoryForm,
     AddAllCategoryForm,
     AddInclusionForm,
     AddBlogsForm,
+    SliderImgForm,
 )
 from travel.models import (
     Blogs,
@@ -18,6 +18,7 @@ from travel.models import (
     SubCategory,
     AllCategory,
     Inclusion,
+    SliderImage,
 )
 
 
@@ -293,6 +294,7 @@ def AddBlogsView(request):
                 messages.error(request,"cannot add blog please try again!!!")
         context ={'form':form}
     return render(request, "admin/blogs/addblogs.html", context)
+    
 
 
 @login_required(login_url='loginpage')
@@ -328,3 +330,58 @@ def UpdateBlogsView(request, pk):
                 return redirect('blogslist')
         context = {'form':form}
     return render(request,"admin/blogs/updateblogs.html", context)
+
+
+
+
+#=========================== views for slider images ============================================
+
+
+@login_required(login_url="loginpage")
+def AddSliderImgView(request):
+    if request.user.is_superuser:
+        form = SliderImgForm()
+        if request.method =="POST":
+            form = SliderImgForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                messages.success(request,"successfully added slider image")
+                return redirect('imagesliderlist')
+            else:
+                messages.error(request,"cannot add slider image please try again!!!")
+        context ={'form':form}
+    return render(request, "admin/sliderimage/addsliderimg.html", context)
+
+
+@login_required(login_url='loginpage')
+def SliderImgListView(request):
+    if request.user.is_superuser:
+        allsliderimg = SliderImage.objects.all().order_by("-created_at")
+        context= {'allsliderimg':allsliderimg}
+    return render(request,"admin/sliderimage/sliderimagelist.html", context)
+
+
+
+@login_required(login_url='loginpage')
+def DeleteSLiderImgView(request, pk):
+    if request.user.is_superuser:
+        deletesliderimage = SliderImage.objects.get(id=pk)
+        deletesliderimage.delete()
+    return redirect('imagesliderlist')
+
+
+
+
+@login_required(login_url="loginpage")
+def UpdateSliderImgView(request, pk):
+    if request.user.is_superuser:
+        sliderimg = SliderImage.objects.get(id=pk)
+        form = SliderImgForm(instance=sliderimg)
+        if request.method == "POST":
+            form = SliderImgForm(request.POST, request.FILES, instance=sliderimg)
+            if form.is_valid():
+                form.save()
+                messages.success(request,"successfully updated slider image !!!")
+                return redirect('imagesliderlist')
+        context = {'form':form}
+    return render(request,"admin/sliderimage/updatesliderimg.html", context)

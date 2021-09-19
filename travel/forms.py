@@ -4,7 +4,8 @@ from travel.models import (
     SubCategory,
     AllCategory,
     Inclusion,
-    Blogs
+    Blogs,
+    SliderImage,
 )
 from ckeditor.widgets import CKEditorWidget
 
@@ -84,3 +85,23 @@ class AddBlogsForm(forms.ModelForm):
     class Meta:
         model = Blogs
         fields = ['title','content','cover_image']
+
+# froms for sliderimage
+class SliderImgForm(forms.ModelForm):
+    title = forms.CharField(max_length=255, required=True,
+        widget = forms.TextInput(attrs={
+            'class':'form-control',
+            'placeholder':'Please enter blog title'
+        })
+    )
+    image = forms.FileField(required=True,
+        widget=forms.FileInput(attrs={
+            'class':'form-control'
+            }
+        )
+    )
+    
+    class Meta:
+        model = SliderImage
+        fields = ['title','image']
+    

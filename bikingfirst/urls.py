@@ -61,6 +61,12 @@ urlpatterns = [
     path('delete_blogs/<str:pk>',a.DeleteSBlogsView, name="deleteblogs"),
     path('update_blogs/<str:pk>',a.UpdateBlogsView, name="updateblogs"),
 
+#-----------------------Route for imageslider--------------------------------------------- 
+    path('add_imageslider/',a.AddSliderImgView, name="addimageslider"),
+    path('imageslider_list/',a.SliderImgListView, name="imagesliderlist"),
+    path('delete_imageslider/<str:pk>',a.DeleteSLiderImgView, name="deleteimageslider"),
+    path('update_imageslider/<str:pk>',a.UpdateSliderImgView, name="updateimageslider"),
+
 
 
 
