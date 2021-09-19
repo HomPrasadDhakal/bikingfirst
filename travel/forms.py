@@ -7,6 +7,7 @@ from travel.models import (
     Blogs,
     SliderImage,
     AboutusDetail,
+    ContactDetail,
 )
 from ckeditor.widgets import CKEditorWidget
 
@@ -126,3 +127,53 @@ class AboutUsForm(forms.ModelForm):
         model = AboutusDetail
         fields = ['title','content','about_cover']
     
+
+# forms for contactus
+class ContactUsForm(forms.ModelForm):
+    sub_title = forms.CharField(max_length=255, required=True,
+        widget=forms.TextInput(attrs={
+            'class':'form-control',
+            'placeholder':'Please enter your slogon here.'
+        })
+    )
+
+    address = forms.CharField( max_length=255, required=True,
+        widget=forms.TextInput(attrs={
+            'class':'form-control',
+            'placeholder':'Please enter your address here.'
+        })
+    )
+
+    phone = forms.CharField(required=True, max_length=15,
+        widget=forms.TextInput(attrs={
+            'class':'form-control',
+            'placeholder':'Enter your Phone number'
+        })
+    )
+
+    mobile = forms.CharField(required=True, max_length=15,
+        widget=forms.TextInput(attrs={
+            'class':'form-control',
+            'placeholder':'Enter your mobile number'
+            
+        })
+    )
+
+    email = forms.EmailField( max_length=255, required=True,
+        widget=forms.EmailInput(attrs={
+            'class':'form-control',
+            'placeholder':'Enter your email here',
+            
+        })
+    )
+
+    website = forms.URLField( max_length=255, required=True,
+        widget=forms.URLInput(attrs={
+            'class':'form-control',
+            'placeholder':'Enter your website'
+        })
+    )
+
+    class Meta:
+        model = ContactDetail
+        fields =['sub_title','address','phone','mobile','email','website']

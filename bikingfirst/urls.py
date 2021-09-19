@@ -68,11 +68,18 @@ urlpatterns = [
     path('update_imageslider/<str:pk>',a.UpdateSliderImgView, name="updateimageslider"),
 
 
-#-----------------------Route for imageslider--------------------------------------------- 
+#-----------------------Route for aboutus--------------------------------------------- 
     path('add_aboutus/',a.AddAboutusVIew, name="addaboutus"),
     path('aboutus_list/',a.AboutusList, name="aboutuslist"),
     path('delete_aboutus/<str:pk>',a.DeleteAboutusView, name="deleteaboutus"),
     path('update_aboutus/<str:pk>',a.UpdateAboutusView, name="updateaboutus"),
+
+
+#-----------------------Route for contact detials--------------------------------------------- 
+    path('add_contactdetails/',a.AddContactView, name="addcontactdetails"),
+    path('contact_list/',a.ContactusList, name="contactdetailslist"),
+    path('delete_contact/<str:pk>',a.DeleteContactus, name="deletecontactdetails"),
+    path('update_contact/<str:pk>',a.UpdateContactusview, name="updatecontactdetails"),
 
 
 

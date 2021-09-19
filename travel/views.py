@@ -12,6 +12,7 @@ from travel.forms import (
     AddBlogsForm,
     SliderImgForm,
     AboutUsForm,
+    ContactUsForm,
 )
 from travel.models import (
     Blogs,
@@ -21,6 +22,7 @@ from travel.models import (
     Inclusion,
     SliderImage,
     AboutusDetail,
+    ContactDetail,
 )
 
 
@@ -438,3 +440,55 @@ def UpdateAboutusView(request, pk):
                 return redirect('aboutuslist')
     context = {'form':form}
     return render(request,"admin/aboutus/updateaboutus.html", context)
+
+
+
+#=========================== views for contact details  ============================================
+
+
+@login_required(login_url="loginpage")
+def AddContactView(request):
+    if request.user.is_superuser:
+        form = ContactUsForm()
+        if request.method =="POST":
+            form = ContactUsForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request,"successfully added contact details")
+                return redirect('contactdetailslist')
+            else:
+                messages.error(request,"cannot add contactdetails  please try again!!!")
+        context ={'form':form}
+    return render(request, "admin/contact/addcontact.html", context)
+
+
+@login_required(login_url='loginpage')
+def ContactusList(request):
+    if request.user.is_superuser:
+        allcontact = ContactDetail.objects.all().order_by("-created_at")
+        context= {'allcontact':allcontact}
+    return render(request,"admin/contact/contactlist.html", context)
+
+
+
+@login_required(login_url='loginpage')
+def DeleteContactus(request, pk):
+    if request.user.is_superuser:
+        deletecontacts = ContactDetail.objects.get(id=pk)
+        deletecontacts.delete()
+    return redirect('contactdetailslist')
+
+
+@login_required(login_url="loginpage")
+def UpdateContactusview(request, pk):
+    if request.user.is_superuser:
+        contact = ContactDetail.objects.get(id=pk)
+        form = ContactUsForm(instance=contact)
+        if request.method == "POST":
+            form = ContactUsForm(request.POST, instance=contact)
+            if form.is_valid():
+                form.save()
+                messages.success(request,"successfully updated contact details !!!")
+                return redirect('contactdetailslist')
+    context = {'form':form}
+    return render(request,"admin/contact/updatecontact.html", context)
