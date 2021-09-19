@@ -1,0 +1,66 @@
+{% extends 'admin/partials/layout.html' %}
+
+{% block title %}
+
+{% endblock title %}
+
+{% block header %}
+{% include 'admin/partials/header.html' %}
+{% endblock header %}
+
+{% block sidebar %}
+{% include 'admin/partials/sidebar.html' %}
+{% endblock sidebar %}
+
+{% block staticdata %}
+{% include 'admin/partials/staticdata.html' %}
+{% endblock staticdata %}
+
+{% block dashbaord %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Admin User are Listed Below</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width: 10px">S.N</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th style="width: 40px">Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in admin %}
+                        <tr>
+                            <td>{{ forloop.counter }}.</td>
+                            <td>{{ i.get_full_name }}</td>
+                            <td>
+                                {{ i.email }}
+                            </td>
+                            {% if i.is_superuser == True %}
+                            <td><span class="badge bg-danger">ADMIN</span></td>
+                            {% else %}
+                            <td><span class="badge bg-danger">NOT ADMIN</span></td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock dashbaord %}
+
+{% block footer %}
+{% include 'admin/partials/footer.html' %}
+{% endblock footer %}
+
+{% block script %}
+{% include 'admin/partials/script.html' %}
+{% endblock script %}

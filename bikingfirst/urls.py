@@ -86,6 +86,11 @@ urlpatterns = [
     path('packages_list/',a.PackagesList, name="packageslist"),
     path('delete_packages/<str:pk>',a.Deletepackages, name="deletepackages"),
     path('update_packages/<str:pk>',a.UpdatePakagesview, name="updatepackages"),
+    
+#-----------------------Route for admin/user listing-----------------------------------
+
+    path('admin_user/', a.ListingAdminUser, name="adminlisting"),
+    path('normal_user/', a.ListingNormalUser, name="normaluser"),
 
 
 

@@ -26,7 +26,7 @@ from travel.models import (
     ContactDetail,
     Packages,
 )
-
+from accounts.models import user
 
 
 #===================================== views for bikingfirst front end =================================
@@ -546,3 +546,22 @@ def UpdatePakagesview(request, pk):
                 return redirect('packageslist')
     context = {'form':form}
     return render(request,"admin/packages/updatepackages.html", context)
+
+
+#===================================== views for listing admin user=================================
+
+
+@login_required(login_url='loginpage')
+def ListingAdminUser(request):
+    if request.user.is_superuser:
+        admin = user.objects.filter(is_superuser=True)
+        context = {'admin':admin}
+    return render(request,"admin/user/adminlist.html", context)
+
+
+@login_required(login_url="loginpage")
+def ListingNormalUser(request):
+    if request.user.is_superuser:
+        normaluser = user.objects.filter(is_superuser=False)
+        context = {"normaluser":normaluser}
+    return render(request,"admin/user/normaluser.html", context)
