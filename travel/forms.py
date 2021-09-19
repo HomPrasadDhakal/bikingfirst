@@ -1,4 +1,5 @@
 from django import forms
+from django.db.models import fields
 from travel.models import (
     Category,
     SubCategory,
@@ -9,6 +10,7 @@ from travel.models import (
     AboutusDetail,
     ContactDetail,
     Packages,
+    PackagesGallary,
 )
 from ckeditor.widgets import CKEditorWidget
 
@@ -261,3 +263,12 @@ class AddPackagesForm(forms.ModelForm):
     class Meta:
         model = Packages
         fields= '__all__'
+
+
+
+# forms for packages images gallary
+
+class AddPackagesImagesFrom(forms.ModelForm):
+    class Meta:
+        model = PackagesGallary
+        fields  = ['packages','image']

@@ -13,6 +13,7 @@ from travel.forms import (
     SliderImgForm,
     AboutUsForm,
     AddPackagesForm,
+    AddPackagesImagesFrom,
     ContactUsForm,
 )
 from travel.models import (
@@ -25,6 +26,7 @@ from travel.models import (
     AboutusDetail,
     ContactDetail,
     Packages,
+    PackagesGallary,
 )
 from accounts.models import user
 
@@ -547,6 +549,40 @@ def UpdatePakagesview(request, pk):
     context = {'form':form}
     return render(request,"admin/packages/updatepackages.html", context)
 
+#=========================== views for packages images gallary  ============================================
+
+
+@login_required(login_url="loginpage")
+def AddPackagesImageView(request):
+    if request.user.is_superuser:
+        form = AddPackagesImagesFrom()
+        if request.method =="POST":
+            form = AddPackagesImagesFrom(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                messages.success(request,"successfully added Packages images")
+                return redirect('packagesimageslist')
+            else:
+                messages.error(request,"cannot add packages images  please try again!!!")
+        context ={'form':form}
+    return render(request, "admin/packages/addppackagesimages.html", context)
+
+
+@login_required(login_url='loginpage')
+def PackagesImageList(request):
+    if request.user.is_superuser:
+        Allpackimages = PackagesGallary.objects.all()
+        context= {'Allpackimages':Allpackimages}
+    return render(request,"admin/packages/packimageslist.html", context)
+
+
+
+@login_required(login_url='loginpage')
+def DeletepackagesImages(request, pk):
+    if request.user.is_superuser:
+        deletepackimage = PackagesGallary.objects.get(id=pk)
+        deletepackimage.delete()
+    return redirect('packagesimageslist')
 
 #===================================== views for listing admin user=================================
 
