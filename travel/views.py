@@ -321,9 +321,9 @@ def UpdateBlogsView(request, pk):
         if request.method == "POST":
             form = AddBlogsForm(request.POST, instance=blog)
             if form.is_valid():
-                form.save(commit=False)
-                blog = form.author == request.user
-                blog.save()
+                blogs = form.save(commit=False)
+                blogs.author == request.user
+                blogs.save()
                 messages.success(request,"successfully updated blogs !!!")
                 return redirect('blogslist')
         context = {'form':form}

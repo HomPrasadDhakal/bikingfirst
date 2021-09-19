@@ -48,6 +48,7 @@ class Inclusion(models.Model):
     def __str__(self):
         return self.title
 
+
 #MODELS FOR BLOGS
 class Blogs(models.Model):
     title = models.CharField(max_length=500)
@@ -57,6 +58,40 @@ class Blogs(models.Model):
     cover_image = models.FileField(upload_to="blogs_images", null=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+#MODELS FOR IMAGE SLIDER
+class SliderImage(models.Model):
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, null=True)
+    image = models.FileField( upload_to="slider_image")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+
+#MODELS FOR CONTACT DETAILS
+class ContactDetail(models.Model):
+    sub_title = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    phone = models.CharField(max_length=15)
+    mobile = models.CharField(max_length=15)
+    email = models.EmailField()
+    website = models.URLField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.slagon
+
+#MODELS FOR ABOUT DETAILS
+class AboutusDetail(models.Model):
+    title = models.CharField(max_length=255)
+    content = RichTextField()
+    about_cover = models.FileField(upload_to="about_cover_image")
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
