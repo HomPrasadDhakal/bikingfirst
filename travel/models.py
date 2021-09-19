@@ -118,3 +118,12 @@ class Packages(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class PackagesGallary(models.Model):
+    packages = models.ForeignKey(Packages, on_delete=models.CASCADE)
+    image = models.FileField(upload_to="packages/images")
+
+    def __str__(self):
+        return self.packages.title
+    
