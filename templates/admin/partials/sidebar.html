@@ -189,6 +189,30 @@
             </li>
           </ul>
         </li>
+        <li class="nav-header">ADMIN/USERS</li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-users-cog"></i>
+            <p>
+              ADMIN/USERS
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'addaboutus' %}" class="nav-link">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Admin</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'aboutuslist' %}" class="nav-link">
+                <i class="fas fa-eye nav-icon"></i>
+                <p>Sign in users</p>
+              </a>
+            </li>
+          </ul>
+        </li>
         <li class="nav-header">MISCELLANEOUS</li>
         <li class="nav-item">
           <a href="#" class="nav-link">
