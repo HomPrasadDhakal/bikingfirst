@@ -100,12 +100,12 @@ class AboutusDetail(models.Model):
 #MODELS FOR PACKAGES
 class Packages(models.Model):
     title = models.CharField(max_length=255)
-    description = models.TextField()
+    description = RichTextField()
     gallary = models.FileField(upload_to="trip_photos")
     category = models.ForeignKey(Category,on_delete=models.CASCADE)
     sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
     all_category = models.ForeignKey(AllCategory, on_delete=models.CASCADE)
-    Itinerary = models.TextField()
+    Itinerary = RichTextField()
     region = models.CharField(max_length=255)
     duration = models.CharField(max_length=255)
     starting_date = models.DateTimeField(null=True, blank=True)

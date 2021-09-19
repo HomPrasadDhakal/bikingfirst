@@ -12,6 +12,7 @@ from travel.forms import (
     AddBlogsForm,
     SliderImgForm,
     AboutUsForm,
+    AddPackagesForm,
     ContactUsForm,
 )
 from travel.models import (
@@ -23,6 +24,7 @@ from travel.models import (
     SliderImage,
     AboutusDetail,
     ContactDetail,
+    Packages,
 )
 
 
@@ -492,3 +494,55 @@ def UpdateContactusview(request, pk):
                 return redirect('contactdetailslist')
     context = {'form':form}
     return render(request,"admin/contact/updatecontact.html", context)
+
+
+
+#=========================== views for packages  ============================================
+
+
+@login_required(login_url="loginpage")
+def AddPackagesView(request):
+    if request.user.is_superuser:
+        form = AddPackagesForm()
+        if request.method =="POST":
+            form = AddPackagesForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                messages.success(request,"successfully added Packages")
+                return redirect('packageslist')
+            else:
+                messages.error(request,"cannot add packages  please try again!!!")
+        context ={'form':form}
+    return render(request, "admin/packages/addppackages.html", context)
+
+
+@login_required(login_url='loginpage')
+def PackagesList(request):
+    if request.user.is_superuser:
+        allpack = Packages.objects.all().order_by("-created_at")
+        context= {'allpack':allpack}
+    return render(request,"admin/packages/packlist.html", context)
+
+
+
+@login_required(login_url='loginpage')
+def Deletepackages(request, pk):
+    if request.user.is_superuser:
+        deletepack = Packages.objects.get(id=pk)
+        deletepack.delete()
+    return redirect('packageslist')
+
+
+@login_required(login_url="loginpage")
+def UpdatePakagesview(request, pk):
+    if request.user.is_superuser:
+        pack = Packages.objects.get(id=pk)
+        form = AddPackagesForm(instance=pack)
+        if request.method == "POST":
+            form = AddPackagesForm(request.POST, instance=pack)
+            if form.is_valid():
+                form.save()
+                messages.success(request,"successfully updated packages !!!")
+                return redirect('packageslist')
+    context = {'form':form}
+    return render(request,"admin/packages/updatepackages.html", context)

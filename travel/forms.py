@@ -8,6 +8,7 @@ from travel.models import (
     SliderImage,
     AboutusDetail,
     ContactDetail,
+    Packages,
 )
 from ckeditor.widgets import CKEditorWidget
 
@@ -177,3 +178,86 @@ class ContactUsForm(forms.ModelForm):
     class Meta:
         model = ContactDetail
         fields =['sub_title','address','phone','mobile','email','website']
+
+
+
+
+# forms for packages
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+class AddPackagesForm(forms.ModelForm):
+    title = forms.CharField(max_length=255, required=True,
+        widget = forms.TextInput(attrs={
+            'class':'form-control',
+            'placeholder':'Please add package name here.'
+        })
+    )
+
+    description = forms.CharField(required= True, 
+        widget=CKEditorWidget()),
+
+    gallary = forms.FileField(required=True,
+        widget=forms.FileInput( attrs={
+            'class':'form-control',
+            'multiple': True,
+        })
+    )
+
+    # category = [(Category.id, Category.title) for Category in Category.objects.all()]
+    # category = forms.MultipleChoiceField(
+    #     required=True, widget=forms.Select, choices=category
+    # )
+
+    # category = [(Category.id, Category.title) for Category in Category.objects.all()]
+    # sub_category = forms.MultipleChoiceField(required=True,
+    # widget=forms.Select, choices=category
+    
+    
+
+    Itinerary = forms.CharField(required= True, 
+        widget=CKEditorWidget()),
+
+    region = forms.CharField(max_length=255, required=True,
+        widget = forms.TextInput(attrs={
+            'class':'form-control',
+            'placeholder':'Please add package name here.'
+        })
+    )
+
+    duration = forms.CharField(max_length=255, required=True,
+        widget = forms.TextInput(attrs={
+            'class':'form-control',
+            'placeholder':'Please add package name here.'
+        })
+    )
+
+    starting_date = forms.DateTimeField(required=True,
+        widget = DateInput(attrs={
+            'class':'form-control',
+        })
+    )
+
+    ending_date = forms.DateTimeField(required=True,
+        widget = DateInput(attrs={
+            'class':'form-control',
+        })
+    )
+
+    Availability = forms.BooleanField(required=False)
+
+    inclusion = [(Inclusion.id, Inclusion.title) for Inclusion in Inclusion.objects.all()]
+    inclusion = forms.MultipleChoiceField(
+        required=True, widget=forms.CheckboxSelectMultiple, choices=inclusion,
+    )
+
+    price = forms.CharField(max_length=255, required=True,
+        widget = forms.TextInput(attrs={
+            'class':'form-control',
+            'placeholder':'Please enter the price of package here.'
+        })
+    )
+
+    class Meta:
+        model = Packages
+        fields= '__all__'

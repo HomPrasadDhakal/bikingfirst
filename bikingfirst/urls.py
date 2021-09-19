@@ -81,6 +81,12 @@ urlpatterns = [
     path('delete_contact/<str:pk>',a.DeleteContactus, name="deletecontactdetails"),
     path('update_contact/<str:pk>',a.UpdateContactusview, name="updatecontactdetails"),
 
+#-----------------------Route for Packages--------------------------------------------- 
+    path('add_packages/',a.AddPackagesView, name="addpackages"),
+    path('packages_list/',a.PackagesList, name="packageslist"),
+    path('delete_packages/<str:pk>',a.Deletepackages, name="deletepackages"),
+    path('update_packages/<str:pk>',a.UpdatePakagesview, name="updatepackages"),
+
 
 
 

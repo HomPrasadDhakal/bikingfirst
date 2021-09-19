@@ -1,0 +1,135 @@
+{% extends 'admin/partials/layout.html' %}
+
+{% block title %}
+
+{% endblock title %}
+
+{% block header %}
+{% include 'admin/partials/header.html' %}
+{% endblock header %}
+
+{% block sidebar %}
+{% include 'admin/partials/sidebar.html' %}
+{% endblock sidebar %}
+
+{% block staticdata %}
+{% include 'admin/partials/staticdata.html' %}
+{% endblock staticdata %}
+
+{% block dashbaord %}
+<div class="row">
+    <!-- left column -->
+    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Add Sub category</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form action="{% url 'addpackages' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleInputtitle1">Packages name</label>
+                        {{ form.title }}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleInputtitle1">Packages Description</label>
+                        {{ form.media }}
+                        {{ form.description }}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleInputtitle1">Packages gallary</label>
+                        {{ form.gallary }}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleInputtitle1">Main category</label>
+                        {{ form.category }}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleInputtitle1">Sub category</label>
+                        {{ form.sub_category }}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleInputtitle1">All Category</label>
+                        {{ form.all_category }}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleInputtitle1">Itinearary</label>
+                        {{ form.media }}
+                        {{ form.Itinerary }}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleInputtitle1">Region</label>
+                        {{ form.region }}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleInputtitle1">Duration</label>
+                        {{ form.duration }}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleInputtitle1">Starting Date</label>
+                        {{ form.starting_date }}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleInputtitle1">Ending Date</label>
+                        {{ form.ending_date }}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleInputtitle1">Available</label>
+                        {{ form.Availability }}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleInputtitle1">Inclusion</label>
+                        {{ form.inclusion }}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleInputtitle1">Price</label>
+                        {{ form.price }}
+                    </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-success btn-block">Sub Sub category</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock dashbaord %}
+
+{% block footer %}
+{% include 'admin/partials/footer.html' %}
+{% endblock footer %}
+
+{% block script %}
+{% include 'admin/partials/script.html' %}
+{% endblock script %}
