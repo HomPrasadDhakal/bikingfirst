@@ -34,6 +34,9 @@ urlpatterns = [
     path('packages_details/<str:pk>', a.PackageDetails, name="packagesdetails"),
     #-----------------------Route for booking packages--------------------------
     path('booking_packages/<str:pk>', a.BookingPack, name="bookingpackages"),
+    #-----------------------Route for user login --------------------------------
+    path('userlogin/', a.UserLogin, name="userlogin"),
+    path('userloginprocess/', a.UserloginProcess, name="userloginprocess"),
 
 
 

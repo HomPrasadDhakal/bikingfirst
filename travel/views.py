@@ -97,10 +97,41 @@ def PackageDetails(request, pk):
 #-------------------------------------------------- views for booking packages page --------------------------------
 
 def BookingPack(request, pk):
+    packages = Packages.objects.get(id=pk)
+    form = BookingPackages()
+    if request.method == "POST":
+        form = BookingPackages(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Congratulations you have booked your Trip successfully !!!")
+            return redirect('frontendhome')
+    else:
+        messages.error(request,"Sorry you are not able to booking your trip !!! try again !!!!")
+        return redirect('frontendhome')
     contactlist = ContactDetail.objects.all()
     context = {"contactlist":contactlist}
     return render(request,"site/booking/booking.html", context)
 
+
+#----------------------------- views for user register, login and log out ------------------------------------------
+
+
+def UserLogin(request):
+    return render(request,"site/user/login.html")
+
+
+def UserloginProcess(request):
+    email=request.POST.get("email")
+    password=request.POST.get("password")
+
+    user=authenticate(request=request,email=email,password=password)
+    if user is not None:
+        login(request=request,user=user)
+        messages.success(request,"Congratulations your can book Trip Now!!!")
+        return HttpResponseRedirect(reverse("frontendhome"))
+    else:
+        messages.error(request,"Error in Login! Invalid Login Details!")
+        return HttpResponseRedirect(reverse("frontendhome"))
 
 
 

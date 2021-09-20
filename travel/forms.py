@@ -273,6 +273,7 @@ class AddPackagesImagesFrom(forms.ModelForm):
 
 #forms for booking packing
 class BookingPackages(forms.ModelForm):
+
     class Meta:
         model = BookPackages
         fields = ['name','phone','email','country','package','arrival_date','depature_date','no_of_adults','no_of_children']
@@ -297,10 +298,10 @@ class BookingPackages(forms.ModelForm):
             'package':forms.Select(attrs={
                 'class':'form-control',
             }),
-            'arrival_date':DateField(attrs={
+            'arrival_date':DateInput(attrs={
                 'class':'form-control',
             }),
-            'depature_date':DateField(attrs={
+            'depature_date':DateInput(attrs={
                 'class':'form-control',
             }),
             'no_of_adults':forms.NumberInput(attrs={
