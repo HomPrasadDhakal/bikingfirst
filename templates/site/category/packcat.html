@@ -38,61 +38,18 @@ Welcome to Biking First
                     <!--PART 2 : LEFT LISTINGS-->
                     <div class="hot-page2-hom-pre hot-page2-alp-left-ner-notb">
                         <ul>
-                            <!--LISTINGS-->
+                           {% for i in pop_pack %}
                             <li>
-                                <a href="#">
+                                <a href="{% url 'packagesdetails' i.id %}">
                                     <div class="hot-page2-hom-pre-1 hot-page2-alp-cl-1-1"> <img
-                                            src="/static/images/annapurna-circuit-biking.jpg" alt=""> </div>
+                                            src="{{ i.image.url }}" alt=""> </div>
                                     <div class="hot-page2-hom-pre-2 hot-page2-alp-cl-1-2">
-                                        <h5>Annapurna Circuit Biking Tour</h5> <span>15 Days</span>
+                                        <h5>{{ i.title }}</h5> <span>{{ i.duration }}</span>
                                     </div>
                                     <div class="hot-page2-hom-pre-3 hot-page2-alp-cl-1-3"> <span>4.2</span> </div>
                                 </a>
                             </li>
-                            <!--LISTINGS-->
-                            <li>
-                                <a href="#">
-                                    <div class="hot-page2-hom-pre-1 hot-page2-alp-cl-1-1"> <img
-                                            src="/static/images/annapurna-circuit-biking.jpg" alt=""> </div>
-                                    <div class="hot-page2-hom-pre-2 hot-page2-alp-cl-1-2">
-                                        <h5>Annapurna Circuit Biking Tour</h5> <span>15 Days</span>
-                                    </div>
-                                    <div class="hot-page2-hom-pre-3 hot-page2-alp-cl-1-3"> <span>4.2</span> </div>
-                                </a>
-                            </li>
-                            <!--LISTINGS-->
-                            <li>
-                                <a href="#">
-                                    <div class="hot-page2-hom-pre-1 hot-page2-alp-cl-1-1"> <img
-                                            src="/static/images/annapurna-circuit-biking.jpg" alt=""> </div>
-                                    <div class="hot-page2-hom-pre-2 hot-page2-alp-cl-1-2">
-                                        <h5>Annapurna Circuit Biking Tour</h5> <span>15 Days</span>
-                                    </div>
-                                    <div class="hot-page2-hom-pre-3 hot-page2-alp-cl-1-3"> <span>4.2</span> </div>
-                                </a>
-                            </li>
-                            <!--LISTINGS-->
-                            <li>
-                                <a href="#">
-                                    <div class="hot-page2-hom-pre-1 hot-page2-alp-cl-1-1"> <img
-                                            src="/static/images/annapurna-circuit-biking.jpg" alt=""> </div>
-                                    <div class="hot-page2-hom-pre-2 hot-page2-alp-cl-1-2">
-                                        <h5>Annapurna Circuit Biking Tour</h5> <span>15 Days</span>
-                                    </div>
-                                    <div class="hot-page2-hom-pre-3 hot-page2-alp-cl-1-3"> <span>4.2</span> </div>
-                                </a>
-                            </li>
-                            <!--LISTINGS-->
-                            <li>
-                                <a href="#">
-                                    <div class="hot-page2-hom-pre-1 hot-page2-alp-cl-1-1"> <img
-                                            src="/static/images/annapurna-circuit-biking.jpg" alt=""> </div>
-                                    <div class="hot-page2-hom-pre-2 hot-page2-alp-cl-1-2">
-                                        <h5>Annapurna Circuit Biking Tour</h5> <span>15 Days</span>
-                                    </div>
-                                    <div class="hot-page2-hom-pre-3 hot-page2-alp-cl-1-3"> <span>4.2</span> </div>
-                                </a>
-                            </li>
+                            {% endfor %}
                         </ul>
                     </div>
                     <!--PART 4 : LEFT LISTINGS-->

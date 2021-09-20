@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from ckeditor.fields import RichTextField
+from django.db.models.base import ModelState
 
 # MODELS FOR CATEGORY SUB CATEGORY & ALL CATEGORY
 
@@ -135,4 +136,28 @@ class PackagesGallary(models.Model):
 
     def __str__(self):
         return self.packages.title
+
+#==============================================models for booking=======================================================
     
+ADULT = (
+    ("1","1"), ('2','2'), ('3','3'), ('4','4'), ('5','5'), ('6','6'), ('7','7'), ('8','8'), ('9','9'), ('10','10'), 
+    ('11','11'), ('12','12'), ('13','13'), ('14','14'), ('15','15'), ('16','16'), ('17','17'), ('18','18'), ('19','19'), ('20','20'), ('above 20',' above 20'), 
+)
+CHILDREN = (
+    ('1','1'), ('2','2'), ('3','3'), ('4','4'), ('5','5'), ('6','6'), ('7','7'), ('8','8'), ('9','9'), ('10','10'), 
+    ('11','11'), ('12','12'), ('13','13'), ('14','14'), ('15','15'), ('16','16'), ('17','17'), ('18','18'), ('19','19'), ('20','20'), ('above 20',' above 20'), 
+)
+class BookPackages(models.Model):
+    name = models.CharField(max_length=255)
+    phone = models.IntegerField()
+    email = models.EmailField()
+    country = models.CharField(max_length=255)
+    package = models.ForeignKey(Packages, on_delete=models.CASCADE)
+    arrival_date = models.DateField()
+    depature_date = models.DateField()
+    no_of_adults = models.CharField(max_length=255, choices=ADULT, default="1")
+    no_of_children = models.CharField(max_length=255, choices=CHILDREN, default="1")
+
+
+    def __str__(self):
+        return self.title 

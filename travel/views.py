@@ -81,7 +81,8 @@ def BlogDetailPage(request, pk):
 def PackageCategory(request, pk):
     packcat = Packages.objects.all()
     contactlist = ContactDetail.objects.all()
-    context = {"packcat":packcat,"contactlist":contactlist}
+    pop_pack = Packages.objects.all().order_by('-views')[:5]
+    context = {"packcat":packcat,"contactlist":contactlist, "pop_pack":pop_pack }
     return render(request,"site/category/packcat.html", context)
 
 
