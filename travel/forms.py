@@ -1,6 +1,7 @@
 from django import forms
 from django.db.models import fields
 from django.forms import widgets
+from django.forms.fields import DateField
 from travel.models import (
     Category,
     SubCategory,
@@ -12,8 +13,10 @@ from travel.models import (
     ContactDetail,
     Packages,
     PackagesGallary,
+    BookPackages,
 )
 from ckeditor.widgets import CKEditorWidget
+
 
 # forms for category
 class AddCategoryForm(forms.ModelForm):
@@ -265,3 +268,47 @@ class AddPackagesImagesFrom(forms.ModelForm):
     class Meta:
         model = PackagesGallary
         fields  = ['packages','image']
+
+
+
+#forms for booking packing
+class BookingPackages(forms.ModelForm):
+    class Meta:
+        model = BookPackages
+        fields = ['name','phone','email','country','package','arrival_date','depature_date','no_of_adults','no_of_children']
+
+        widgets = {
+            'name':forms.TextInput(attrs={
+                'class':'form-control',
+                'placeholder':'Enter your name',
+            }),
+            'phone':forms.NumberInput(attrs={
+                'class':'form-control',
+                'placeholder':'Enter your contact number',
+            }),
+            'email':forms.EmailInput(attrs={
+                'class':'form-control',
+                'placeholder':'Enter your email address',
+            }),
+            'country':forms.TextInput(attrs={
+                'class':'form-control',
+                'placeholder':'Enter your country name',
+            }),
+            'package':forms.Select(attrs={
+                'class':'form-control',
+            }),
+            'arrival_date':DateField(attrs={
+                'class':'form-control',
+            }),
+            'depature_date':DateField(attrs={
+                'class':'form-control',
+            }),
+            'no_of_adults':forms.NumberInput(attrs={
+                'class':'form-control',
+                'placeholder':'Please enter total number of adult want to booked'
+            }),
+            'no_of_children':forms.NumberInput(attrs={
+                'class':'form-control',
+                'placeholder':'Please enter total number of children want to booked'
+            }),
+        }

@@ -16,6 +16,7 @@ from travel.forms import (
     AddPackagesForm,
     AddPackagesImagesFrom,
     ContactUsForm,
+    BookingPackages,
 )
 from travel.models import (
     Blogs,
