@@ -101,7 +101,7 @@ class AboutusDetail(models.Model):
 class Packages(models.Model):
     title = models.CharField(max_length=255)
     description = RichTextField()
-    gallary = models.FileField(upload_to="trip_photos")
+    image = models.FileField(upload_to="trip_photos")
     category = models.ForeignKey(Category,on_delete=models.CASCADE)
     sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
     all_category = models.ForeignKey(AllCategory, on_delete=models.CASCADE)

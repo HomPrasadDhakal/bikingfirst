@@ -1,5 +1,6 @@
 from django import forms
 from django.db.models import fields
+from django.forms import widgets
 from travel.models import (
     Category,
     SubCategory,
@@ -28,30 +29,41 @@ class AddCategoryForm(forms.ModelForm):
 
 #froms for subcategory 
 class AddSubCategoryForm(forms.ModelForm):
-    title = forms.CharField(max_length=255, required=True,
-        widget = forms.TextInput(attrs={
-            'class':'form-control',
-            'placeholder':'Please enter subcategory title ',
-            'required': 'required',
-        })
-    )
+
     class Meta:
         model = SubCategory
         fields =['category','title']
 
+        widgets ={
+            'category':forms.Select(attrs={
+                'class':'form-control'
+            }),
+            'title': forms.TextInput(attrs={
+                'class':'form-control',
+                'placeholder':'Please enter sub category title'
+            })
+        }
+
 
 #froms for All category
 class AddAllCategoryForm(forms.ModelForm):
-    title = forms.CharField(max_length=255, required=True,
-        widget = forms.TextInput(attrs={
-            'class':'form-control',
-            'placeholder':'Please enter all category title'
-        })
-    )
-   
+
     class Meta:
         model = AllCategory
         fields =['category','sub_category','title']
+
+        widgets ={
+            'category':forms.Select(attrs={
+                'class':'form-control'
+            }),
+            'sub_category':forms.Select(attrs={
+                'class':'form-control'
+            }),
+            'title': forms.TextInput(attrs={
+                'class':'form-control',
+                'placeholder':'Please enter sub category title'
+            })
+        }
 
 
 #froms for inclusion
@@ -81,7 +93,7 @@ class AddBlogsForm(forms.ModelForm):
     )
     
     cover_image = forms.FileField(required=True,
-        widget=forms.FileInput(attrs={
+        widget=forms.ClearableFileInput(attrs={
             'class':'form-control'
             }
         )
@@ -93,42 +105,40 @@ class AddBlogsForm(forms.ModelForm):
 
 # froms for sliderimage
 class SliderImgForm(forms.ModelForm):
-    title = forms.CharField(max_length=255, required=True,
-        widget = forms.TextInput(attrs={
-            'class':'form-control',
-            'placeholder':'Please enter blog title'
-        })
-    )
-    image = forms.FileField(required=True,
-        widget=forms.FileInput(attrs={
-            'class':'form-control'
-            }
-        )
-    )
     
     class Meta:
         model = SliderImage
         fields = ['title','image']
+        widgets={
+            'title': forms.TextInput(attrs={
+                'class':'form-control',
+                'placeholder':'Please enter slider image title here'
+            }),
+            'image': forms.ClearableFileInput(attrs={
+                'class':'form-control',
+            }),
+        }
 
 
 # forms for aboutus
 class AboutUsForm(forms.ModelForm):
-    title = forms.CharField(max_length=255, required=True,
-        widget=forms.TextInput(attrs={'class':'form-control',
-          'placeholder':'Please enter about us title'}))
-
-    content = forms.CharField(required= True, 
-        widget=CKEditorWidget()
-    )
-    about_cover = forms.FileField(required=True,
-        widget=forms.FileInput( attrs={
-            'class':'form-control',
-        })
-    )
-
+    
     class Meta:
         model = AboutusDetail
         fields = ['title','content','about_cover']
+        widgets={
+            'title': forms.TextInput(attrs={
+                'class':'form-control',
+                'placeholder':'Please enter about us  title here'
+            }),
+            'content': forms.TextInput(attrs={
+                'class':'form-control',
+                'placeholder':'Please enter about us detail here'
+            }),
+            'about_cover': forms.ClearableFileInput(attrs={
+                'class':'form-control',
+            }),
+        }
     
 
 # forms for contactus
@@ -189,82 +199,65 @@ class DateInput(forms.DateInput):
     input_type = 'date'
 
 class AddPackagesForm(forms.ModelForm):
-    title = forms.CharField(max_length=255, required=True,
-        widget = forms.TextInput(attrs={
-            'class':'form-control',
-            'placeholder':'Please add package name here.'
-        })
-    )
-
-    description = forms.CharField(required= True, 
-        widget=CKEditorWidget()),
-
-    gallary = forms.FileField(required=True,
-        widget=forms.FileInput( attrs={
-            'class':'form-control',
-            'multiple': True,
-        })
-    )
-
-    # category = [(Category.id, Category.title) for Category in Category.objects.all()]
-    # category = forms.MultipleChoiceField(
-    #     required=True, widget=forms.Select, choices=category
-    # )
-
-    # category = [(Category.id, Category.title) for Category in Category.objects.all()]
-    # sub_category = forms.MultipleChoiceField(required=True,
-    # widget=forms.Select, choices=category
-    
-    
-
-    Itinerary = forms.CharField(required= True, 
-        widget=CKEditorWidget()),
-
-    region = forms.CharField(max_length=255, required=True,
-        widget = forms.TextInput(attrs={
-            'class':'form-control',
-            'placeholder':'Please add package name here.'
-        })
-    )
-
-    duration = forms.CharField(max_length=255, required=True,
-        widget = forms.TextInput(attrs={
-            'class':'form-control',
-            'placeholder':'Please add package name here.'
-        })
-    )
-
-    starting_date = forms.DateTimeField(required=True,
-        widget = DateInput(attrs={
-            'class':'form-control',
-        })
-    )
-
-    ending_date = forms.DateTimeField(required=True,
-        widget = DateInput(attrs={
-            'class':'form-control',
-        })
-    )
-
-    Availability = forms.BooleanField(required=False)
-
     inclusion = [(Inclusion.id, Inclusion.title) for Inclusion in Inclusion.objects.all()]
     inclusion = forms.MultipleChoiceField(
         required=True, widget=forms.CheckboxSelectMultiple, choices=inclusion,
     )
-
-    price = forms.CharField(max_length=255, required=True,
-        widget = forms.TextInput(attrs={
-            'class':'form-control',
-            'placeholder':'Please enter the price of package here.'
-        })
-    )
-
     class Meta:
         model = Packages
-        fields= '__all__'
+        fields= ['title','description','image','category','sub_category','all_category','Itinerary',
+        'region','duration','starting_date','ending_date','Availability','inclusion','price']
 
-
+        widgets ={
+            'title': forms.TextInput(attrs={
+                'class':'form-control',
+                'placeholder':'Please enter packages title here'
+            }),
+            'description': forms.TextInput(attrs={
+                'class':'form-control',
+                'placeholder':'Please enter pacakge description',
+                'rows':'8',
+            }),
+            'image': forms.ClearableFileInput(attrs={
+                'class':'form-control',
+            }),
+            'category':forms.Select(attrs={
+                'class':'form-control'
+            }),
+            'sub_category':forms.Select(attrs={
+                'class':'form-control'
+            }),
+            'all_category':forms.Select(attrs={
+                'class':'form-control'
+            }),
+            'Itinerary': forms.TextInput(attrs={
+                'class':'form-control',
+                'placeholder':'Please enter pacakge description',
+                'rows':'8',
+            }),
+            'region': forms.TextInput(attrs={
+                'class':'form-control',
+                'placeholder':'Please enter packages region here'
+            }),
+            'duration': forms.TextInput(attrs={
+                'class':'form-control',
+                'placeholder':'Please enter packages title here'
+            }),
+            'starting_date': DateInput(attrs={
+                'class':'form-control',
+            }),
+            'ending_date': DateInput(attrs={
+                'class':'form-control',
+            }),
+            'Availability':forms.CheckboxInput(attrs={
+               'help-text':'please tick in the field'
+            }),
+           'price': forms.NumberInput(attrs={
+                'class':'form-control',
+                'placeholder':'Please enter packages price here'
+            }),
+            
+        }
 
 # forms for packages images gallary
 
