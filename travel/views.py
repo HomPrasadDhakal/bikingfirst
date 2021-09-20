@@ -78,6 +78,18 @@ def BlogDetailPage(request, pk):
     return render(request,"site/blog/blogdetail.html", context)
 
 
+def PackageCategory(request, pk):
+    packcat = Packages.objects.all()
+    contactlist = ContactDetail.objects.all()
+    context = {"packcat":packcat,"contactlist":contactlist}
+    return render(request,"site/category/packcat.html", context)
+
+
+def PackageDetails(request, pk):
+    i = Packages.objects.get(id=pk)
+    contactlist = ContactDetail.objects.all()
+    context = {"contactlist":contactlist, "i":i}
+    return render(request,"site/category/packdetail.html", context)
 #########################################################################################################
 #########################################################################################################
 #########################################################################################################

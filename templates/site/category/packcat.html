@@ -1,0 +1,309 @@
+{% extends 'site/partials/layout.html' %}
+
+
+{% block title %}
+Welcome to Biking First
+{% endblock title %}
+
+{% block customcss %}
+{% endblock customcss %}
+
+{% block header %}
+{% include 'site/partials/header.html' %}
+{% endblock header %}
+
+{% block slider %}
+
+<!--====== HOTELS LIST ==========-->
+<section class="hot-page2-alp hot-page2-pa-sp-top">
+    <div class="container">
+        <div class="row inner_banner inner_banner_3 bg-none">
+            <div class="hot-page2-alp-tit">
+                <h1>Category Page</h1>
+                <ul>
+                    <li><a href="{% url 'frontendhome' %}">Home</a> </li>
+                    <li><i class="fa fa-angle-right" aria-hidden="true"></i> </li>
+                    <li><a href="#inner-page-title" class="bread-acti">Category Page</a> </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="hot-page2-alp-con">
+                <!--LEFT LISTINGS-->
+                <div class="col-md-3 hot-page2-alp-con-left">
+                    <!--PART 1 : LEFT LISTINGS-->
+                    <div class="hot-page2-alp-con-left-1">
+                        <h3>Popular Packages</h3>
+                    </div>
+                    <!--PART 2 : LEFT LISTINGS-->
+                    <div class="hot-page2-hom-pre hot-page2-alp-left-ner-notb">
+                        <ul>
+                            <!--LISTINGS-->
+                            <li>
+                                <a href="#">
+                                    <div class="hot-page2-hom-pre-1 hot-page2-alp-cl-1-1"> <img
+                                            src="/static/images/annapurna-circuit-biking.jpg" alt=""> </div>
+                                    <div class="hot-page2-hom-pre-2 hot-page2-alp-cl-1-2">
+                                        <h5>Annapurna Circuit Biking Tour</h5> <span>15 Days</span>
+                                    </div>
+                                    <div class="hot-page2-hom-pre-3 hot-page2-alp-cl-1-3"> <span>4.2</span> </div>
+                                </a>
+                            </li>
+                            <!--LISTINGS-->
+                            <li>
+                                <a href="#">
+                                    <div class="hot-page2-hom-pre-1 hot-page2-alp-cl-1-1"> <img
+                                            src="/static/images/annapurna-circuit-biking.jpg" alt=""> </div>
+                                    <div class="hot-page2-hom-pre-2 hot-page2-alp-cl-1-2">
+                                        <h5>Annapurna Circuit Biking Tour</h5> <span>15 Days</span>
+                                    </div>
+                                    <div class="hot-page2-hom-pre-3 hot-page2-alp-cl-1-3"> <span>4.2</span> </div>
+                                </a>
+                            </li>
+                            <!--LISTINGS-->
+                            <li>
+                                <a href="#">
+                                    <div class="hot-page2-hom-pre-1 hot-page2-alp-cl-1-1"> <img
+                                            src="/static/images/annapurna-circuit-biking.jpg" alt=""> </div>
+                                    <div class="hot-page2-hom-pre-2 hot-page2-alp-cl-1-2">
+                                        <h5>Annapurna Circuit Biking Tour</h5> <span>15 Days</span>
+                                    </div>
+                                    <div class="hot-page2-hom-pre-3 hot-page2-alp-cl-1-3"> <span>4.2</span> </div>
+                                </a>
+                            </li>
+                            <!--LISTINGS-->
+                            <li>
+                                <a href="#">
+                                    <div class="hot-page2-hom-pre-1 hot-page2-alp-cl-1-1"> <img
+                                            src="/static/images/annapurna-circuit-biking.jpg" alt=""> </div>
+                                    <div class="hot-page2-hom-pre-2 hot-page2-alp-cl-1-2">
+                                        <h5>Annapurna Circuit Biking Tour</h5> <span>15 Days</span>
+                                    </div>
+                                    <div class="hot-page2-hom-pre-3 hot-page2-alp-cl-1-3"> <span>4.2</span> </div>
+                                </a>
+                            </li>
+                            <!--LISTINGS-->
+                            <li>
+                                <a href="#">
+                                    <div class="hot-page2-hom-pre-1 hot-page2-alp-cl-1-1"> <img
+                                            src="/static/images/annapurna-circuit-biking.jpg" alt=""> </div>
+                                    <div class="hot-page2-hom-pre-2 hot-page2-alp-cl-1-2">
+                                        <h5>Annapurna Circuit Biking Tour</h5> <span>15 Days</span>
+                                    </div>
+                                    <div class="hot-page2-hom-pre-3 hot-page2-alp-cl-1-3"> <span>4.2</span> </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--PART 4 : LEFT LISTINGS-->
+                    <div class="hot-page2-alp-l3 hot-page2-alp-l-com">
+                        <h4><i class="fa fa-map-marker" aria-hidden="true"></i> Select Region</h4>
+                        <div class="hot-page2-alp-l-com1 hot-page2-alp-p4">
+                            <form>
+                                <ul>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp41" class="styled" type="checkbox" checked="">
+                                            <label for="chp41"> Kathmandu Valley </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp42" class="styled" type="checkbox">
+                                            <label for="chp42"> Pokhara </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp43" class="styled" type="checkbox">
+                                            <label for="chp43"> Annapurna </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp44" class="styled" type="checkbox">
+                                            <label for="chp44"> Mustang </label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
+                    </div>
+                    <!--END PART 4 : LEFT LISTINGS-->
+                    <!--PART 5 : LEFT LISTINGS-->
+                    <div class="hot-page2-alp-l3 hot-page2-alp-l-com">
+                        <h4><i class="fa fa-dollar" aria-hidden="true"></i> Select Price Range</h4>
+                        <div class="hot-page2-alp-l-com1 hot-page2-alp-p5">
+                            <form>
+                                <ul>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp51" class="styled" type="checkbox" checked="">
+                                            <label for="chp51"> Below $1000</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp51" class="styled" type="checkbox" checked="">
+                                            <label for="chp51"> $1000 - $4000 </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp52" class="styled" type="checkbox">
+                                            <label for="chp52"> $4000 - $6000 </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp53" class="styled" type="checkbox">
+                                            <label for="chp53"> $6000 - $8000 </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp54" class="styled" type="checkbox">
+                                            <label for="chp54"> $8000 - $10000 </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp55" class="styled" type="checkbox">
+                                            <label for="chp55"> $10000 + </label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
+                    </div>
+                    <!--END PART 5 : LEFT LISTINGS-->
+                    <!--PART 6 : LEFT LISTINGS-->
+                    <div class="hot-page2-alp-l3 hot-page2-alp-l-com">
+                        <h4><i class="fa fa-star-o" aria-hidden="true"></i> Select Ratings</h4>
+                        <div class="hot-page2-alp-l-com1 hot-page2-alp-p5">
+                            <form>
+                                <ul>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp61" class="styled" type="checkbox" checked="">
+                                            <label for="chp61"> <span class="ho-hot-rat-star-list">
+                                                    <span class="hot-list-left-part-rat">5.0</span> <i
+                                                        class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star"
+                                                        aria-hidden="true"></i><i class="fa fa-star"
+                                                        aria-hidden="true"></i><i class="fa fa-star"
+                                                        aria-hidden="true"></i><i class="fa fa-star"
+                                                        aria-hidden="true"></i> </span>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp62" class="styled" type="checkbox">
+                                            <label for="chp62"> <span class="ho-hot-rat-star-list">
+                                                    <span class="hot-list-left-part-rat">4.0</span> <i
+                                                        class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star"
+                                                        aria-hidden="true"></i><i class="fa fa-star"
+                                                        aria-hidden="true"></i><i class="fa fa-star"
+                                                        aria-hidden="true"></i><i class="fa fa-star-o"
+                                                        aria-hidden="true"></i> </span>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp63" class="styled" type="checkbox">
+                                            <label for="chp63"> <span class="ho-hot-rat-star-list">
+                                                    <span class="hot-list-left-part-rat">3.0</span> <i
+                                                        class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star"
+                                                        aria-hidden="true"></i><i class="fa fa-star"
+                                                        aria-hidden="true"></i><i class="fa fa-star-o"
+                                                        aria-hidden="true"></i><i class="fa fa-star-o"
+                                                        aria-hidden="true"></i> </span>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp64" class="styled" type="checkbox">
+                                            <label for="chp64"> <span class="ho-hot-rat-star-list">
+                                                    <span class="hot-list-left-part-rat">2.0</span> <i
+                                                        class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star"
+                                                        aria-hidden="true"></i><i class="fa fa-star-o"
+                                                        aria-hidden="true"></i><i class="fa fa-star-o"
+                                                        aria-hidden="true"></i><i class="fa fa-star-o"
+                                                        aria-hidden="true"></i> </span>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp65" class="styled" type="checkbox">
+                                            <label for="chp65"> <span class="ho-hot-rat-star-list">
+                                                    <span class="hot-list-left-part-rat">1.0</span> <i
+                                                        class="fa fa-star" aria-hidden="true"></i><i
+                                                        class="fa fa-star-o" aria-hidden="true"></i><i
+                                                        class="fa fa-star-o" aria-hidden="true"></i><i
+                                                        class="fa fa-star-o" aria-hidden="true"></i><i
+                                                        class="fa fa-star-o" aria-hidden="true"></i> </span>
+                                            </label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
+                    </div>
+                    <!--END PART 5 : LEFT LISTINGS-->
+
+                </div>
+                <!--END LEFT LISTINGS-->
+                <!--RIGHT LISTINGS-->
+                <div class="col-md-9 hot-page2-alp-con-right">
+                    <div class="hot-page2-alp-con-right-1">
+                        <!--LISTINGS-->
+                        <div class="row">
+                            {% for i in packcat %}
+                            <div class="hot-page2-alp-r-list">
+                                <div class="col-md-3 hot-page2-alp-r-list-re-sp">
+                                    <a href="javascript:void(0);">
+                                        <div class="hotel-list-score">4.5</div>
+                                        <div class="hot-page2-hli-1"> <img src="{{ i.image.url }}"
+                                                alt=""> </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="trav-list-bod">
+                                        <a href="{% url 'packagesdetails' i.id %}">
+                                            <h3>{{ i.title|truncatechars:30}}</h3>
+                                        </a>
+                                        <p>{{ i.description|safe|truncatechars:180  }}</p>
+                                        <span>Duration:{{ i.duration }}</span>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="hot-page2-alp-ri-p3 tour-alp-ri-p3">
+                                        <span class="hot-list-p3-1">Prices Starting</span> <span
+                                            class="hot-list-p3-2">${{ i.price }}</span><span class="hot-list-p3-4">
+                                            <a href="tour-details.html" class="hot-page2-alp-quot-btn">Book Now</a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <!--END RIGHT LISTINGS-->
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock slider %}
+
+{% block footer %}
+{% include 'site/partials/footer.html' %}
+{% endblock footer %}
+
+{% block script %}
+{% include 'site/partials/script.html' %}
+{% endblock script %}

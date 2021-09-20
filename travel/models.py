@@ -98,6 +98,13 @@ class AboutusDetail(models.Model):
 
 
 #MODELS FOR PACKAGES
+RATING = (
+    ('1','ONE'),
+    ('2','TWO'),
+    ('3','THREE'),
+    ('4','FOUR'),
+    ('5','FIVE'),
+)
 class Packages(models.Model):
     title = models.CharField(max_length=255)
     description = RichTextField()
@@ -113,6 +120,8 @@ class Packages(models.Model):
     Availability = models.BooleanField(default=False, null=True, blank=True)
     inclusion  = models.ManyToManyField(Inclusion, related_name="package_inclusion")
     price = models.PositiveIntegerField()
+    rating = models.CharField(max_length=25, choices=RATING)
+    views = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -18,31 +18,17 @@
                             <a href="#!" class="ed-mi-close"><i class="fa fa-times"></i></a>                            
                             <ul>
                                 <li><a href="{% url 'frontendhome' %}">Home</a></li>
-                                <li><a href="#">About Us</a></li>
                             </ul>
-                            <h4>Biking in Nepal</h4>
+                        
                             <ul>
-                                <li><a href="#">Kathmandu Valley (Day Ride)</a></li>
-                                <li><a href="#">Kathmandu Valley (Rim Tour)</a></li>
-                                <li><a href="#">Tokha & Budhanilkantha</a></li>
-                                <li><a href="#">Bungamati Mountain Biking</a></li>
-                                <li><a href="#">Kathmandu - Pokhara Biking</a></li>
-                                <li><a href="#">Pokhara Valley Biking</a></li>
-                                <li><a href="#">Annapurna Circuit Biking Tour</a></li>
-                                <li><a href="#">Annapurna Half Circuit Biking Tour</a></li>
-                                <li><a href="#">Upper Mustang Biking Tour</a></li>
-                            </ul>
-                            <h4>Trekking in Nepal</h4>
-                            <ul>
-                                <li><a href="#">Annapurna Base Camp Trekking</a></li>
-                                <li><a href="#">Everest Base Camp Trekking</a></li>
-                                <li><a href="#">Langtang Valley Treking</a></li>
-                                <li><a href="#">Upper Mustang Trekking</a></li>
-                                <li><a href="#">Lower Mustang Trekking</a></li>
+                            {% for i in cat3 %}
+                                <li><a href="#">{{ i.title }}</a></li>
+                            {% endfor %}
                             </ul>
                             <ul>
-                                <li><a href="#">Our Blog</a></li>
-                                <li><a href="contact.html">Contact us</a></li>
+                                <li><a href="{% url 'bloglist' %}">Our Blog</a></li>
+                                <li><a href="{% url 'aboutus' %}">About Us</a></li>
+                                <li><a href="{% url 'contactus' %}">Contact us</a></li>
                             </ul>
                         </div>
                     </div>
@@ -102,86 +88,29 @@
                         <div class="main-menu">
                             <ul>
                                 <li><a href="{% url 'frontendhome' %}">Home</a></li>
+                                {% for i in cat1 %}
                                 <li class="cour-menu">
-                                    <a href="#!" class="mm-arr">Biking in Nepal</a>
-                                    <!-- MEGA MENU 1 -->
+                                        <a href="#!" class="mm-arr">{{ i.title }}</a>
                                     <div class="mm-pos">
                                         <div class="cour-mm m-menu">
                                             <div class="m-menu-inn">
+                                            {% for j in cat2 %}
+                                            {% if j.category == i %}
                                                 <div class="mm1-com mm2-cour-com mm1-s3">
-                                                    <h4>Kathmandu Valley</h4>
+                                                    <h4>{{ j.title }}</h4>
                                                     <ul>
-                                                        <li><a href="#">Kathmandu Valley (Day Ride)</a></li>
-                                                        <li><a href="#">Kathmandu Valley (Rim Tour)</a></li>
-                                                        <li><a href="#">Tokha & Budhanilkantha</a></li>
-                                                        <li><a href="#">Bungamati Mountain Biking</a></li>                                              
+                                                    {% for k in cat3 %}
+                                                        <li><a href="{% url 'packagescategory' k.id %}">{{ k.title }}</a></li> 
+                                                    {% endfor %}                                        
                                                     </ul>
                                                 </div>
-                                                <div class="mm1-com mm2-cour-com mm1-s3">
-                                                    <h4>Pokhara</h4>
-                                                    <ul>
-                                                        <li><a href="#">Kathmandu - Pokhara Biking</a></li>
-                                                        <li><a href="#">Pokhara Valley Biking</a></li>                                                   
-                                                    </ul>                                                    
-                                                </div>
-                                                <div class="mm1-com mm2-cour-com mm1-s3">
-                                                    <h4>Annapurna</h4>
-                                                    <ul>
-                                                        <li><a href="#">Annapurna Circuit Biking Tour</a></li>
-                                                        <li><a href="#">Annapurna Half Circuit Biking Tour</a></li>                                                                                                       
-                                                    </ul>
-                                                </div>
-                                                <div class="mm1-com mm1-cour-com mm1-s3">
-                                                    <h4>Mustang</h4>
-                                                    <ul>
-                                                        <li><a href="#">Upper Mustang Biking Tour</a></li>                                                       
-                                                    </ul>                                                    
-                                                </div>
-                                                
+                                            {% endif %}
+                                            {% endfor %}
                                             </div>
                                         </div>
                                     </div>
                                 </li>
-                                <li class="about-menu">
-                                    <a href="family-package.html" class="mm-arr">Trekking in Nepal</a>
-                                    <!-- MEGA MENU 1 -->
-                                    <div class="mm-pos">
-                                        <div class="about-mm m-menu">
-                                            <div class="m-menu-inn">
-                                                <div class="mm1-com mm1-s1">
-                                                    <div class="ed-course-in">
-                                                        <a class="course-overlay menu-about" href="all-package.html">
-                                                            <img src="/static/images/trekking-in-nepal.jpeg" alt="">
-                                                            <span>Trekking in Nepal</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="mm1-com mm1-s2">
-                                                    <p>Nepal is the best destination for Hiking, walking and Trekking. The sites and regions in Nepal are full of adventures for adventure seekers, spiritual trekkers and nature lovers. </p>
-                                                    <a href="#" class="mm-r-m-btn">Read more</a>
-                                                </div>
-                                                <div class="mm1-com mm1-s3">
-                                                    <ul>
-                                                        <li><a href="#">Annapurna Base Camp Trekking</a></li>
-                                                        <li><a href="#">Everest Base Camp Trekking</a></li>
-                                                        <li><a href="#">Langtang Valley Treking</a></li>
-                                                        <li><a href="#">Upper Mustang Trekking</a></li>
-                                                        <li><a href="#">Lower Mustang Trekking</a></li>                                                       
-                                                    </ul>
-                                                </div>
-                                                <div class="mm1-com mm1-s4">
-                                                    <ul>
-                                                        <li><a href="#">Annapurna Base Camp Trekking</a></li>
-                                                        <li><a href="#">Everest Base Camp Trekking</a></li>
-                                                        <li><a href="#">Langtang Valley Treking</a></li>
-                                                        <li><a href="#">Upper Mustang Trekking</a></li>
-                                                        <li><a href="#">Lower Mustang Trekking</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
+                                {% endfor %}
                                 <li><a href="{% url 'bloglist' %}">Our Blog</a></li>
                                 <li><a href="{% url 'aboutus' %}">About Us</a></li>
                                 <li><a href="{% url 'contactus' %}">Contact us</a></li>

@@ -9,7 +9,7 @@
 				{% for c in contactlist %}
 				<span class="to-con-2">Quick Contact: {{ c.phone }}</span>
 				{% endfor %}
-				<div class="ho-con-cont"> <a href="#" class="to-con-3 link-btn">Start Booking</a> <a href="#"
+				<div class="ho-con-cont"> <a href="#" class="to-con-3 link-btn">Start Booking</a> <a href="{% url 'contactus' %}"
 						class="to-con-4 link-btn">Quick Inquiry</a> </div>
 			</div>
 			<div class="col-md-6 ho-vid"> <img src="{{ i.about_cover.url }}" alt=""> </div>

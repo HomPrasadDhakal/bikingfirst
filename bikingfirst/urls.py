@@ -26,8 +26,15 @@ urlpatterns = [
     path('', a.FrontIndexPageView, name="frontendhome"),
     path('contact_us/', a.ContactUsPage, name="contactus"),
     path('about_us/', a.AboutusPage, name="aboutus"),
+    #--------------------route for blog-------------------------------------------
     path('bloglist/', a.BlogsPage, name="bloglist"),
     path('detail_blog/<str:pk>', a.BlogDetailPage, name="blogdetails"),
+    #---------------------Route for Packages category----------------------------
+    path('packages_category/<str:pk>', a.PackageCategory, name="packagescategory"),
+    path('packages_details/<str:pk>', a.PackageDetails, name="packagesdetails"),
+
+
+
 #=========================Route for Back End =======================================
 #=========================Route for Back End =======================================
 #=========================Route for Back End =======================================

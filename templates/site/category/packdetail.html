@@ -1,0 +1,199 @@
+{% extends 'site/partials/layout.html' %}
+
+
+{% block title %}
+Welcome to Biking First
+{% endblock title %}
+
+{% block customcss %}
+{% endblock customcss %}
+
+{% block header %}
+{% include 'site/partials/header.html' %}
+{% endblock header %}
+
+{% block slider %}
+
+	<section>
+		<div class="rows inner_banner" style="background: url('{{ i.image.url }}') no-repeat center center;
+     background-size: cover;">
+			<div class="container">
+				<h2 class="text-uppercase"><span>{{ i.title }}</span></h2>
+				<ul>
+					<li><a href="{% url 'frontendhome' %}">Home</a>
+					</li>
+					<li><i class="fa fa-angle-right" aria-hidden="true"></i> </li>
+					<li><a href="#inner-page-title" class="bread-acti">{{ i.title }}</a>
+					</li>
+				</ul>				
+			</div>
+		</div>
+	</section>
+	<!--====== TOUR DETAILS - BOOKING ==========-->
+	<section>
+		<div class="rows banner_book" id="inner-page-title">
+			<div class="container">
+				<div class="banner_book_1">
+					<ul>
+						<li class="dl1">Region : {{ i.region }}</li>
+						<li class="dl2">Price : ${{ i.price }}</li>
+						<li class="dl3">Duration : {{ i.duration }}</li>
+						<li class="dl4"><a href="booking-form.html">Book Now</a> </li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--====== TOUR DETAILS ==========-->
+	<section>
+		<div class="rows inn-page-bg com-colo">
+			<div class="container inn-page-con-bg tb-space">
+				<div class="col-md-9">
+					<!--====== TOUR TITLE ==========-->
+					<div class="tour_head">
+						<h2>{{ i.title }}<span class="tour_star"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-half-o" aria-hidden="true"></i></span><span class="tour_rat">4.5</span></h2> </div>
+					<!--====== TOUR DESCRIPTION ==========-->
+					<div class="tour_head1">
+						<h3>Introduction</h3>
+						<p>{{ i.description|safe  }}</p>
+					</div>
+					<!--====== ROOMS: HOTEL BOOKING ==========-->
+					<div class="tour_head1 hotel-book-room">
+						<h3>Photo Gallery</h3>
+						<div id="myCarousel1" class="carousel slide" data-ride="carousel">
+							<!-- Indicators -->
+							<ol class="carousel-indicators carousel-indicators-1">
+								<li data-target="#myCarousel1" data-slide-to="0"><img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania">
+								</li>
+								<li data-target="#myCarousel1" data-slide-to="1"><img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania">
+								</li>
+								<li data-target="#myCarousel1" data-slide-to="2"><img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania">
+								</li>
+								<li data-target="#myCarousel1" data-slide-to="3"><img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania">
+								</li>
+								<li data-target="#myCarousel1" data-slide-to="4"><img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania">
+								</li>
+								<li data-target="#myCarousel1" data-slide-to="5"><img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania">
+								</li>
+								<li data-target="#myCarousel1" data-slide-to="6"><img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania">
+								</li>
+								<li data-target="#myCarousel1" data-slide-to="7"><img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania">
+								</li>
+								<li data-target="#myCarousel1" data-slide-to="8"><img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania">
+								</li>
+							</ol>
+							<!-- Wrapper for slides -->
+							<div class="carousel-inner carousel-inner1" role="listbox">
+								<div class="item active"> <img src="{{ i.image.url }}" alt="Chania" width="460" height="345"> </div>
+								<div class="item"> <img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania" width="460" height="345"> </div>
+								<div class="item"> <img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania" width="460" height="345"> </div>
+								<div class="item"> <img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania" width="460" height="345"> </div>
+								<div class="item"> <img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania" width="460" height="345"> </div>
+								<div class="item"> <img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania" width="460" height="345"> </div>
+								<div class="item"> <img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania" width="460" height="345"> </div>
+								<div class="item"> <img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania" width="460" height="345"> </div>
+								<div class="item"> <img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania" width="460" height="345"> </div>
+							</div>
+							<!-- Left and right controls -->
+							<a class="left carousel-control" href="#myCarousel1" role="button" data-slide="prev"> <span><i class="fa fa-angle-left hotel-gal-arr" aria-hidden="true"></i></span> </a>
+							<a class="right carousel-control" href="#myCarousel1" role="button" data-slide="next"> <span><i class="fa fa-angle-right hotel-gal-arr hotel-gal-arr1" aria-hidden="true"></i></span> </a>
+						</div>
+					</div>
+										
+					<!--====== DURATION ==========-->
+					<div class="tour_head1 l-info-pack-days days">
+						<h3>Detailed Itinerary</h3>
+						<p>{{ i.Itinerary|safe }}</p>
+					</div>
+                    
+                    <!--====== ABOUT THE TOUR ==========-->
+					<div class="tour_head1">
+						<h3>Dates & Prices</h3>
+						<table>
+							<tr>
+								<th>Dates</th>
+								<th class="event-res">Availability</th>
+								<th class="event-res">Prices</th>
+								<th>Book</th>
+							</tr>
+							<tr>
+								<td>August 15 2021</td>
+								<td class="event-res">Available</td>
+								<td class="event-res">1600 Euros</td>
+								<td><a href="booking.html" class="link-btn">Book Now</a> </td>
+							</tr>
+							<tr>
+								<td>August 15 2021</td>
+								<td class="event-res">Available</td>
+								<td class="event-res">1600 Euros</td>
+								<td><a href="booking.html" class="link-btn">Book Now</a> </td>
+							</tr>
+							<tr>
+								<td>August 15 2021</td>
+								<td class="event-res">Available</td>
+								<td class="event-res">1600 Euros</td>
+								<td><a href="booking.html" class="link-btn">Book Now</a> </td>
+							</tr>
+							<tr>
+								<td>August 15 2021</td>
+								<td class="event-res">Available</td>
+								<td class="event-res">1600 Euros</td>
+								<td><a href="booking.html" class="link-btn">Book Now</a> </td>
+							</tr>
+						</table>
+					</div>
+					<div>						
+					</div>
+				</div>
+				<div class="col-md-3 tour_r">					
+					<!--====== TRIP INFORMATION ==========-->
+					<div class="tour_right tour_incl tour-ri-com">
+						<h3>Trip Inclusion</h3>
+						<ul>
+                        {% for a in i.inclusion.all %}
+							<li>{{ a.title }}</li>
+							
+                        {% endfor %}
+						</ul>
+					</div>
+					<!--====== PACKAGE SHARE ==========-->
+					<div class="tour_right head_right tour_social tour-ri-com">
+						<h3>Share This Package</h3>
+						<ul>
+							<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
+							<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a> </li>
+							<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a> </li>
+							<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a> </li>
+							<li><a href="#"><i class="fa fa-whatsapp" aria-hidden="true"></i></a> </li>
+						</ul>
+					</div>
+					<!--====== HELP PACKAGE ==========-->
+                    {% for i in contactlist %}
+					<div class="tour_right head_right tour_help tour-ri-com">
+						<h3>Help & Support</h3>
+						<div class="tour_help_1">
+							<h4 class="tour_help_1_call">Call Us Now</h4>
+							<h4><i class="fa fa-phone" aria-hidden="true"></i> {{ i.phone }}</h4> </div>
+					</div>
+                    {% endfor %}
+					<!--====== PUPULAR TOUR PACKAGES ==========-->
+					<div class="tour_right tour_rela tour-ri-com">
+						<h3>Similar Packages</h3>
+						<div class="tour_rela_1"> <img src="/static/images/kathmandu-valley-cycling-holidays.jpg" alt="" />
+							<h4>Kathmandu Valley (Day Ride)</h4>
+							<p>This exciting ride around the Kathmandu Valley takes you out of the city and to some of the best known hill stations on the Valley Rim.</p> <a href="#" class="link-btn">View Detail</a> </div>						
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+{% endblock slider %}
+    
+{% block footer %}
+{% include 'site/partials/footer.html' %}
+{% endblock footer %}
+
+{% block script %}
+{% include 'site/partials/script.html' %}
+{% endblock script %}

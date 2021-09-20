@@ -25,7 +25,7 @@
                         {% for i in upcomming_pack %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
-                            <td><img src="/static/images/iplace-1.jpg" alt=""/><a href="hotels-list.html" class="events-title">{{ i.title|truncatechars:250 }}</a> </td>
+                            <td><img src="/static/images/iplace-1.jpg" alt=""/><a href="{% url 'packagesdetails' i.id %}" class="events-title">{{ i.title|truncatechars:250 }}</a> </td>
                             <td class="e_h1">{{ i.starting_date }}</td>                            
                             <td class="e_h1">${{ i.price }}</td>
                             <td><a href="booking.html" class="link-btn">Book Now</a> </td>

@@ -23,7 +23,7 @@
                                 <div class="hom-hot-av-tic">{{ i.duration }}</div> <img src="{{ i.image.url }}" alt=""> </div>
                             <div class="to-ho-hotel-con-23">
                                 <div class="to-ho-hotel-con-2">
-                                    <a href="hotel-details.html">
+                                    <a href="{% url 'packagesdetails' i.id %}">
                                         <h4>{{ i.title|truncatechars:30}}</h4>
                                     </a>
                                 </div>
