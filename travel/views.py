@@ -51,19 +51,20 @@ def FrontIndexPageView(request):
         }
     return render(request,'site/index.html', context)
 
-
+#------------------------------------ views for contact us page --------------------------------
 def ContactUsPage(request):
     contactlist = ContactDetail.objects.all()
     context = {"contactlist":contactlist}
     return render(request,"site/contact/contact.html", context)
 
+#------------------------------------------------- views for aboutus page-----------------------------
 def AboutusPage(request):
     aboutus = AboutusDetail.objects.all()
     contactlist = ContactDetail.objects.all()
     context = {"aboutus":aboutus,"contactlist":contactlist}
     return render(request,"site/contact/aboutus.html", context)
 
-
+#---------------------------------------------- views for blog pages ----------------------------------------
 def BlogsPage(request):
     contactlist = ContactDetail.objects.all()
     bloglist = Blogs.objects.all().order_by('-id')
@@ -77,7 +78,7 @@ def BlogDetailPage(request, pk):
     context = {"contactlist":contactlist, "detailblog":detailblog}
     return render(request,"site/blog/blogdetail.html", context)
 
-
+#------------------------------------------ views for packages pages ------------------------------------------
 def PackageCategory(request, pk):
     packcat = Packages.objects.all()
     contactlist = ContactDetail.objects.all()
@@ -91,6 +92,18 @@ def PackageDetails(request, pk):
     contactlist = ContactDetail.objects.all()
     context = {"contactlist":contactlist, "i":i}
     return render(request,"site/category/packdetail.html", context)
+
+#-------------------------------------------------- views for booking packages page --------------------------------
+
+def BookingPack(request, pk):
+    contactlist = ContactDetail.objects.all()
+    context = {"contactlist":contactlist}
+    return render(request,"site/booking/booking.html", context)
+
+
+
+
+
 #########################################################################################################
 #########################################################################################################
 #########################################################################################################

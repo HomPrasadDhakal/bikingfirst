@@ -38,7 +38,7 @@ Welcome to Biking First
 						<li class="dl1">Region : {{ i.region }}</li>
 						<li class="dl2">Price : ${{ i.price }}</li>
 						<li class="dl3">Duration : {{ i.duration }}</li>
-						<li class="dl4"><a href="booking-form.html">Book Now</a> </li>
+						<li class="dl4"><a href="{% url 'bookingpackages' i.id %}">Book Now</a> </li>
 					</ul>
 				</div>
 			</div>
@@ -138,7 +138,7 @@ Welcome to Biking First
 								<td>August 15 2021</td>
 								<td class="event-res">Available</td>
 								<td class="event-res">1600 Euros</td>
-								<td><a href="booking.html" class="link-btn">Book Now</a> </td>
+								<td><a href="#" class="link-btn">Book Now</a> </td>
 							</tr>
 						</table>
 					</div>

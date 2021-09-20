@@ -32,6 +32,8 @@ urlpatterns = [
     #---------------------Route for Packages category----------------------------
     path('packages_category/<str:pk>', a.PackageCategory, name="packagescategory"),
     path('packages_details/<str:pk>', a.PackageDetails, name="packagesdetails"),
+    #-----------------------Route for booking packages--------------------------
+    path('booking_packages/<str:pk>', a.BookingPack, name="bookingpackages"),
 
 
 
