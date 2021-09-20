@@ -7,7 +7,7 @@
             <div class="ed-mob-menu-con">
                 <div class="ed-mm-left">
                     <div class="wed-logo">
-                        <a href="index.html"><img src="/static/images/biking-first-logo.png" alt="" />
+                        <a href="{% url 'frontendhome' %}"><img src="/static/images/biking-first-logo.png" alt=""/>
 						</a>
                     </div>
                 </div>
@@ -17,7 +17,7 @@
                         <div class="ed-mm-inn">
                             <a href="#!" class="ed-mi-close"><i class="fa fa-times"></i></a>                            
                             <ul>
-                                <li><a href="main.html">Home</a></li>
+                                <li><a href="{% url 'frontendhome' %}">Home</a></li>
                                 <li><a href="#">About Us</a></li>
                             </ul>
                             <h4>Biking in Nepal</h4>
@@ -58,12 +58,14 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="ed-com-t1-left">
+                        {% for i in contactlist %}
                             <ul>
-                                <li><a href="#">Quick Contact: Thamel, Kathmandu, Nepal</a>
+                                <li><a href="#">Quick Contact: {{ i.address }}</a>
                                 </li>
-                                <li><a href="#">Phone: +977 9851157023</a>
+                                <li><a href="#">Phone: {{ i.phone }}</a>
                                 </li>
                             </ul>
+                        {% endfor %}
                         </div>
                         <div class="ed-com-t1-right">
                             <ul>
@@ -94,13 +96,12 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="wed-logo">
-                            <a href="index.html"><img src="/static/images/biking-first-logo.png" alt="" />
+                            <a href="{% url 'frontendhome' %}"><img src="/static/images/biking-first-logo.png" alt="" />
                             </a>
                         </div>
                         <div class="main-menu">
                             <ul>
-                                <li><a href="main.html">Home</a></li>
-                                <li><a href="#">About Us</a></li>
+                                <li><a href="{% url 'frontendhome' %}">Home</a></li>
                                 <li class="cour-menu">
                                     <a href="#!" class="mm-arr">Biking in Nepal</a>
                                     <!-- MEGA MENU 1 -->
@@ -181,8 +182,9 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li><a href="#">Our Blog</a></li>
-                                <li><a href="contact.html">Contact us</a></li>
+                                <li><a href="{% url 'bloglist' %}">Our Blog</a></li>
+                                <li><a href="{% url 'aboutus' %}">About Us</a></li>
+                                <li><a href="{% url 'contactus' %}">Contact us</a></li>
                             </ul>
                         </div>
                     </div>

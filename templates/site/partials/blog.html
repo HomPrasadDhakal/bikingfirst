@@ -1,108 +1,83 @@
 {% load static %}
 
- <section>
-        <div class="rows pla pad-bot-redu tb-space">
-            <div class="pla1 p-home container">
-                <!-- TITLE & DESCRIPTION -->
-                <div class="spe-title spe-title-1">
-                    <h2>Cycling & <span>Travel</span> Blogs</h2>
-                    <div class="title-line">
-                        <div class="tl-1"></div>
-                        <div class="tl-2"></div>
-                        <div class="tl-3"></div>
-                    </div>                   
-                </div>
-                <div class="popu-places-home">
-                    <!-- POPULAR PLACES 1 -->
-                    <div class="col-md-6 col-sm-6 col-xs-12 place">
-                        <div class="col-md-6 col-sm-12 col-xs-12"> <img src="/static/images/cycling-blog.jpg" alt="" /> </div>
-                        <div class="col-md-6 col-sm-12 col-xs-12">
-                            <h3>Blog Title One</h3>
-                            <p>Our love of cycling and passion for adventure and real life biking tour experiences is what drives us to deliver high quality biking tours to all levels of rider wishing to explore this beautiful region.
-
-</p> <a href="#" class="link-btn">Read More..</a> </div>
-                    </div>
-                    <!-- POPULAR PLACES 2 -->
-                    <div class="col-md-6 col-sm-6 col-xs-12 place">
-                        <div class="col-md-6 col-sm-12 col-xs-12"> <img src="/static/images/cycling-blog.jpg" alt="" /> </div>
-                        <div class="col-md-6 col-sm-12 col-xs-12">
-                            <h3>Blog Title Two</h3>
-                            <p>Our love of cycling and passion for adventure and real life biking tour experiences is what drives us to deliver high quality biking tours to all levels of rider wishing to explore this beautiful region.
-
-</p> <a href="#" class="link-btn">Read More..</a> </div>
-                    </div>
-                </div>
-                <div class="popu-places-home">
-                    <!-- POPULAR PLACES 3 -->
-                    <div class="col-md-6 col-sm-6 col-xs-12 place">
-                        <div class="col-md-6 col-sm-12 col-xs-12"> <img src="/static/images/cycling-blog.jpg" alt="" /> </div>
-                        <div class="col-md-6 col-sm-12 col-xs-12">
-                            <h3>Blog Title Three</h3>
-                            <p>Our love of cycling and passion for adventure and real life biking tour experiences is what drives us to deliver high quality biking tours to all levels of rider wishing to explore this beautiful region.
-
-</p> <a href="#" class="link-btn">Read More..</a> </div>
-                    </div>
-                    <!-- POPULAR PLACES 4 -->
-                    <div class="col-md-6 col-sm-6 col-xs-12 place">
-                        <div class="col-md-6 col-sm-12 col-xs-12"> <img src="/static/images/cycling-blog.jpg" alt="" /> </div>
-                        <div class="col-md-6 col-sm-12 col-xs-12">
-                            <h3>Blog Title Four</h3>
-                            <p>Our love of cycling and passion for adventure and real life biking tour experiences is what drives us to deliver high quality biking tours to all levels of rider wishing to explore this beautiful region.
-
-</p> <a href="#" class="link-btn">Read More..</a> </div>
-                    </div>
+<section>
+    <div class="rows pla pad-bot-redu tb-space">
+        <div class="pla1 p-home container">
+            <!-- TITLE & DESCRIPTION -->
+            <div class="spe-title spe-title-1">
+                <h2>Cycling & <span>Travel</span> Blogs</h2>
+                <div class="title-line">
+                    <div class="tl-1"></div>
+                    <div class="tl-2"></div>
+                    <div class="tl-3"></div>
                 </div>
             </div>
+            <div class="popu-places-home">
+                {% for i in latest_blogs %}
+                <div class="col-md-6 col-sm-6 col-xs-12 place">
+                    <div class="col-md-6 col-sm-12 col-xs-12"> <img src="{{ i.cover_image.url }}" alt="" />
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <h3>{{ i.title|truncatechars:20|safe }}</h3>
+                        <p>{{i.content|truncatechars:120|safe }}
+
+                        </p> <a href="#" class="link-btn">Read More..</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
         </div>
-    </section>    
-    
-    <!--====== REQUEST A QUOTE ==========-->
-    <section>
-        <div class="form tb-space">
-            <div class="rows container">
-                <div class="spe-title">
-                    <h2>Book your <span>Cycling Holiday</span> Now!</h2>
-                    <div class="title-line">
-                        <div class="tl-1"></div>
-                        <div class="tl-2"></div>
-                        <div class="tl-3"></div>
-                    </div>                    
-                </div>
-                <div class="col-md-6 col-sm-6 col-xs-12 form_1">
-                    <div class="succ_mess">Thank you for contacting us we will get back to you soon.</div>
-                    <form id="home_form" name="home_form" action="mail/send.php">
-                        <ul>
-                            <li>
-                                <input type="text" name="ename" value="" id="ename" placeholder="Name" required>
-                            </li>
-                            <li>
-                                <input type="tel" name="emobile" value="" id="emobile" placeholder="Mobile" required>
-                            </li>
-                            <li>
-                                <input type="email" name="eemail" value="" id="eemail" placeholder="Email id" required>
-                            </li>
-                            <li>
-                                <input type="text" name="esubject" value="" id="esubject" placeholder="Subject" required>
-                            </li>
-                            <li>
-                                <input type="text" name="ecity" value="" id="ecity" placeholder="City" required>
-                            </li>
-                            <li>
-                                <input type="text" name="ecount" value="" id="ecount" placeholder="Country" required>
-                            </li>
-                            <li>
-                                <textarea name="emess" cols="40" rows="3" id="text-comment" placeholder="Enter your message"></textarea>
-                            </li>
-                            <li>
-                                <input type="submit" value="Submit" id="send_button">
-                            </li>
-                        </ul>
-                    </form>
-                </div>
-                <div class="col-md-6 col-sm-6 col-xs-12 family">
-                    <img src="/static/images/biking-first-book-now-img.png" alt="" />
+    </div>
+</section>
+
+<!--====== REQUEST A QUOTE ==========-->
+<section>
+    <div class="form tb-space">
+        <div class="rows container">
+            <div class="spe-title">
+                <h2>Book your <span>Cycling Holiday</span> Now!</h2>
+                <div class="title-line">
+                    <div class="tl-1"></div>
+                    <div class="tl-2"></div>
+                    <div class="tl-3"></div>
                 </div>
             </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 form_1">
+                <div class="succ_mess">Thank you for contacting us we will get back to you soon.</div>
+                <form id="home_form" name="home_form" action="mail/send.php">
+                    <ul>
+                        <li>
+                            <input type="text" name="ename" value="" id="ename" placeholder="Name" required>
+                        </li>
+                        <li>
+                            <input type="tel" name="emobile" value="" id="emobile" placeholder="Mobile" required>
+                        </li>
+                        <li>
+                            <input type="email" name="eemail" value="" id="eemail" placeholder="Email id" required>
+                        </li>
+                        <li>
+                            <input type="text" name="esubject" value="" id="esubject" placeholder="Subject" required>
+                        </li>
+                        <li>
+                            <input type="text" name="ecity" value="" id="ecity" placeholder="City" required>
+                        </li>
+                        <li>
+                            <input type="text" name="ecount" value="" id="ecount" placeholder="Country" required>
+                        </li>
+                        <li>
+                            <textarea name="emess" cols="40" rows="3" id="text-comment"
+                                placeholder="Enter your message"></textarea>
+                        </li>
+                        <li>
+                            <input type="submit" value="Submit" id="send_button">
+                        </li>
+                    </ul>
+                </form>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 family">
+                <img src="/static/images/biking-first-book-now-img.png" alt="" />
+            </div>
         </div>
-    </section>
-   
+    </div>
+</section>

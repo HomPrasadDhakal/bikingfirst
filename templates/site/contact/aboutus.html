@@ -1,0 +1,67 @@
+{% extends 'site/partials/layout.html' %}
+
+
+{% block title %}
+Welcome to Biking First
+{% endblock title %}
+
+{% block customcss %}
+{% endblock customcss %}
+
+{% block header %}
+{% include 'site/partials/header.html' %}
+{% endblock header %}
+
+{% block slider %}
+{% for i in aboutus %}
+<section>
+    <div class="rows inner_banner inner_banner_2">
+        <div class="container">
+            <h2><span>About Us</span></h2>
+            <ul>
+                <li><a href="{% url 'frontendhome' %}">Home</a>
+                </li>
+                <li><i class="fa fa-angle-right" aria-hidden="true"></i></li>
+                <li><a href="#inner-page-title" class="bread-acti">About Us</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!--====== ABOUT CONTENT ==========-->
+<section class="tourb2-ab-p-2 com-colo-abou">
+    <div class="container">
+        <!-- TITLE & DESCRIPTION -->
+        <div class="spe-title">
+            <h2>About Biking First</h2>
+            <div class="title-line">
+                <div class="tl-1"></div>
+                <div class="tl-2"></div>
+                <div class="tl-3"></div>
+            </div>
+        </div>
+        <div class="row tourb2-ab-p1">
+            <div class="col-md-6 col-sm-6">
+                <div class="tourb2-ab-p1-left">
+                    <h3 class="text-uppercase">{{ i.title }}</h3>
+                    <p>{{ i.content|safe }}
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="tourb2-ab-p1-right"> <img src="{{ i.about_cover.url }}" alt="" /> </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endfor %}
+{% endblock slider %}
+
+
+{% block footer %}
+{% include 'site/partials/footer.html' %}
+{% endblock footer %}
+
+{% block script %}
+{% include 'site/partials/script.html' %}
+{% endblock script %}

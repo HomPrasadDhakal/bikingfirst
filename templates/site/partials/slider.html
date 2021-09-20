@@ -7,30 +7,14 @@
 				<div>
 			<div class="slider fullscreen">
 				<ul class="slides">
-					<li> <img src="/static/images/banner_one.jpg" alt="">
+				{% for i in sliderimage %}
+					<li> <img src="{{ i.image.url }}" alt="">
 						<!-- random image -->
 						<div class="caption center-align slid-cap">
-							<h2>Image Title One</h2>							
+							<h2>{{ i.title }}</h2>							
                         </div>
 					</li>
-					<li> <img src="/static/images/banner_two.jpg" alt="">
-						<!-- random image -->
-						<div class="caption center-align slid-cap">
-							<h2>Image Title Two</h2>							
-                        </div>
-					</li>
-					<li> <img src="/static/images/banner_three.jpg" alt="">
-						<!-- random image -->
-						<div class="caption center-align slid-cap">
-							<h2>Image Title Three</h2>							
-                        </div>
-					</li>
-					<li> <img src="/static/images/banner_four.jpg" alt="">
-						<!-- random image -->
-						<div class="caption center-align slid-cap">
-							<h2>Image Title Four</h2>							
-                        </div>
-					</li>
+				{% endfor %}
 				</ul>
 			</div>
 				</div>

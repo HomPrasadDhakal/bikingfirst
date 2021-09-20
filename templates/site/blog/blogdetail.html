@@ -1,0 +1,69 @@
+{% extends 'site/partials/layout.html' %}
+
+
+{% block title %}
+Welcome to Biking First
+{% endblock title %}
+
+{% block customcss %}
+{% endblock customcss %}
+
+{% block header %}
+{% include 'site/partials/header.html' %}
+{% endblock header %}
+
+{% block slider %}
+  <!--====== BANNER ==========-->
+	<section>
+		<div class="rows inner_banner inner_banner_1">
+			<div class="container">
+				<h2><span>Annapurna Circuit Biking</span></h2>
+				<ul>
+					<li><a href="{% url 'frontendhome' %}">Home</a> </li>
+					<li><i class="fa fa-angle-right" aria-hidden="true"></i> </li>
+                    <li><a href="{% url 'bloglist' %}">Our Blog</a> </li>
+					<li><i class="fa fa-angle-right" aria-hidden="true"></i> </li>
+					<li><a href="#inner-page-title" class="bread-acti">Annapurna Circuit Biking</a> </li>
+				</ul>				
+			</div>
+		</div>
+	</section>
+	
+	<!--====== ALL POST ==========-->
+	<section>
+		<div class="rows inn-page-bg com-colo">
+			<div class="container inn-page-con-bg tb-space pad-bot-redu-5" id="inner-page-title">
+				<!--===== POSTS ======-->
+				<div class="rows">
+					<div class="posts">
+						<div class="col-md-6 col-sm-6 col-xs-12"> <img src="{{ detailblog.cover_image.url }}" alt="" /> </div>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<h3>{{ detailblog.title }}</h3>
+							<h5><span class="post_author">Author:{{ detailblog.author.get_full_name }}</span><span class="post_date">Published Date:{{ detailblog.created_at }}</span></h5>
+							<div class="post-btn">
+								<ul>
+									<li><a href="#"><i class="fa fa-facebook fb1"></i> Share On Facebook</a>
+									</li>
+									<li><a href="#"><i class="fa fa-twitter tw1"></i> Share On Twitter</a>
+									</li>
+									<li><a href="#"><i class="fa fa-google-plus gp1"></i> Share On Google Plus</a>
+									</li>
+								</ul>
+							</div>							
+							{{ detailblog.content|safe }}
+                            </div>
+					</div>
+				</div>
+				<!--===== POST END ======-->
+			</div>
+		</div>
+	</section>
+{% endblock slider %}
+  
+{% block footer %}
+{% include 'site/partials/footer.html' %}
+{% endblock footer %}
+
+{% block script %}
+{% include 'site/partials/script.html' %}
+{% endblock script %}

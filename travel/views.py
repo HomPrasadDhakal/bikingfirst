@@ -1,3 +1,4 @@
+from django.forms.fields import ChoiceField
 from django.shortcuts import  render, redirect
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
@@ -29,14 +30,52 @@ from travel.models import (
     PackagesGallary,
 )
 from accounts.models import user
+import datetime
 
 
 #===================================== views for bikingfirst front end =================================
 
 def FrontIndexPageView(request):
-    context = {}
+    contactlist = ContactDetail.objects.all()
+    sliderimage = SliderImage.objects.all()
+    aboutus = AboutusDetail.objects.all()
+    packages = Packages.objects.all().order_by('-id')[:9]
+    upcomming_pack = Packages.objects.filter(starting_date__gte=datetime.date.today())
+    latest_blogs = Blogs.objects.all().order_by('-id')[:4]
+    context = {"contactlist":contactlist,
+            'sliderimage':sliderimage,
+            "aboutus":aboutus,
+            "packages":packages,
+            "upcomming_pack":upcomming_pack,
+            "latest_blogs":latest_blogs,
+        }
     return render(request,'site/index.html', context)
 
+
+def ContactUsPage(request):
+    contactlist = ContactDetail.objects.all()
+    context = {"contactlist":contactlist}
+    return render(request,"site/contact/contact.html", context)
+
+def AboutusPage(request):
+    aboutus = AboutusDetail.objects.all()
+    contactlist = ContactDetail.objects.all()
+    context = {"aboutus":aboutus,"contactlist":contactlist}
+    return render(request,"site/contact/aboutus.html", context)
+
+
+def BlogsPage(request):
+    contactlist = ContactDetail.objects.all()
+    bloglist = Blogs.objects.all().order_by('-id')
+    context = {"bloglist":bloglist, "contactlist":contactlist}
+    return render(request,"site/blog/bloglist.html", context)
+
+
+def BlogDetailPage(request, pk):
+    detailblog = Blogs.objects.get(id=pk)
+    contactlist = ContactDetail.objects.all()
+    context = {"contactlist":contactlist, "detailblog":detailblog}
+    return render(request,"site/blog/blogdetail.html", context)
 
 
 #########################################################################################################
@@ -541,7 +580,7 @@ def UpdatePakagesview(request, pk):
         pack = Packages.objects.get(id=pk)
         form = AddPackagesForm(instance=pack)
         if request.method == "POST":
-            form = AddPackagesForm(request.POST, instance=pack)
+            form = AddPackagesForm(request.POST, request.FILES, instance=pack)
             if form.is_valid():
                 form.save()
                 messages.success(request,"successfully updated packages !!!")

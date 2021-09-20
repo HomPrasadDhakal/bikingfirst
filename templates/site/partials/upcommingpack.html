@@ -16,55 +16,21 @@
                 <table id="myTable">
                     <tbody>
                         <tr>
-                            <th>#</th>
+                            <th>S.N</th>
                             <th>Cycling Holdidays</th>
                             <th class="e_h1">Dates</th>                            
                             <th class="e_h1">Price</th>
                             <th>Book</th>
                         </tr>
+                        {% for i in upcomming_pack %}
                         <tr>
-                            <td>1</td>
-                            <td><img src="/static/images/iplace-1.jpg" alt="" /><a href="hotels-list.html" class="events-title">Annapurna Round Mountain Biking</a> </td>
-                            <td class="e_h1">Aug 15, 2021 (15 Days)</td>                            
-                            <td class="e_h1">$2000</td>
+                            <td>{{ forloop.counter }}</td>
+                            <td><img src="/static/images/iplace-1.jpg" alt=""/><a href="hotels-list.html" class="events-title">{{ i.title|truncatechars:250 }}</a> </td>
+                            <td class="e_h1">{{ i.starting_date }}</td>                            
+                            <td class="e_h1">${{ i.price }}</td>
                             <td><a href="booking.html" class="link-btn">Book Now</a> </td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><img src="/static/images/iplace-2.jpg" alt="" /><a href="hotels-list.html" class="events-title">Annapurna Round Mountain Biking</a> </td>
-                            <td class="e_h1">Aug 15, 2021 (15 Days)</td>                            
-                            <td class="e_h1">$2000</td>
-                            <td><a href="booking.html" class="link-btn">Book Now</a> </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td><img src="/static/images/iplace-3.jpg" alt="" /><a href="hotels-list.html" class="events-title">Annapurna Round Mountain Biking</a> </td>
-                            <td class="e_h1">Aug 15, 2021 (15 Days)</td>                            
-                            <td class="e_h1">$2000</td>
-                            <td><a href="booking.html" class="link-btn">Book Now</a> </td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td><img src="/static/images/iplace-4.jpg" alt="" /><a href="hotels-list.html" class="events-title">Annapurna Round Mountain Biking</a> </td>
-                            <td class="e_h1">Aug 15, 2021 (15 Days)</td>                            
-                            <td class="e_h1">$2000</td>
-                            <td><a href="booking.html" class="link-btn">Book Now</a> </td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td><img src="/static/images/iplace-5.jpg" alt="" /><a href="hotels-list.html" class="events-title">Annapurna Round Mountain Biking</a> </td>
-                            <td class="e_h1">Aug 15, 2021 (15 Days)</td>                            
-                            <td class="e_h1">$2000</td>
-                            <td><a href="booking.html" class="link-btn">Book Now</a> </td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td><img src="/static/images/iplace-6.jpg" alt="" /><a href="hotels-list.html" class="events-title">Annapurna Round Mountain Biking</a> </td>
-                            <td class="e_h1">Aug 15, 2021 (15 Days)</td>                            
-                            <td class="e_h1">$2000</td>
-                            <td><a href="booking.html" class="link-btn">Book Now</a> </td>
-                        </tr>              
-                                           
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>

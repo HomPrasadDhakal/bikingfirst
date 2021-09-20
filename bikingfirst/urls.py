@@ -24,6 +24,10 @@ urlpatterns = [
 #=========================Route for front End=======================================
 #=========================Route for front End=======================================
     path('', a.FrontIndexPageView, name="frontendhome"),
+    path('contact_us/', a.ContactUsPage, name="contactus"),
+    path('about_us/', a.AboutusPage, name="aboutus"),
+    path('bloglist/', a.BlogsPage, name="bloglist"),
+    path('detail_blog/<str:pk>', a.BlogDetailPage, name="blogdetails"),
 #=========================Route for Back End =======================================
 #=========================Route for Back End =======================================
 #=========================Route for Back End =======================================

@@ -5,18 +5,19 @@
         <div class="rows">
             <div class="footer tb-space">
                 <div class="container">
+                {% for i in contactlist %}
                     <div class="foot-sec2">
                         <div>
                             <div class="row">
                                 <div class="col-sm-3 foot-spec foot-com">
                                     <h4>Why Biking First</h4>
-                                    <p>We have a decade of experience and team of expert.</p>
+                                    <p>{{ i.sub_title}}</p>
                                 </div>
                                 <div class="col-sm-3 foot-spec foot-com">
                                     <h4>Contact Us</h4>
-                                    <p>Thamel, Kathmandu, Nepal</p>
-                                    <p><span class="highlighted">Phone: +977 9851157023</span> </p>
-                                    <p>Email: info@bikingfirst.com</p>
+                                    <p>{{ i.address }}</p>
+                                    <p>Phone: {{ i.phone }}</p>
+                                    <p>Email: {{ i.email }}</p>
                                 </div>
                                 <div class="col-sm-3 col-md-3 foot-spec foot-com">
                                     <h4>Quick Links</h4>
@@ -38,6 +39,7 @@
                         </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
         </div>
     </section>
