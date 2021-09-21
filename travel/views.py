@@ -1,4 +1,3 @@
-from django.forms.fields import ChoiceField
 from django.shortcuts import  render, redirect
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
@@ -90,6 +89,8 @@ def PackageCategory(request, pk):
 
 def PackageDetails(request, pk):
     i = Packages.objects.get(id=pk)
+    i.views = i.views + 1
+    i.save()
     contactlist = ContactDetail.objects.all()
     context = {"contactlist":contactlist, "i":i}
     return render(request,"site/category/packdetail.html", context)
@@ -172,10 +173,11 @@ def logoutprocess(request):
     messages.success(request,"your successfully logout !")
     return HttpResponseRedirect(reverse("loginpage"))
 
-#backend dashboard view
+#=================================backend dashboard view=========================================================
 @login_required(login_url='loginpage')
 def BackEndPageView(request):
-    context = {}
+    packages = Packages.objects.all().order_by('-id')[:10]
+    context = {'packages':packages}
     return render(request,"admin/index.html", context)
 
 #=========================== views for category============================================
