@@ -37,6 +37,9 @@ urlpatterns = [
     #-----------------------Route for user login --------------------------------
     path('userlogin/', a.UserLogin, name="userlogin"),
     path('userloginprocess/', a.UserloginProcess, name="userloginprocess"),
+    path('userlogoutprocess/', a.UserlogoutProcess, name="userlogoutprocess"),
+    #-----------------------Route for search packages------------------------------
+    path('packagessearch/',a.Searchpack, name="searchpackages"),
 
 
 

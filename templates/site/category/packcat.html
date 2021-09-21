@@ -241,7 +241,11 @@ Packages Category
                                     <div class="hot-page2-alp-ri-p3 tour-alp-ri-p3">
                                         <span class="hot-list-p3-1">Prices Starting</span> <span
                                             class="hot-list-p3-2">${{ i.price }}</span><span class="hot-list-p3-4">
+                                            {% if request.user.is_authenticated %}
                                             <a href="{% url 'bookingpackages' i.id %}" class="hot-page2-alp-quot-btn">Book Now</a>
+                                            {% else %}
+                                            <a href="{% url 'userlogin' %}" class="hot-page2-alp-quot-btn">Sign In</a>
+                                            {% endif %}
                                         </span>
                                     </div>
                                 </div>

@@ -293,14 +293,14 @@ class BookingPackages(forms.ModelForm):
                 'class':'form-control',
                 'placeholder':'Enter your country name',
             }),
-            'package':forms.Select(attrs={
-                'class':'form-control',
-            }),
+            # 'package':forms.Select(attrs={
+            #     'class':'form-control',
+            # }),
             'arrival_date':DateInput(attrs={
-                'class':'form-control',
+                # 'class':'form-control',
             }),
             'depature_date':DateInput(attrs={
-                'class':'form-control',
+                #'class':'form-control',
             }),
             'no_of_adults':forms.NumberInput(attrs={
                 'class':'form-control',

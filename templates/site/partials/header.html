@@ -55,10 +55,15 @@
                         </div>
                         <div class="ed-com-t1-right">
                             <ul>
+                            {% if request.user.is_authenticated %}
+                                <li><a href="{% url 'userlogoutprocess' %}">Logout</a>
+                                </li>
+                            {% else %}
                                 <li><a href="{% url 'userlogin' %}">Sign In</a>
                                 </li>
                                 <li><a href="register.html">Register</a>
                                 </li>
+                            {% endif %}
                             </ul>
                         </div>
                         <div class="ed-com-t1-social">

@@ -30,13 +30,15 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="search-form">
-						<form class="tourz-search-form">
+						<form class="tourz-search-form" action="{% url 'searchpackages' %}" method="get">
 							<div class="input-field">
-								<input type="text" id="select-city" class="autocomplete">
+							{% csrf_token %}
+								<input type="text" name="region" id="select-city" class="autocomplete">
 								<label for="select-city">Enter Region</label>
 							</div>
 							<div class="input-field">
-								<input type="text" id="select-search" class="autocomplete">
+							{% csrf_token %}
+								<input type="text" name="title" id="select-search" class="autocomplete">
 								<label for="select-search" class="search-hotel-type">Search over a 100's of biking, trekking, tour and more</label>
 							</div>
 							<div class="input-field">

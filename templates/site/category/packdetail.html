@@ -38,7 +38,11 @@
 						<li class="dl1">Region : {{ i.region }}</li>
 						<li class="dl2">Price : ${{ i.price }}</li>
 						<li class="dl3">Duration : {{ i.duration }}</li>
+						{% if request.user.is_authenticated %}
 						<li class="dl4"><a href="{% url 'bookingpackages' i.id %}">Book Now</a> </li>
+						{% else %}
+						<li class="dl4"><a href="{% url 'userlogin' %}">Sign In</a> </li>
+						{% endif %}
 					</ul>
 				</div>
 			</div>
@@ -89,7 +93,7 @@
 						<p>{{ i.Itinerary|safe }}</p>
 					</div>
                     
-                    <!--====== ABOUT THE TOUR ==========-->
+                    {% comment %} <!--====== ABOUT THE TOUR ==========-->
 					<div class="tour_head1">
 						<h3>Dates & Prices</h3>
 						<table>
@@ -124,7 +128,7 @@
 								<td><a href="#" class="link-btn">Book Now</a> </td>
 							</tr>
 						</table>
-					</div>
+					</div> {% endcomment %}
 					<div>						
 					</div>
 				</div>

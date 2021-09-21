@@ -103,15 +103,25 @@ def BookingPack(request, pk):
     if request.method == "POST":
         form = BookingPackages(request.POST)
         if form.is_valid():
-            form.save()
+            booking = form.save(commit=False)
             messages.success(request,"Congratulations you have booked your Trip successfully !!!")
             return redirect('frontendhome')
-    else:
-        messages.error(request,"Sorry you are not able to booking your trip !!! try again !!!!")
-        return redirect('frontendhome')
     contactlist = ContactDetail.objects.all()
-    context = {"contactlist":contactlist}
+    context = {"contactlist":contactlist,"form":form, "packages":packages}
     return render(request,"site/booking/booking.html", context)
+
+
+#---------------------------------- views for searching packages---------------------------------------------------
+def Searchpack(request):
+    query1 = request.GET.get('region')
+    query2 = request.GET.get('title')
+    region = Packages.objects.filter(region__icontains=query1)
+    title = Packages.objects.filter(title__icontains=query2)
+    search = region.union(title)
+    contactlist = ContactDetail.objects.all()
+    context = {'search':search,"query2":query2,"contactlist":contactlist}
+    return render(request,'site/searching.html', context)
+
 
 
 #----------------------------- views for user register, login and log out ------------------------------------------
@@ -134,6 +144,12 @@ def UserloginProcess(request):
         messages.error(request,"Error in Login! Invalid Login Details!")
         return HttpResponseRedirect(reverse("frontendhome"))
 
+
+
+def UserlogoutProcess(request):
+    logout(request)
+    messages.success(request,"your  successfully logout !")
+    return redirect('frontendhome')
 
 
 

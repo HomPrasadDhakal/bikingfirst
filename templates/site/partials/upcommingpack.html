@@ -28,7 +28,11 @@
                             <td><img src="/static/images/iplace-1.jpg" alt=""/><a href="{% url 'packagesdetails' i.id %}" class="events-title">{{ i.title|truncatechars:250 }}</a> </td>
                             <td class="e_h1">{{ i.starting_date }}</td>                            
                             <td class="e_h1">${{ i.price }}</td>
+                            {% if request.user.is_authenticated %}
                             <td><a href="{% url 'bookingpackages' i.id %}" class="link-btn">Book Now</a> </td>
+                            {% else %}
+                            <td><a href="{% url 'userlogin'%}" class="link-btn">Sign In</a> </td>
+                            {% endif %}
                         </tr>
                         {% endfor %}
                     </tbody>

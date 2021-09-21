@@ -14,96 +14,80 @@ Welcome to Biking First
 
 {% block slider %}
 
-	<!--DASHBOARD-->
-	<section>
-		<div class="tr-register">
-			<div class="tr-regi-form v2-search-form">
-				<h4>Book <span>Now</span></h4>
-				<p>It's free and always will be.</p>
-				<form class="contact__form" method="post" action="mail/tourbooking.php">
-							<div class="alert alert-success contact__msg" style="display: none" role="alert">
-								Thank you for arranging a wonderful trip for us! Our team will contact you shortly!
-							</div>
-							<div class="row">
-								<div class="input-field col s12">
-									<input type="text"  class="validate" name="name" required>
-									<label>Enter your name</label>
-								</div>
-							</div>
-							<div class="row">
-								<div class="input-field col s6">
-									<input type="number"  class="validate" name="phone" required>
-									<label>Enter your phone</label>
-								</div>
-								<div class="input-field col s6">
-									<input type="email"  class="validate" name="email" required>
-									<label>Enter your email</label>
-								</div>
-							</div>
-							<div class="row">
-								<div class="input-field col s12">
-									<input type="text" id="select-city-1" class="autocomplete validate" name="city">
-									<label for="select-city-1">Select Country</label>
-								</div>
-								<div class="input-field col s12">
-									<select name="package">
-										<option value="" disabled selected>Select your package</option>
-										<option value="Annapurna Circuit Biking Tour">Annapurna Circuit Biking Tour</option>										
-									</select>
-								</div>
-							</div>
-							<div class="row">
-								<div class="input-field col s6">
-									<input type="text" id="from" name="arrival" readonly>
-									<label for="from">Arrival Date</label>
-								</div>
-								<div class="input-field col s6">
-									<input type="text" id="to" name="departure" readonly>
-									<label for="to">Departure Date</label>
-								</div>
-							</div>
-							<div class="row">
-								<div class="input-field col s6">
-									<select name="noofadults">
-										<option value="" disabled selected>No of adults</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-									</select>
-								</div>
-								<div class="input-field col s6">
-									<select name="noofchildrens">
-										<option value="" disabled selected>No of childrens</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>											
-									</select>
-								</div>
-							</div>
-                           <div class="row">
-								<div class="input-field col s12">
-									<input type="text" id="select-city-1" class="autocomplete validate" name="city">
-									<label for="select-city-1">Package Price</label>
-								</div>								
-							</div>
-                            <div class="row">
-								<div class="input-field col s12">
-									<input type="submit" value="Book Now" class="waves-effect waves-light tourz-sear-btn v2-ser-btn">
-								</div>
-							</div>
-						</form>
-			</div>
+<!--DASHBOARD-->
+<section>
+	<div class="tr-register">
+		<div class="tr-regi-form v2-search-form">
+			<h4>Book <span>Now</span></h4>
+			<p>It's free and always will be.</p>
+			<form class="contact__form" method="post" action="mail/tourbooking.php">
+				<div class="alert alert-success contact__msg" style="display: none" role="alert">
+					Thank you for arranging a wonderful trip for us! Our team will contact you shortly!
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						{{ form.name }}
+						<label>Enter your name</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s6">
+						{{ form.phone }}
+						<label>Enter your phone</label>
+					</div>
+					<div class="input-field col s6">
+						{{ form.email }}
+						<label>Enter your email</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						{{ form.country }}
+						<label for="select-city-1">Select Country</label>
+					</div>
+					<div class="input-field col s12">
+						<input type="text" id="select-city-1" class="autocomplete validate" value="{{packages.title}}"
+							readonly>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s6">
+						<input type="text" id="from" name="arrival" value="{{packages.starting_date}}" readonly>
+						<label for="from">Arrival Date</label>
+					</div>
+					<div class="input-field col s6">
+						<input type="text" id="to" name="departure" value="{{packages.ending_date }}" readonly>
+						<label for="to">Departure Date</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s6">
+						{{ form.no_of_adults }}
+					</div>
+					<div class="input-field col s6">
+						{{ form.no_of_children }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input type="text" id="select-city-1" class="autocomplete validate"
+							value="${{ packages.price }}" name="city" readonly>
+						<label for="select-city-1">Package Price</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input type="submit" value="Book Now"
+							class="waves-effect waves-light tourz-sear-btn v2-ser-btn">
+					</div>
+				</div>
+			</form>
 		</div>
-	</section>
-	<!--END DASHBOARD-->
+	</div>
+</section>
+<!--END DASHBOARD-->
 {% endblock slider %}
-    
+
 {% block footer %}
 {% include 'site/partials/footer.html' %}
 {% endblock footer %}
