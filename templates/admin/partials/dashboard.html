@@ -1,7 +1,7 @@
 {% load static %}
 <div class="row">
     <div class="col-md-12">
-        <div class="card-primary">
+        <div class="card-success">
             <div class="card-header">
                 <h3 class="card-title">Latest Packages</h3>
             </div>
@@ -41,7 +41,7 @@
             <!-- /.card-body -->
             <div class="card-footer clearfix">
                 <ul class="pagination pagination-sm m-0 float-right">
-                    <li class="page-item"><a class="page-link" href="{% url 'packageslist' %}">View More</a></li>
+                    <li class="page-item"><a class="page-link" href="{% url 'packageslist' %}">View all Packages</a></li>
                 </ul>
             </div>
         </div>
@@ -75,7 +75,7 @@
                             <td>{{i.starting_date }}</td>
                             <td>{{ i.duration }}</td>
                             <td>${{ i.price }}</td>
-                            <td>{{ i.views }}&nbsp<i class="fas fa-eye"></i></td>
+                            <td>({{ i.views }})&nbsp<i class="fas fa-eye"></i></td>
                             {% if i.Availability == True %}
                             <td><span class="badge bg-success">Available</span></td>
                             {% else %}

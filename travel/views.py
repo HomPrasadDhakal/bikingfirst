@@ -13,7 +13,6 @@ from travel.forms import (
     SliderImgForm,
     AboutUsForm,
     AddPackagesForm,
-    AddPackagesImagesFrom,
     ContactUsForm,
     BookingPackages,
 )
@@ -91,8 +90,9 @@ def PackageDetails(request, pk):
     i = Packages.objects.get(id=pk)
     i.views = i.views + 1
     i.save()
+    simliar_package = Packages.objects.filter(all_category=i.all_category).exclude(id=pk)[:10]
     contactlist = ContactDetail.objects.all()
-    context = {"contactlist":contactlist, "i":i}
+    context = {"contactlist":contactlist, "i":i,"simliar_package":simliar_package}
     return render(request,"site/category/packdetail.html", context)
 
 #-------------------------------------------------- views for booking packages page --------------------------------
@@ -609,7 +609,10 @@ def AddPackagesView(request):
         if request.method =="POST":
             form = AddPackagesForm(request.POST, request.FILES)
             if form.is_valid():
-                form.save()
+                pack = form.save()
+                image = request.FILES.getlist("slider_images")
+                for i in image:
+                    PackagesGallary.objects.create(packages=pack, image=i)
                 messages.success(request,"successfully added Packages")
                 return redirect('packageslist')
             else:
@@ -643,46 +646,14 @@ def UpdatePakagesview(request, pk):
         if request.method == "POST":
             form = AddPackagesForm(request.POST, request.FILES, instance=pack)
             if form.is_valid():
-                form.save()
+                pack = form.save()
+                image = request.FILES.getlist("slider_images")
+                for i in image:
+                    PackagesGallary.objects.create(packages=pack, image=i)
                 messages.success(request,"successfully updated packages !!!")
                 return redirect('packageslist')
     context = {'form':form}
     return render(request,"admin/packages/updatepackages.html", context)
-
-#=========================== views for packages images gallary  ============================================
-
-
-@login_required(login_url="loginpage")
-def AddPackagesImageView(request):
-    if request.user.is_superuser:
-        form = AddPackagesImagesFrom()
-        if request.method =="POST":
-            form = AddPackagesImagesFrom(request.POST, request.FILES)
-            if form.is_valid():
-                form.save()
-                messages.success(request,"successfully added Packages images")
-                return redirect('packagesimageslist')
-            else:
-                messages.error(request,"cannot add packages images  please try again!!!")
-        context ={'form':form}
-    return render(request, "admin/packages/addppackagesimages.html", context)
-
-
-@login_required(login_url='loginpage')
-def PackagesImageList(request):
-    if request.user.is_superuser:
-        Allpackimages = PackagesGallary.objects.all()
-        context= {'Allpackimages':Allpackimages}
-    return render(request,"admin/packages/packimageslist.html", context)
-
-
-
-@login_required(login_url='loginpage')
-def DeletepackagesImages(request, pk):
-    if request.user.is_superuser:
-        deletepackimage = PackagesGallary.objects.get(id=pk)
-        deletepackimage.delete()
-    return redirect('packagesimageslist')
 
 #===================================== views for listing admin user=================================
 

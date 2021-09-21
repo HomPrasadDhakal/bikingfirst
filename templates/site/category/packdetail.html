@@ -2,7 +2,7 @@
 
 
 {% block title %}
-Welcome to Biking First
+{{ i.title }}
 {% endblock title %}
 
 {% block customcss %}
@@ -60,44 +60,27 @@ Welcome to Biking First
 					<!--====== ROOMS: HOTEL BOOKING ==========-->
 					<div class="tour_head1 hotel-book-room">
 						<h3>Photo Gallery</h3>
-						<div id="myCarousel1" class="carousel slide" data-ride="carousel">
+						<div id="myCarouse1" class="carousel slide" data-ride="carousel">
 							<!-- Indicators -->
 							<ol class="carousel-indicators carousel-indicators-1">
-								<li data-target="#myCarousel1" data-slide-to="0"><img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania">
+							{% for pi in i.packagesgallary_set.all %}
+								<li data-target="#myCarousel1" data-slide-to="0"><img src="{{ pi.image.url }}" alt="{{ i.title }}">
 								</li>
-								<li data-target="#myCarousel1" data-slide-to="1"><img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania">
-								</li>
-								<li data-target="#myCarousel1" data-slide-to="2"><img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania">
-								</li>
-								<li data-target="#myCarousel1" data-slide-to="3"><img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania">
-								</li>
-								<li data-target="#myCarousel1" data-slide-to="4"><img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania">
-								</li>
-								<li data-target="#myCarousel1" data-slide-to="5"><img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania">
-								</li>
-								<li data-target="#myCarousel1" data-slide-to="6"><img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania">
-								</li>
-								<li data-target="#myCarousel1" data-slide-to="7"><img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania">
-								</li>
-								<li data-target="#myCarousel1" data-slide-to="8"><img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania">
-								</li>
+							{% endfor %}
 							</ol>
-							<!-- Wrapper for slides -->
 							<div class="carousel-inner carousel-inner1" role="listbox">
-								<div class="item active"> <img src="{{ i.image.url }}" alt="Chania" width="460" height="345"> </div>
-								<div class="item"> <img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania" width="460" height="345"> </div>
-								<div class="item"> <img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania" width="460" height="345"> </div>
-								<div class="item"> <img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania" width="460" height="345"> </div>
-								<div class="item"> <img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania" width="460" height="345"> </div>
-								<div class="item"> <img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania" width="460" height="345"> </div>
-								<div class="item"> <img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania" width="460" height="345"> </div>
-								<div class="item"> <img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania" width="460" height="345"> </div>
-								<div class="item"> <img src="/static/images/cycling-in-kathmandu.jpg" alt="Chania" width="460" height="345"> </div>
+							
+								<div class="item active">
+								<img src="{{ i.image.url }}" alt="Chania" width="460" height="345"> 
+								</div>
+							
 							</div>
+							
 							<!-- Left and right controls -->
 							<a class="left carousel-control" href="#myCarousel1" role="button" data-slide="prev"> <span><i class="fa fa-angle-left hotel-gal-arr" aria-hidden="true"></i></span> </a>
 							<a class="right carousel-control" href="#myCarousel1" role="button" data-slide="next"> <span><i class="fa fa-angle-right hotel-gal-arr hotel-gal-arr1" aria-hidden="true"></i></span> </a>
 						</div>
+						
 					</div>
 										
 					<!--====== DURATION ==========-->
@@ -179,9 +162,11 @@ Welcome to Biking First
 					<!--====== PUPULAR TOUR PACKAGES ==========-->
 					<div class="tour_right tour_rela tour-ri-com">
 						<h3>Similar Packages</h3>
-						<div class="tour_rela_1"> <img src="/static/images/kathmandu-valley-cycling-holidays.jpg" alt="" />
-							<h4>Kathmandu Valley (Day Ride)</h4>
-							<p>This exciting ride around the Kathmandu Valley takes you out of the city and to some of the best known hill stations on the Valley Rim.</p> <a href="#" class="link-btn">View Detail</a> </div>						
+						{% for simpack in simliar_package %}
+						<div class="tour_rela_1"> <img src="{{ simpack.image.url }}" alt="" />
+							<h4>{{ simpack.title }}</h4>
+							<p>{{ simpack.description|safe|truncatechars:100}}</p> <a href="{% url 'packagesdetails' simpack.id %}" class="link-btn">View Detail</a> </div>						
+						{% endfor %}
 					</div>
 				</div>
 			</div>

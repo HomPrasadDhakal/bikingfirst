@@ -204,8 +204,14 @@ class DateInput(forms.DateInput):
 class AddPackagesForm(forms.ModelForm):
     inclusion = [(Inclusion.id, Inclusion.title) for Inclusion in Inclusion.objects.all()]
     inclusion = forms.MultipleChoiceField(
-        required=True, widget=forms.CheckboxSelectMultiple, choices=inclusion,
-    )
+        required=True, widget=forms.CheckboxSelectMultiple, choices=inclusion
+    ),
+    slider_images = forms.FileField(required=False, widget=forms.ClearableFileInput(
+        attrs={
+            'class':'form-control',
+            'multiple':'True',
+        }
+    ))
     class Meta:
         model = Packages
         fields= ['title','description','image','category','sub_category','all_category','Itinerary',
@@ -261,14 +267,6 @@ class AddPackagesForm(forms.ModelForm):
             }),
             
         }
-
-# forms for packages images gallary
-
-class AddPackagesImagesFrom(forms.ModelForm):
-    class Meta:
-        model = PackagesGallary
-        fields  = ['packages','image']
-
 
 
 #forms for booking packing
