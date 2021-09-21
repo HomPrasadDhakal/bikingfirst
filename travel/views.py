@@ -177,7 +177,8 @@ def logoutprocess(request):
 @login_required(login_url='loginpage')
 def BackEndPageView(request):
     packages = Packages.objects.all().order_by('-id')[:10]
-    context = {'packages':packages}
+    most_view_packages = Packages.objects.all().order_by('-views')[:10]
+    context = {'packages':packages,"most_view_packages":most_view_packages}
     return render(request,"admin/index.html", context)
 
 #=========================== views for category============================================
