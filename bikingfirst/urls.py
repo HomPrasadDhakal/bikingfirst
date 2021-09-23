@@ -34,10 +34,14 @@ urlpatterns = [
     path('packages_details/<str:pk>', a.PackageDetails, name="packagesdetails"),
     #-----------------------Route for booking packages--------------------------
     path('booking_packages/<str:pk>', a.BookingPack, name="bookingpackages"),
+    path('list_of_booked_packages', a.BookingPackagesList, name="bookedpackages"),
+    path('details_of_booked_packages/<str:pk>', a.BookingDetails, name="detailsbookedpackages"),
     #-----------------------Route for user login --------------------------------
     path('userlogin/', a.UserLogin, name="userlogin"),
     path('userloginprocess/', a.UserloginProcess, name="userloginprocess"),
     path('userlogoutprocess/', a.UserlogoutProcess, name="userlogoutprocess"),
+    #-----------------------Route for user registration packages------------------------------
+        path('usersignup/', a.UserRegistration, name="signupuser"),
     #-----------------------Route for search packages------------------------------
     path('packagessearch/',a.Searchpack, name="searchpackages"),
 
@@ -46,6 +50,8 @@ urlpatterns = [
 #=========================Route for Back End =======================================
 #=========================Route for Back End =======================================
 #=========================Route for Back End =======================================
+
+
     path('admin/', a.BackEndLogin, name="loginpage"),
     path('loginprocess/',a.LoginProcess, name="loginprocess"),
     path('logoutprocess/',a.logoutprocess, name="logoutprocess"),
@@ -75,12 +81,14 @@ urlpatterns = [
     path('update_inclusion/<str:pk>',a.UpdateInclusionView, name="updateinclusion"),
 
 #-----------------------Route for Blogs--------------------------------------------- 
+
     path('add_blog/',a.AddBlogsView, name="addblogs"),
     path('blogs_list/',a.BlogsListView, name="blogslist"),
     path('delete_blogs/<str:pk>',a.DeleteSBlogsView, name="deleteblogs"),
     path('update_blogs/<str:pk>',a.UpdateBlogsView, name="updateblogs"),
 
 #-----------------------Route for imageslider--------------------------------------------- 
+
     path('add_imageslider/',a.AddSliderImgView, name="addimageslider"),
     path('imageslider_list/',a.SliderImgListView, name="imagesliderlist"),
     path('delete_imageslider/<str:pk>',a.DeleteSLiderImgView, name="deleteimageslider"),

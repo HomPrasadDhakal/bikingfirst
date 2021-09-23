@@ -20,33 +20,34 @@ Welcome to Biking First
 		<div class="tr-regi-form v2-search-form">
 			<h4>Book <span>Now</span></h4>
 			<p>It's free and always will be.</p>
-			<form class="contact__form" method="post" action="mail/tourbooking.php">
+			<form class="contact__form" method="post" action="{% url 'bookingpackages' packages.id %}">
+			{% csrf_token %}
 				<div class="alert alert-success contact__msg" style="display: none" role="alert">
 					Thank you for arranging a wonderful trip for us! Our team will contact you shortly!
 				</div>
 				<div class="row">
 					<div class="input-field col s12">
-						{{ form.name }}
+						<input type="text"  class="validate" name="name" required>
 						<label>Enter your name</label>
 					</div>
 				</div>
 				<div class="row">
 					<div class="input-field col s6">
-						{{ form.phone }}
+						<input type="number"  class="validate" name="phone" required>
 						<label>Enter your phone</label>
 					</div>
 					<div class="input-field col s6">
-						{{ form.email }}
+						<input type="email"  class="validate" name="email" required>
 						<label>Enter your email</label>
 					</div>
 				</div>
 				<div class="row">
 					<div class="input-field col s12">
-						{{ form.country }}
+						<input type="text" id="select-city-1" class="autocomplete validate" name="country">
 						<label for="select-city-1">Select Country</label>
 					</div>
 					<div class="input-field col s12">
-						<input type="text" id="select-city-1" class="autocomplete validate" value="{{packages.title}}"
+						<input type="text" id="select-city-1" name="pack" class="autocomplete validate" value="{{packages.title}}"
 							readonly>
 					</div>
 				</div>
@@ -70,8 +71,7 @@ Welcome to Biking First
 				</div>
 				<div class="row">
 					<div class="input-field col s12">
-						<input type="text" id="select-city-1" class="autocomplete validate"
-							value="${{ packages.price }}" name="city" readonly>
+						<input type="text" id="select-city-1" class="autocomplete validate" value="${{ packages.price }} per person" name="price" readonly>
 						<label for="select-city-1">Package Price</label>
 					</div>
 				</div>

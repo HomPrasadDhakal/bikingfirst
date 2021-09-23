@@ -1,0 +1,119 @@
+{% extends 'admin/partials/layout.html' %}
+
+{% block title %}
+
+{% endblock title %}
+
+{% block header %}
+{% include 'admin/partials/header.html' %}
+{% endblock header %}
+
+{% block sidebar %}
+{% include 'admin/partials/sidebar.html' %}
+{% endblock sidebar %}
+
+{% block staticdata %}
+{% include 'admin/partials/staticdata.html' %}
+{% endblock staticdata %}
+
+{% block dashbaord %}
+<div class="row">
+    <div class="col-md-3">
+
+        <!-- Profile Image -->
+        <div class="card card-primary card-outline">
+            <div class="card-body box-profile">
+                <div class="text-center">
+                    <img class="profile-user-img img-fluid img-circle" src="/static/dist/img/avtar.png"
+                        alt="User profile picture">
+                </div>
+
+                <h3 class="profile-username text-center">{{i.created_by.get_full_name }}</h3>
+
+                <p class="text-muted text-center">{{ i.created_by.email }}</p>
+
+                <ul class="list-group list-group-unbordered mb-3">
+                    <li class="list-group-item">
+                        <b>Phone:</b> <a class="float-right">9876543210</a>
+                    </li>
+                </ul>
+                {% if i.created_by.is_superuser %}
+                <button class="btn btn-danger btn-block"><b>ADMIN</b></button>
+                {% else %}
+                <button class="btn btn-primary btn-block"><b>NORMAL USER</b></button>
+                {% endif %}
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-9">
+        <div class="card-primary">
+            <div class="card-header p-2">
+                <h5 class="text-uppercase">HEAR ARE THE DETAILS FILLED BY {{i.created_by.get_full_name}}</h5>
+            </div><!-- /.card-header -->
+            <div class="card-body">
+                <div class="tab-content">
+                    <div class="active tab-pane" id="activity">
+                        <!-- Post -->
+                        <div class="post">
+                            <div class="user-block">
+                                <img class="img-circle img-bordered-sm" src="/static/dist/img/avtar.png"
+                                    alt="user image">
+                                <span class="username">
+                                    <a href="#">{{ i.name }}</a>
+                                </span>
+                                <span class="description">Country:- {{ i.country }}</span>
+                            </div>
+                            <table class="table">
+                                <tbody>
+                                  <tr>
+                                    <th scope="row" class="text-bold text-uppercase">Packages:</th>
+                                    <td>{{ i.package.title }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" class="text-bold text-uppercase">Arrival date:</th>
+                                    <td>{{ i.package.starting_date }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" class="text-bold text-uppercase">Deptaure date:</th>
+                                    <td>{{ i.package.ending_date }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" class="text-bold text-uppercase">Adults:</th>
+                                    <td>({{ i.no_of_adults }})  PERSON</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" class="text-bold text-uppercase">Children:</th>
+                                    <td>({{ i.no_of_children }}) PERSON</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" class="text-bold text-uppercase">Phone:</th>
+                                    <td>{{ i.phone }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" class="text-bold text-uppercase">Email:</th>
+                                    <td>{{ i.email }}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.tab-content -->
+            </div><!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.col -->
+</div>
+{% endblock dashbaord %}
+
+{% block footer %}
+{% include 'admin/partials/footer.html' %}
+{% endblock footer %}
+
+{% block script %}
+{% include 'admin/partials/script.html' %}
+{% endblock script %}

@@ -27,6 +27,7 @@ from travel.models import (
     ContactDetail,
     Packages,
     PackagesGallary,
+    BookPackages,
 )
 from accounts.models import user
 import datetime
@@ -98,14 +99,20 @@ def PackageDetails(request, pk):
 #-------------------------------------------------- views for booking packages page --------------------------------
 
 def BookingPack(request, pk):
-    packages = Packages.objects.get(id=pk)
-    form = BookingPackages()
-    if request.method == "POST":
-        form = BookingPackages(request.POST)
-        if form.is_valid():
-            booking = form.save(commit=False)
-            messages.success(request,"Congratulations you have booked your Trip successfully !!!")
-            return redirect('frontendhome')
+    if request.user.is_authenticated:
+        packages = Packages.objects.get(id=pk)
+        form = BookingPackages()
+        if request.method == "POST":
+            form = BookingPackages(request.POST)
+            if form.is_valid():
+                booking = form.save(commit=False)
+                booking.package = packages
+                booking.created_by = request.user
+                booking.save()
+                messages.success(request,"Congratulations you have booked your Trip successfully !!!")
+                return redirect('frontendhome')
+    else:
+        return redirect('userlogin')
     contactlist = ContactDetail.objects.all()
     context = {"contactlist":contactlist,"form":form, "packages":packages}
     return render(request,"site/booking/booking.html", context)
@@ -152,6 +159,9 @@ def UserlogoutProcess(request):
     return redirect('frontendhome')
 
 
+def UserRegistration(request):
+    context = {}
+    return render(request,"site/user/registration.html")
 
 #########################################################################################################
 #########################################################################################################
@@ -194,7 +204,8 @@ def logoutprocess(request):
 def BackEndPageView(request):
     packages = Packages.objects.all().order_by('-id')[:10]
     most_view_packages = Packages.objects.all().order_by('-views')[:10]
-    context = {'packages':packages,"most_view_packages":most_view_packages}
+    latest_booked_packages = BookPackages.objects.all().order_by('-id')[:10]
+    context = {'packages':packages,"most_view_packages":most_view_packages,"latest_booked_packages":latest_booked_packages}
     return render(request,"admin/index.html", context)
 
 #=========================== views for category============================================
@@ -670,6 +681,22 @@ def UpdatePakagesview(request, pk):
                 return redirect('packageslist')
     context = {'form':form}
     return render(request,"admin/packages/updatepackages.html", context)
+
+#===================================== views for packages booking =================================
+
+@login_required(login_url="loginpage")
+def BookingPackagesList(request):
+    bookingpackage = BookPackages.objects.all().order_by('-id')
+    context = {"bookingpackage":bookingpackage}
+    return render(request,"admin/booking/bookingpackages.html", context)
+
+
+@login_required(login_url="loginpage")
+def BookingDetails(request, pk):
+    booking_details = BookPackages.objects.get(id=pk)
+    context = {"i":booking_details}
+    return render(request,"admin/booking/booking-details.html", context)
+
 
 #===================================== views for listing admin user=================================
 
