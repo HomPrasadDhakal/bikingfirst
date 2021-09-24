@@ -1,0 +1,48 @@
+{% extends 'admin/partials/layout.html' %}
+
+{% block title %}
+{{ i.subject }}
+{% endblock title %}
+
+{% block header %}
+{% include 'admin/partials/header.html' %}
+{% endblock header %}
+
+{% block sidebar %}
+{% include 'admin/partials/sidebar.html' %}
+{% endblock sidebar %}
+
+{% block staticdata %}
+{% include 'admin/partials/staticdata.html' %}
+{% endblock staticdata %}
+
+{% block dashbaord %}
+<div class="row">
+<div class="col-12">
+    <h4>{{ i.subject }}</h4>
+    <div class="post">
+        <div class="user-block">
+        <img class="img-circle img-bordered-sm" src="/static/dist/img/avtar.png" alt="user image">
+        <span class="username">
+            <a href="#">{{ i.name }}</a>
+        </span>
+        <span class="description text-uppercase"><b>Address:</b> {{ i.country }}, {{ i.city }}</span>
+        <span class="description text-uppercase"><b>PHONE:</b> {{ i.mobile }}</span>
+        </div>
+        <!-- /.user-block -->
+        <p>
+        {{ i.message|linebreaks }}
+        </p>
+    </div>
+</div>
+</div>
+{% endblock dashbaord %}
+
+{% block footer %}
+{% include 'admin/partials/footer.html' %}
+{% endblock footer %}
+
+{% block script %}
+{% include 'admin/partials/script.html' %}
+{% endblock script %}
+

@@ -31,7 +31,20 @@
 
 {% block header %}
 {% endblock header %}
-
+{% if messages %}
+    {% for message in messages %}
+    {% if message.tags == "success" %}
+    <div class="alert alert-success" role="alert">
+      {{ message }}
+    </div>
+    {% endif %}
+    {% if message.tags == "error" %}
+    <div class="alert alert-danger" role="alert">
+      {{ message }}
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
 {% block slider %}
 {% endblock slider %}
 

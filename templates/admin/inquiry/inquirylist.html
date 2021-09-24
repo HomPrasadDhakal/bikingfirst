@@ -1,0 +1,68 @@
+{% extends 'admin/partials/layout.html' %}
+
+{% block title %}
+
+{% endblock title %}
+
+{% block header %}
+{% include 'admin/partials/header.html' %}
+{% endblock header %}
+
+{% block sidebar %}
+{% include 'admin/partials/sidebar.html' %}
+{% endblock sidebar %}
+
+{% block staticdata %}
+{% include 'admin/partials/staticdata.html' %}
+{% endblock staticdata %}
+
+{% block dashbaord %}
+<div class="row">
+    <div class="col-md-12">
+    <div class="card-primary">
+        <div class="card-header">
+        <h3 class="card-title">Inquire list</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width: 10px">S.N</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>mobile</th>
+                <th>country</th>
+                <th>city</th>
+                <th>Subject</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in InquiryList %}
+            <tr>
+                <td>{{ forloop.counter }}.</td>
+                <td><a href="{% url 'inquirylistdetail' i.id %}">{{ i.name }}</a></td>
+                <td>{{ i.email }}</td>
+                <td>{{ i.mobile }}</td>
+                <td>{{ i.country }}</td>
+                <td>{{ i.city }}</td>
+                <td>{{ i.subject }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+    </div>
+    <!-- /.col -->
+</div>
+{% endblock dashbaord %}
+
+{% block footer %}
+{% include 'admin/partials/footer.html' %}
+{% endblock footer %}
+
+{% block script %}
+{% include 'admin/partials/script.html' %}
+{% endblock script %}
+

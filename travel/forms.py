@@ -14,9 +14,10 @@ from travel.models import (
     Packages,
     PackagesGallary,
     BookPackages,
+    GenralInquery,
 )
-from accounts.model import user
-from django.contrib.auth.froms import UserCreationForm
+from accounts.models import user
+from django.contrib.auth.forms import UserCreationForm
 from ckeditor.widgets import CKEditorWidget
 
 
@@ -319,4 +320,39 @@ class BookingPackages(forms.ModelForm):
 #User creationf froms
 
 class Registrationform(UserCreationForm):
-    pass
+
+    class Meta:
+        model = user
+        fields = ['first_name','last_name','email','mobile','password1','password2']
+
+    
+class GenralInqueryForm(forms.ModelForm):
+    class Meta:
+        model = GenralInquery
+        fields = ["name","mobile","email","subject","city","country","message"]
+
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'placeholder':'Enter your name'
+            }),
+            'mobile': forms.TextInput(attrs={
+                'placeholder':'Enter your mobile number'
+            }),
+            'email': forms.TextInput(attrs={
+                'placeholder':'Enter your email address'
+            }),
+            'subject': forms.TextInput(attrs={
+                'placeholder':'Enter your subject title'
+            }),
+            'city': forms.TextInput(attrs={
+                'placeholder':'Enter your city name'
+            }),
+            'country': forms.TextInput(attrs={
+                'placeholder':'Enter your country name'
+            }),
+            'message': forms.Textarea(attrs={
+                'placeholder':'Enter your message',
+                'rows':'3',
+                'cols':'40',
+            }),
+        }

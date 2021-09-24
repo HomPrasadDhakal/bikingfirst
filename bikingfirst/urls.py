@@ -32,19 +32,17 @@ urlpatterns = [
     #---------------------Route for Packages category----------------------------
     path('packages_category/<str:pk>', a.PackageCategory, name="packagescategory"),
     path('packages_details/<str:pk>', a.PackageDetails, name="packagesdetails"),
+    path('all_packages/', a.Allpackages, name="allpackages"),
     #-----------------------Route for booking packages--------------------------
     path('booking_packages/<str:pk>', a.BookingPack, name="bookingpackages"),
-    path('list_of_booked_packages', a.BookingPackagesList, name="bookedpackages"),
-    path('details_of_booked_packages/<str:pk>', a.BookingDetails, name="detailsbookedpackages"),
     #-----------------------Route for user login --------------------------------
     path('userlogin/', a.UserLogin, name="userlogin"),
     path('userloginprocess/', a.UserloginProcess, name="userloginprocess"),
     path('userlogoutprocess/', a.UserlogoutProcess, name="userlogoutprocess"),
     #-----------------------Route for user registration packages------------------------------
-        path('usersignup/', a.UserRegistration, name="signupuser"),
+    path('usersignup/', a.UserRegistration, name="signupuser"),
     #-----------------------Route for search packages------------------------------
     path('packagessearch/',a.Searchpack, name="searchpackages"),
-
 
 
 #=========================Route for Back End =======================================
@@ -114,10 +112,17 @@ urlpatterns = [
     path('delete_packages/<str:pk>',a.Deletepackages, name="deletepackages"),
     path('update_packages/<str:pk>',a.UpdatePakagesview, name="updatepackages"),
     
+#-----------------------Route for booked packages-----------------------------------
+    path('list_of_booked_packages', a.BookingPackagesList, name="bookedpackages"),
+    path('details_of_booked_packages/<str:pk>', a.BookingDetails, name="detailsbookedpackages"),
 #-----------------------Route for admin/user listing-----------------------------------
 
     path('admin_user/', a.ListingAdminUser, name="adminlisting"),
     path('normal_user/', a.ListingNormalUser, name="normaluser"),
+
+#---------------------Route for inquirylist---------------------------------------------
+    path('inquirylist/', a.InquiryList, name="inquirylist"),
+    path('inquirylist/<str:pk>', a.InquirylistDetail, name="inquirylistdetail"),
 
 
 

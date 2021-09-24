@@ -15,6 +15,8 @@ from travel.forms import (
     AddPackagesForm,
     ContactUsForm,
     BookingPackages,
+    Registrationform,
+    GenralInqueryForm,
 )
 from travel.models import (
     Blogs,
@@ -28,6 +30,7 @@ from travel.models import (
     Packages,
     PackagesGallary,
     BookPackages,
+    GenralInquery,
 )
 from accounts.models import user
 import datetime
@@ -42,12 +45,22 @@ def FrontIndexPageView(request):
     packages = Packages.objects.all().order_by('-id')[:9]
     upcomming_pack = Packages.objects.filter(starting_date__gte=datetime.date.today())
     latest_blogs = Blogs.objects.all().order_by('-id')[:4]
+    form = GenralInqueryForm()
+    if request.method =="POST":
+        form = GenralInqueryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Thank you for contacting us we will get back to you soon.")
+            return redirect("frontendhome")
+        else:
+            form = GenralInqueryForm()
     context = {"contactlist":contactlist,
             'sliderimage':sliderimage,
             "aboutus":aboutus,
             "packages":packages,
             "upcomming_pack":upcomming_pack,
             "latest_blogs":latest_blogs,
+            "form":form,
         }
     return render(request,'site/index.html', context)
 
@@ -95,6 +108,13 @@ def PackageDetails(request, pk):
     contactlist = ContactDetail.objects.all()
     context = {"contactlist":contactlist, "i":i,"simliar_package":simliar_package}
     return render(request,"site/category/packdetail.html", context)
+
+def Allpackages(request):
+    allpackages = Packages.objects.all()
+    contactlist = ContactDetail.objects.all()
+    pop_pack = Packages.objects.all().order_by('-views')[:5]
+    context ={"allpackages":allpackages, "contactlist":contactlist,"pop_pack":pop_pack}
+    return render(request,"site/category/allpackages.html", context)
 
 #-------------------------------------------------- views for booking packages page --------------------------------
 
@@ -145,7 +165,7 @@ def UserloginProcess(request):
     user=authenticate(request=request,email=email,password=password)
     if user is not None:
         login(request=request,user=user)
-        messages.success(request,"Congratulations your can book Trip Now!!!")
+        messages.success(request,"Congratulations login in Successfully!!!")
         return HttpResponseRedirect(reverse("frontendhome"))
     else:
         messages.error(request,"Error in Login! Invalid Login Details!")
@@ -160,8 +180,34 @@ def UserlogoutProcess(request):
 
 
 def UserRegistration(request):
-    context = {}
-    return render(request,"site/user/registration.html")
+    form = Registrationform()
+    if request.method == "POST":
+        form = Registrationform(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_superuser = False
+            user.is_staff = False
+            user.save()
+            messages.success(request,"congratulation you have successfully created your account !!!")
+            return redirect("userlogin")
+        else:
+            context = {'form':form}
+            messages.error(request,"invalid details please try again !!!")
+            return render(request,"site/user/registration.html", context)
+    context = {'form':form}
+    return render(request,"site/user/registration.html", context)
+
+
+# def Inquery(request):
+#     form = GenralInqueryForm()
+#     if request.method =="POST":
+#         form = GenralInqueryForm(request.POST):
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request,"your inquiry has been send admin will reply you as soon as possible!!!")
+#             return redirect("frontendhome")
+#     context = {'form':form}
+#     return render(request,"site/partials/blogs.html", context)
 
 #########################################################################################################
 #########################################################################################################
@@ -184,9 +230,8 @@ def BackEndLogin(request):
 def LoginProcess(request):
     email=request.POST.get("email")
     password=request.POST.get("password")
-
     user=authenticate(request=request,email=email,password=password)
-    if user is not None:
+    if user is not None and user.is_superuser:
         login(request=request,user=user)
         return HttpResponseRedirect(reverse("backenddashbaord"))
     else:
@@ -205,54 +250,90 @@ def BackEndPageView(request):
     packages = Packages.objects.all().order_by('-id')[:10]
     most_view_packages = Packages.objects.all().order_by('-views')[:10]
     latest_booked_packages = BookPackages.objects.all().order_by('-id')[:10]
-    context = {'packages':packages,"most_view_packages":most_view_packages,"latest_booked_packages":latest_booked_packages}
+    latest_register_user = user.objects.filter(is_superuser=False).order_by('-id')[:10]
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+
+    context = {'packages':packages,
+                "most_view_packages":most_view_packages,
+                "latest_booked_packages":latest_booked_packages,
+                "latest_register_user":latest_register_user,
+                "packages_count":packages_count,
+                "booked_packages_count":booked_packages_count,
+                "total_user_count":total_user_count,
+                "blog_count":blog_count,
+                }
     return render(request,"admin/index.html", context)
 
 #=========================== views for category============================================
 
 @login_required(login_url="loginpage")
 def AddCategory(request):
-    if request.user.is_superuser:
-        form = AddCategoryForm()
-        if request.method=='POST':
-            form = AddCategoryForm(request.POST)
-            if form.is_valid():
-                form.save()
-                messages.success(request,"Successfully Created category!!!")
-                return redirect('addcategory')
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    form = AddCategoryForm()
+    if request.method=='POST':
+        form = AddCategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Successfully Created category!!!")
+            return redirect('addcategory')
     context = {'form':form}
     return render(request,"admin/category/addcategory.html", context)
 
 
 @login_required(login_url='loginpage')
 def CategorylistView(request):
-    if request.user.is_superuser:
-        categorylist = Category.objects.all().order_by('-created_at')
-    context = {"categorylist":categorylist}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    categorylist = Category.objects.all().order_by('-created_at')
+    context = {"categorylist":categorylist,
+                "packages_count":packages_count,
+                "booked_packages_count":booked_packages_count,
+                "total_user_count":total_user_count,
+                "blog_count":blog_count,
+    }
     return render(request, "admin/category/categorylist.html", context)
 
 
 @login_required(login_url="loginpage")
 def DeleteCategoryView(request, pk):
-    if request.user.is_superuser:
-        category = Category.objects.get(id=pk)
-        category.delete()
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    category = Category.objects.get(id=pk)
+    category.delete()
     return redirect('categorylist')
 
 
 
 @login_required(login_url='loginpage')
 def UpdatecategoryView(request, pk):
-    if request.user.is_superuser:
-        category = Category.objects.get(id=pk)
-        form = AddCategoryForm(instance=category)
-        if request.method =="POST":
-            form = AddCategoryForm(request.POST, instance=category)
-            if form.is_valid():
-                form.save()
-                messages.success(request,"Updated category successfully !!!")
-                return redirect('categorylist')
-    context = {'form':form}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    category = Category.objects.get(id=pk)
+    form = AddCategoryForm(instance=category)
+    if request.method =="POST":
+        form = AddCategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Updated category successfully !!!")
+            return redirect('categorylist')
+    context = {'form':form,
+            "packages_count":packages_count,
+            "booked_packages_count":booked_packages_count,
+            "total_user_count":total_user_count,
+            "blog_count":blog_count,
+            }
     return render(request, "admin/category/updatecategory.html", context)
 
 
@@ -260,25 +341,41 @@ def UpdatecategoryView(request, pk):
 
 @login_required(login_url="loginpage")
 def AddSubCategoryView(request):
-    if request.user.is_superuser:
-        form = AddSubCategoryForm()
-        if request.method =="POST":
-            form = AddSubCategoryForm(request.POST)
-            if form.is_valid():
-                form.save()
-                messages.success(request,"successfully added subcategory")
-                return redirect('subcategorylist')
-            else:
-                messages.error(request,"cannot add subcategory please try again!!!")
-        context ={'form':form}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    form = AddSubCategoryForm()
+    if request.method =="POST":
+        form = AddSubCategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"successfully added subcategory")
+            return redirect('subcategorylist')
+        else:
+            messages.error(request,"cannot add subcategory please try again!!!")
+    context ={'form':form,
+                "packages_count":packages_count,
+                "booked_packages_count":booked_packages_count,
+                "total_user_count":total_user_count,
+                "blog_count":blog_count,
+            }
     return render(request, "admin/subcategory/addsubcategory.html", context)
 
 
 @login_required(login_url='loginpage')
 def SubCategoryListView(request):
-    if request.user.is_superuser:
-        subcatlist = SubCategory.objects.all()
-        context= {'subcatlist':subcatlist}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    subcatlist = SubCategory.objects.all()
+    context= {'subcatlist':subcatlist,
+                "packages_count":packages_count,
+                "booked_packages_count":booked_packages_count,
+                "total_user_count":total_user_count,
+                "blog_count":blog_count,
+    }
     return render(request,"admin/subcategory/subcategorylist.html", context)
 
 
@@ -286,24 +383,31 @@ def SubCategoryListView(request):
 
 @login_required(login_url='loginpage')
 def DeleteSubCateogryView(request, pk):
-    if request.user.is_superuser:
-        deletesubcat = SubCategory.objects.get(id=pk)
-        deletesubcat.delete()
+    deletesubcat = SubCategory.objects.get(id=pk)
+    deletesubcat.delete()
     return redirect('subcategorylist')
 
 
 @login_required(login_url="loginpage")
 def UpdateSubCategoryView(request, pk):
-    if request.user.is_superuser:
-        subcat = SubCategory.objects.get(id=pk)
-        form = AddSubCategoryForm(instance=subcat)
-        if request.method == "POST":
-            form = AddSubCategoryForm(request.POST, instance=subcat)
-            if form.is_valid():
-                form.save()
-                messages.success(request,"successfully updated subcategory !!!")
-                return redirect('subcategorylist')
-        context = {'form':form}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    subcat = SubCategory.objects.get(id=pk)
+    form = AddSubCategoryForm(instance=subcat)
+    if request.method == "POST":
+        form = AddSubCategoryForm(request.POST, instance=subcat)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"successfully updated subcategory !!!")
+            return redirect('subcategorylist')
+    context = {'form':form,
+                "packages_count":packages_count,
+                "booked_packages_count":booked_packages_count,
+                "total_user_count":total_user_count,
+                "blog_count":blog_count,
+    }
     return render(request,"admin/subcategory/updatesubcategory.html", context)
 
 
@@ -311,50 +415,77 @@ def UpdateSubCategoryView(request, pk):
 #=========================== views for all category============================================
 @login_required(login_url="loginpage")
 def AddAllCategoryView(request):
-    if request.user.is_superuser:
-        form = AddAllCategoryForm()
-        if request.method =="POST":
-            form = AddAllCategoryForm(request.POST)
-            if form.is_valid():
-                form.save()
-                messages.success(request,"successfully added all category")
-                return redirect('allcategorylist')
-            else:
-                messages.error(request,"cannot add allcategory please try again!!!")
-        context ={'form':form}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    form = AddAllCategoryForm()
+    if request.method =="POST":
+        form = AddAllCategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"successfully added all category")
+            return redirect('allcategorylist')
+        else:
+            messages.error(request,"cannot add allcategory please try again!!!")
+    context ={'form':form,
+                "packages_count":packages_count,
+                "booked_packages_count":booked_packages_count,
+                "total_user_count":total_user_count,
+                "blog_count":blog_count,
+            }
     return render(request, "admin/allcategory/addallcategory.html", context)
 
 
 @login_required(login_url='loginpage')
 def allCategoryListView(request):
-    if request.user.is_superuser:
-        allcatlist = AllCategory.objects.all()
-        context= {'allcatlist':allcatlist}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    allcatlist = AllCategory.objects.all()
+    context= {'allcatlist':allcatlist,
+                "packages_count":packages_count,
+                "booked_packages_count":booked_packages_count,
+                "total_user_count":total_user_count,
+                "blog_count":blog_count,
+                }
     return render(request,"admin/allcategory/allcategorylist.html", context)
 
 
 
 @login_required(login_url='loginpage')
 def DeleteSAllCateogryView(request, pk):
-    if request.user.is_superuser:
-        deleteallcat = AllCategory.objects.get(id=pk)
-        deleteallcat.delete()
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    deleteallcat = AllCategory.objects.get(id=pk)
+    deleteallcat.delete()
     return redirect('allcategorylist')
 
 
 
 @login_required(login_url="loginpage")
 def UpdateallCategoryView(request, pk):
-    if request.user.is_superuser:
-        allcat = AllCategory.objects.get(id=pk)
-        form = AddAllCategoryForm(instance=allcat)
-        if request.method == "POST":
-            form = AddAllCategoryForm(request.POST, instance=allcat)
-            if form.is_valid():
-                form.save()
-                messages.success(request,"successfully updated allcategory !!!")
-                return redirect('allcategorylist')
-        context = {'form':form}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    allcat = AllCategory.objects.get(id=pk)
+    form = AddAllCategoryForm(instance=allcat)
+    if request.method == "POST":
+        form = AddAllCategoryForm(request.POST, instance=allcat)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"successfully updated allcategory !!!")
+            return redirect('allcategorylist')
+    context = {'form':form,
+            "packages_count":packages_count,
+            "booked_packages_count":booked_packages_count,
+            "total_user_count":total_user_count,
+            "blog_count":blog_count,
+            }
     return render(request,"admin/allcategory/updateallcategory.html", context)
 
 
@@ -363,50 +494,73 @@ def UpdateallCategoryView(request, pk):
 
 @login_required(login_url="loginpage")
 def AddAllInslucionView(request):
-    if request.user.is_superuser:
-        form = AddInclusionForm()
-        if request.method =="POST":
-            form = AddInclusionForm(request.POST)
-            if form.is_valid():
-                form.save()
-                messages.success(request,"successfully added inclusion")
-                return redirect('inclusionlist')
-            else:
-                messages.error(request,"cannot add inclusion please try again!!!")
-        context ={'form':form}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    form = AddInclusionForm()
+    if request.method =="POST":
+        form = AddInclusionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"successfully added inclusion")
+            return redirect('inclusionlist')
+        else:
+            messages.error(request,"cannot add inclusion please try again!!!")
+    context ={'form':form,
+                "packages_count":packages_count,
+                "booked_packages_count":booked_packages_count,
+                "total_user_count":total_user_count,
+                "blog_count":blog_count,
+            }
     return render(request, "admin/inclusion/addinclusion.html", context)
 
 
 @login_required(login_url='loginpage')
 def InslucionListView(request):
-    if request.user.is_superuser:
-        allinclusion = Inclusion.objects.all()
-        context= {'allinclusion':allinclusion}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    allinclusion = Inclusion.objects.all()
+    context= {'allinclusion':allinclusion,
+                "packages_count":packages_count,
+                "booked_packages_count":booked_packages_count,
+                "total_user_count":total_user_count,
+                "blog_count":blog_count,
+                }
     return render(request,"admin/inclusion/inclusionlist.html", context)
 
 
 
 @login_required(login_url='loginpage')
 def DeleteSInclusionView(request, pk):
-    if request.user.is_superuser:
-        deleteinclusion = Inclusion.objects.get(id=pk)
-        deleteinclusion.delete()
+    deleteinclusion = Inclusion.objects.get(id=pk)
+    deleteinclusion.delete()
     return redirect('inclusionlist')
 
 
 
 @login_required(login_url="loginpage")
 def UpdateInclusionView(request, pk):
-    if request.user.is_superuser:
-        allinc = Inclusion.objects.get(id=pk)
-        form = AddInclusionForm(instance=allinc)
-        if request.method == "POST":
-            form = AddInclusionForm(request.POST, instance=allinc)
-            if form.is_valid():
-                form.save()
-                messages.success(request,"successfully updated inclusion !!!")
-                return redirect('inclusionlist')
-        context = {'form':form}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    allinc = Inclusion.objects.get(id=pk)
+    form = AddInclusionForm(instance=allinc)
+    if request.method == "POST":
+        form = AddInclusionForm(request.POST, instance=allinc)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"successfully updated inclusion !!!")
+            return redirect('inclusionlist')
+    context = {'form':form,
+                "packages_count":packages_count,
+                "booked_packages_count":booked_packages_count,
+                "total_user_count":total_user_count,
+                "blog_count":blog_count,
+                }
     return render(request,"admin/inclusion/updateinclusion.html", context)
 
 
@@ -415,55 +569,78 @@ def UpdateInclusionView(request, pk):
 
 @login_required(login_url="loginpage")
 def AddBlogsView(request):
-    if request.user.is_superuser:
-        form = AddBlogsForm()
-        if request.method =="POST":
-            form = AddBlogsForm(request.POST, request.FILES)
-            if form.is_valid():
-                blogs = form.save(commit=False)
-                blogs.author = request.user
-                blogs.save()
-                messages.success(request,"successfully added blogs")
-                return redirect('blogslist')
-            else:
-                messages.error(request,"cannot add blog please try again!!!")
-        context ={'form':form}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    form = AddBlogsForm()
+    if request.method =="POST":
+        form = AddBlogsForm(request.POST, request.FILES)
+        if form.is_valid():
+            blogs = form.save(commit=False)
+            blogs.author = request.user
+            blogs.save()
+            messages.success(request,"successfully added blogs")
+            return redirect('blogslist')
+        else:
+            messages.error(request,"cannot add blog please try again!!!")
+    context ={'form':form,
+                "packages_count":packages_count,
+                "booked_packages_count":booked_packages_count,
+                "total_user_count":total_user_count,
+                "blog_count":blog_count,
+    }
     return render(request, "admin/blogs/addblogs.html", context)
-    
+
 
 
 @login_required(login_url='loginpage')
 def BlogsListView(request):
-    if request.user.is_superuser:
-        allblogs = Blogs.objects.all().order_by("-created_at")
-        context= {'allblogs':allblogs}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    allblogs = Blogs.objects.all().order_by("-created_at")
+    context= {'allblogs':allblogs,
+            "packages_count":packages_count,
+            "booked_packages_count":booked_packages_count,
+            "total_user_count":total_user_count,
+            "blog_count":blog_count,
+    }
     return render(request,"admin/blogs/bloglist.html", context)
 
 
 
 @login_required(login_url='loginpage')
 def DeleteSBlogsView(request, pk):
-    if request.user.is_superuser:
-        deleteblogs = Blogs.objects.get(id=pk)
-        deleteblogs.delete()
+    deleteblogs = Blogs.objects.get(id=pk)
+    deleteblogs.delete()
     return redirect('blogslist')
 
 
 
 @login_required(login_url="loginpage")
 def UpdateBlogsView(request, pk):
-    if request.user.is_superuser:
-        blog = Blogs.objects.get(id=pk)
-        form = AddBlogsForm(instance=blog)
-        if request.method == "POST":
-            form = AddBlogsForm(request.POST, instance=blog)
-            if form.is_valid():
-                blogs = form.save(commit=False)
-                blogs.author == request.user
-                blogs.save()
-                messages.success(request,"successfully updated blogs !!!")
-                return redirect('blogslist')
-        context = {'form':form}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    blog = Blogs.objects.get(id=pk)
+    form = AddBlogsForm(instance=blog)
+    if request.method == "POST":
+        form = AddBlogsForm(request.POST, instance=blog)
+        if form.is_valid():
+            blogs = form.save(commit=False)
+            blogs.author == request.user
+            blogs.save()
+            messages.success(request,"successfully updated blogs !!!")
+            return redirect('blogslist')
+    context = {'form':form,
+            "packages_count":packages_count,
+            "booked_packages_count":booked_packages_count,
+            "total_user_count":total_user_count,
+            "blog_count":blog_count,
+    }
     return render(request,"admin/blogs/updateblogs.html", context)
 
 
@@ -474,50 +651,73 @@ def UpdateBlogsView(request, pk):
 
 @login_required(login_url="loginpage")
 def AddSliderImgView(request):
-    if request.user.is_superuser:
-        form = SliderImgForm()
-        if request.method =="POST":
-            form = SliderImgForm(request.POST, request.FILES)
-            if form.is_valid():
-                form.save()
-                messages.success(request,"successfully added slider image")
-                return redirect('imagesliderlist')
-            else:
-                messages.error(request,"cannot add slider image please try again!!!")
-        context ={'form':form}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    form = SliderImgForm()
+    if request.method =="POST":
+        form = SliderImgForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"successfully added slider image")
+            return redirect('imagesliderlist')
+        else:
+            messages.error(request,"cannot add slider image please try again!!!")
+    context ={'form':form,
+            "packages_count":packages_count,
+            "booked_packages_count":booked_packages_count,
+            "total_user_count":total_user_count,
+            "blog_count":blog_count,
+        }
     return render(request, "admin/sliderimage/addsliderimg.html", context)
 
 
 @login_required(login_url='loginpage')
 def SliderImgListView(request):
-    if request.user.is_superuser:
-        allsliderimg = SliderImage.objects.all().order_by("-created_at")
-        context= {'allsliderimg':allsliderimg}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    allsliderimg = SliderImage.objects.all().order_by("-created_at")
+    context= {'allsliderimg':allsliderimg,
+            "packages_count":packages_count,
+            "booked_packages_count":booked_packages_count,
+            "total_user_count":total_user_count,
+            "blog_count":blog_count,
+    }
     return render(request,"admin/sliderimage/sliderimagelist.html", context)
 
 
 
 @login_required(login_url='loginpage')
 def DeleteSLiderImgView(request, pk):
-    if request.user.is_superuser:
-        deletesliderimage = SliderImage.objects.get(id=pk)
-        deletesliderimage.delete()
+    deletesliderimage = SliderImage.objects.get(id=pk)
+    deletesliderimage.delete()
     return redirect('imagesliderlist')
 
 
 
 @login_required(login_url="loginpage")
 def UpdateSliderImgView(request, pk):
-    if request.user.is_superuser:
-        sliderimg = SliderImage.objects.get(id=pk)
-        form = SliderImgForm(instance=sliderimg)
-        if request.method == "POST":
-            form = SliderImgForm(request.POST, request.FILES, instance=sliderimg)
-            if form.is_valid():
-                form.save()
-                messages.success(request,"successfully updated slider image !!!")
-                return redirect('imagesliderlist')
-        context = {'form':form}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    sliderimg = SliderImage.objects.get(id=pk)
+    form = SliderImgForm(instance=sliderimg)
+    if request.method == "POST":
+        form = SliderImgForm(request.POST, request.FILES, instance=sliderimg)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"successfully updated slider image !!!")
+            return redirect('imagesliderlist')
+    context = {'form':form,
+            "packages_count":packages_count,
+            "booked_packages_count":booked_packages_count,
+            "total_user_count":total_user_count,
+            "blog_count":blog_count,
+    }
     return render(request,"admin/sliderimage/updatesliderimg.html", context)
 
 
@@ -527,49 +727,72 @@ def UpdateSliderImgView(request, pk):
 
 @login_required(login_url="loginpage")
 def AddAboutusVIew(request):
-    if request.user.is_superuser:
-        form = AboutUsForm()
-        if request.method =="POST":
-            form = AboutUsForm(request.POST, request.FILES)
-            if form.is_valid():
-                form.save()
-                messages.success(request,"successfully added aboutus")
-                return redirect('aboutuslist')
-            else:
-                messages.error(request,"cannot add aboutus please try again!!!")
-        context ={'form':form}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    form = AboutUsForm()
+    if request.method =="POST":
+        form = AboutUsForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"successfully added aboutus")
+            return redirect('aboutuslist')
+        else:
+            messages.error(request,"cannot add aboutus please try again!!!")
+    context ={'form':form,
+            "packages_count":packages_count,
+            "booked_packages_count":booked_packages_count,
+            "total_user_count":total_user_count,
+            "blog_count":blog_count,
+    }
     return render(request, "admin/aboutus/addaboutus.html", context)
 
 
 @login_required(login_url='loginpage')
 def AboutusList(request):
-    if request.user.is_superuser:
-        allaboutus = AboutusDetail.objects.all().order_by("-created_at")
-        context= {'allaboutus':allaboutus}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    allaboutus = AboutusDetail.objects.all().order_by("-created_at")
+    context= {'allaboutus':allaboutus,
+            "packages_count":packages_count,
+            "booked_packages_count":booked_packages_count,
+            "total_user_count":total_user_count,
+            "blog_count":blog_count,
+    }
     return render(request,"admin/aboutus/aboutuslist.html", context)
 
 
 
 @login_required(login_url='loginpage')
 def DeleteAboutusView(request, pk):
-    if request.user.is_superuser:
-        deleteaboutus = AboutusDetail.objects.get(id=pk)
-        deleteaboutus.delete()
+    deleteaboutus = AboutusDetail.objects.get(id=pk)
+    deleteaboutus.delete()
     return redirect('aboutuslist')
 
 
 @login_required(login_url="loginpage")
 def UpdateAboutusView(request, pk):
-    if request.user.is_superuser:
-        ab = AboutusDetail.objects.get(id=pk)
-        form = AboutUsForm(instance=ab)
-        if request.method == "POST":
-            form = AboutUsForm(request.POST, request.FILES, instance=ab)
-            if form.is_valid():
-                form.save()
-                messages.success(request,"successfully updated aboutus !!!")
-                return redirect('aboutuslist')
-    context = {'form':form}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    ab = AboutusDetail.objects.get(id=pk)
+    form = AboutUsForm(instance=ab)
+    if request.method == "POST":
+        form = AboutUsForm(request.POST, request.FILES, instance=ab)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"successfully updated aboutus !!!")
+            return redirect('aboutuslist')
+    context = {'form':form,
+            "packages_count":packages_count,
+            "booked_packages_count":booked_packages_count,
+            "total_user_count":total_user_count,
+            "blog_count":blog_count,
+    }
     return render(request,"admin/aboutus/updateaboutus.html", context)
 
 
@@ -579,49 +802,72 @@ def UpdateAboutusView(request, pk):
 
 @login_required(login_url="loginpage")
 def AddContactView(request):
-    if request.user.is_superuser:
-        form = ContactUsForm()
-        if request.method =="POST":
-            form = ContactUsForm(request.POST)
-            if form.is_valid():
-                form.save()
-                messages.success(request,"successfully added contact details")
-                return redirect('contactdetailslist')
-            else:
-                messages.error(request,"cannot add contactdetails  please try again!!!")
-        context ={'form':form}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    form = ContactUsForm()
+    if request.method =="POST":
+        form = ContactUsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"successfully added contact details")
+            return redirect('contactdetailslist')
+        else:
+            messages.error(request,"cannot add contactdetails  please try again!!!")
+    context ={'form':form,
+            "packages_count":packages_count,
+            "booked_packages_count":booked_packages_count,
+            "total_user_count":total_user_count,
+            "blog_count":blog_count,
+    }
     return render(request, "admin/contact/addcontact.html", context)
 
 
 @login_required(login_url='loginpage')
 def ContactusList(request):
-    if request.user.is_superuser:
-        allcontact = ContactDetail.objects.all().order_by("-created_at")
-        context= {'allcontact':allcontact}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    allcontact = ContactDetail.objects.all().order_by("-created_at")
+    context= {'allcontact':allcontact,
+                "packages_count":packages_count,
+                "booked_packages_count":booked_packages_count,
+                "total_user_count":total_user_count,
+                "blog_count":blog_count,
+    }
     return render(request,"admin/contact/contactlist.html", context)
 
 
 
 @login_required(login_url='loginpage')
 def DeleteContactus(request, pk):
-    if request.user.is_superuser:
-        deletecontacts = ContactDetail.objects.get(id=pk)
-        deletecontacts.delete()
+    deletecontacts = ContactDetail.objects.get(id=pk)
+    deletecontacts.delete()
     return redirect('contactdetailslist')
 
 
 @login_required(login_url="loginpage")
 def UpdateContactusview(request, pk):
-    if request.user.is_superuser:
-        contact = ContactDetail.objects.get(id=pk)
-        form = ContactUsForm(instance=contact)
-        if request.method == "POST":
-            form = ContactUsForm(request.POST, instance=contact)
-            if form.is_valid():
-                form.save()
-                messages.success(request,"successfully updated contact details !!!")
-                return redirect('contactdetailslist')
-    context = {'form':form}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    contact = ContactDetail.objects.get(id=pk)
+    form = ContactUsForm(instance=contact)
+    if request.method == "POST":
+        form = ContactUsForm(request.POST, instance=contact)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"successfully updated contact details !!!")
+            return redirect('contactdetailslist')
+    context = {'form':form,
+            "packages_count":packages_count,
+            "booked_packages_count":booked_packages_count,
+            "total_user_count":total_user_count,
+            "blog_count":blog_count,
+    }
     return render(request,"admin/contact/updatecontact.html", context)
 
 
@@ -631,28 +877,44 @@ def UpdateContactusview(request, pk):
 
 @login_required(login_url="loginpage")
 def AddPackagesView(request):
-    if request.user.is_superuser:
-        form = AddPackagesForm()
-        if request.method =="POST":
-            form = AddPackagesForm(request.POST, request.FILES)
-            if form.is_valid():
-                pack = form.save()
-                image = request.FILES.getlist("slider_images")
-                for i in image:
-                    PackagesGallary.objects.create(packages=pack, image=i)
-                messages.success(request,"successfully added Packages")
-                return redirect('packageslist')
-            else:
-                messages.error(request,"cannot add packages  please try again!!!")
-        context ={'form':form}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    form = AddPackagesForm()
+    if request.method =="POST":
+        form = AddPackagesForm(request.POST, request.FILES)
+        if form.is_valid():
+            pack = form.save()
+            image = request.FILES.getlist("slider_images")
+            for i in image:
+                PackagesGallary.objects.create(packages=pack, image=i)
+            messages.success(request,"successfully added Packages")
+            return redirect('packageslist')
+        else:
+            messages.error(request,"cannot add packages  please try again!!!")
+    context ={'form':form,
+            "packages_count":packages_count,
+            "booked_packages_count":booked_packages_count,
+            "total_user_count":total_user_count,
+            "blog_count":blog_count,
+    }
     return render(request, "admin/packages/addppackages.html", context)
 
 
 @login_required(login_url='loginpage')
 def PackagesList(request):
-    if request.user.is_superuser:
-        allpack = Packages.objects.all().order_by("-created_at")
-        context= {'allpack':allpack}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    allpack = Packages.objects.all().order_by("-created_at")
+    context= {'allpack':allpack,
+            "packages_count":packages_count,
+            "booked_packages_count":booked_packages_count,
+            "total_user_count":total_user_count,
+            "blog_count":blog_count,
+    }
     return render(request,"admin/packages/packlist.html", context)
 
 
@@ -667,34 +929,60 @@ def Deletepackages(request, pk):
 
 @login_required(login_url="loginpage")
 def UpdatePakagesview(request, pk):
-    if request.user.is_superuser:
-        pack = Packages.objects.get(id=pk)
-        form = AddPackagesForm(instance=pack)
-        if request.method == "POST":
-            form = AddPackagesForm(request.POST, request.FILES, instance=pack)
-            if form.is_valid():
-                pack = form.save()
-                image = request.FILES.getlist("slider_images")
-                for i in image:
-                    PackagesGallary.objects.create(packages=pack, image=i)
-                messages.success(request,"successfully updated packages !!!")
-                return redirect('packageslist')
-    context = {'form':form}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    pack = Packages.objects.get(id=pk)
+    form = AddPackagesForm(instance=pack)
+    if request.method == "POST":
+        form = AddPackagesForm(request.POST, request.FILES, instance=pack)
+        if form.is_valid():
+            pack = form.save()
+            image = request.FILES.getlist("slider_images")
+            for i in image:
+                PackagesGallary.objects.create(packages=pack, image=i)
+            messages.success(request,"successfully updated packages !!!")
+            return redirect('packageslist')
+    context = {'form':form,
+            "packages_count":packages_count,
+            "booked_packages_count":booked_packages_count,
+            "total_user_count":total_user_count,
+            "blog_count":blog_count,
+    }
     return render(request,"admin/packages/updatepackages.html", context)
 
 #===================================== views for packages booking =================================
 
 @login_required(login_url="loginpage")
 def BookingPackagesList(request):
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
     bookingpackage = BookPackages.objects.all().order_by('-id')
-    context = {"bookingpackage":bookingpackage}
+    context = {"bookingpackage":bookingpackage,
+                "packages_count":packages_count,
+                "booked_packages_count":booked_packages_count,
+                "total_user_count":total_user_count,
+                "blog_count":blog_count,
+    }
     return render(request,"admin/booking/bookingpackages.html", context)
 
 
 @login_required(login_url="loginpage")
 def BookingDetails(request, pk):
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
     booking_details = BookPackages.objects.get(id=pk)
-    context = {"i":booking_details}
+    context = {"i":booking_details,
+                "packages_count":packages_count,
+                "booked_packages_count":booked_packages_count,
+                "total_user_count":total_user_count,
+                "blog_count":blog_count,
+    }
     return render(request,"admin/booking/booking-details.html", context)
 
 
@@ -703,15 +991,57 @@ def BookingDetails(request, pk):
 
 @login_required(login_url='loginpage')
 def ListingAdminUser(request):
-    if request.user.is_superuser:
-        admin = user.objects.filter(is_superuser=True)
-        context = {'admin':admin}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    admin = user.objects.filter(is_superuser=True)
+    context = {'admin':admin,
+                "packages_count":packages_count,
+                "booked_packages_count":booked_packages_count,
+                "total_user_count":total_user_count,
+                "blog_count":blog_count,
+    }
     return render(request,"admin/user/adminlist.html", context)
 
 
 @login_required(login_url="loginpage")
 def ListingNormalUser(request):
-    if request.user.is_superuser:
-        normaluser = user.objects.filter(is_superuser=False)
-        context = {"normaluser":normaluser}
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    normaluser = user.objects.filter(is_superuser=False)
+    context = {"normaluser":normaluser,
+                "packages_count":packages_count,
+                "booked_packages_count":booked_packages_count,
+                "total_user_count":total_user_count,
+                "blog_count":blog_count,
+    }
     return render(request,"admin/user/normaluser.html", context)
+
+
+@login_required(login_url="loginpage")
+def InquiryList(request):
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    InquiryList = GenralInquery.objects.all()
+    context={"InquiryList":InquiryList}
+    return render(request,"admin/inquiry/inquirylist.html", context)
+
+@login_required(login_url="loginpage")
+def InquirylistDetail(request, pk):
+    packages_count = Packages.objects.all().count()
+    booked_packages_count = BookPackages.objects.all().count()
+    total_user_count = user.objects.filter(is_superuser=False).count()
+    blog_count = Blogs.objects.all().count()
+    inquirylist = GenralInquery.objects.get(id=pk)
+    context = {"i":inquirylist,
+                "packages_count":packages_count,
+                "booked_packages_count":booked_packages_count,
+                "total_user_count":total_user_count,
+                "blog_count":blog_count,
+    }
+    return render(request,"admin/inquiry/inquirydetail.html", context)

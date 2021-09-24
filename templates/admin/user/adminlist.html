@@ -21,7 +21,7 @@
     <div class="col-md-12">
         <div class="card-primary">
             <div class="card-header">
-                <h3 class="card-title">Admin User are Listed Below</h3>
+                <h3 class="card-title">Normal User are Listed Below</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -39,9 +39,7 @@
                         <tr>
                             <td>{{ forloop.counter }}.</td>
                             <td>{{ i.get_full_name }}</td>
-                            <td>
-                                {{ i.email }}
-                            </td>
+                            <td>{{ i.email }}</td>
                             {% if i.is_superuser == True %}
                             <td><span class="badge bg-danger">ADMIN</span></td>
                             {% else %}

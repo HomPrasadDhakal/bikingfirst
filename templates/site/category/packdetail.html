@@ -41,7 +41,7 @@
 						{% if request.user.is_authenticated %}
 						<li class="dl4"><a href="{% url 'bookingpackages' i.id %}">Book Now</a> </li>
 						{% else %}
-						<li class="dl4"><a href="{% url 'userlogin' %}">Sign In</a> </li>
+						<li class="dl4"><a href="{% url 'userlogin' %}">Book Now</a> </li>
 						{% endif %}
 					</ul>
 				</div>

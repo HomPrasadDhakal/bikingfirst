@@ -31,6 +31,7 @@
                             <th style="width: 10px">S.N</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Mobile</th>
                             <th style="width: 40px">Role</th>
                         </tr>
                     </thead>
@@ -39,11 +40,10 @@
                         <tr>
                             <td>{{ forloop.counter }}.</td>
                             <td>{{ i.get_full_name }}</td>
-                            <td>
-                                {{ i.email }}
-                            </td>
-                            {% if i.is_superuser == false %}
-                            <td><span class="badge bg-danger">NORMAL USER</span></td>
+                            <td>{{ i.email }}</td>
+                            <td>{{ i.mobile }}</td>
+                            {% if i.is_superuser == False %}
+                            <td><span class="badge bg-primary">NORMAL USER</span></td>
                             {% else %}
                             <td><span class="badge bg-danger">NOT NORMAL USER</span></td>
                             {% endif %}
