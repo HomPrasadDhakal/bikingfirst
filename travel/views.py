@@ -227,7 +227,7 @@ def UserProfileUpdate(request):
 
 
 def MyPackView(request):
-    my_pack = BookPackages.objects.all()
+    my_pack = BookPackages.objects.filter(created_by=request.user)
     contactlist = ContactDetail.objects.all()
     context = {"my_pack":my_pack,"contactlist":contactlist}
     return render(request,"site/userprofile/mypack.html", context)

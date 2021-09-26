@@ -153,10 +153,3 @@ urlpatterns = [
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-
-
-
-# 1 - Submit email form                         //PasswordResetView.as_view()
-# 2 - Email sent success message                //PasswordResetDoneView.as_view()
-# 3 - Link to password Rest form in email       //PasswordResetConfirmView.as_view()
-# 4 - Password successfully changed message     //PasswordResetCompleteView.as_view()
