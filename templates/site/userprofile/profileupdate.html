@@ -1,0 +1,115 @@
+{% extends 'site/partials/layout.html' %}
+
+
+{% block title %}
+update your profile 
+{% endblock title %}
+
+{% block customcss %}
+{% endblock customcss %}
+
+{% block header %}
+{% include 'site/partials/header.html' %}
+{% endblock header %}
+
+{% block slider %}
+<section>
+    <div class="db">
+        <!--LEFT SECTION-->
+        <div class="db-l">
+            <div class="db-l-2">
+                <ul>
+                    <li><img src="{{ userprofile.profile.profile_pic.url }}" alt="update_profile_pic" /></li>
+                    <li><strong>Name:</strong>{{ userprofile.get_full_name }}</li>
+                    <li><strong>Address:</strong>{{ userprofile.profile.address }}</li>
+                    <li><strong>Email:</strong>{{ userprofile.email }}</li>
+                    <li><strong>Mobile:</strong> +{{ userprofile.mobile }}</li>
+                </ul>
+            </div>
+            <div class="db-l-2">
+                <ul>
+                    <li><a href="#"><img src="/static/images/icon/dbl6.png" alt="" /> My Profile</a></li>
+                    <li><a href="#"><img src="/static/images/icon/dbl1.png" alt="" /> All Bookings</a></li>
+                </ul>
+            </div>
+        </div>
+        <!--CENTER SECTION-->
+        <div class="db-2">
+            <div class="db-2-com db-2-main">
+                <h4>Edit My Profile </h4>
+                <div class="db-2-main-com db2-form-pay db2-form-com">
+                    <form class="col s12" action="" method="POST" enctype='multipart/form-data'>
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                {{u_form.first_name}}
+                                <label>First name</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                {{ u_form.last_name}}
+                                <label>Last name</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                {{ u_form.mobile }}
+                                <label>mobile number</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                {{ p_form.address }}
+                                <label>address</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                {{ p_form.dob }}
+                            </div>
+                            <div class="input-field col s12 m6">
+                                {{ p_form.gender }}
+                                <label>Gender</label>
+                            </div>
+                        </div>
+                        <div class="row db-file-upload">
+                            <div class="file-field input-field">
+                                <div class="db-up-btn"> <span>Upload Photo</span>
+                                    {{ p_form.profile_pic }}
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input type="submit" value="SUBMIT" class="waves-effect waves-light full-btn">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--RIGHT SECTION-->
+        <div class="db-3">
+            <h4>Notifications</h4>
+            <ul>
+                <li>
+                    <a href="#!"> <img src="/static/images/kathmandu-valley-cycling-holidays.jpg" alt="" />
+                        <h5>Great Himalaya Cycling Tour</h5>
+                        <p>New Cylcing adventures in nepal, book now and get discount</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock slider %}
+
+{% block footer %}
+{% include 'site/partials/footer.html' %}
+{% endblock footer %}
+
+{% block script %}
+{% include 'site/partials/script.html' %}
+{% endblock script %}

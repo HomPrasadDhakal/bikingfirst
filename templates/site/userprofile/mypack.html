@@ -1,0 +1,78 @@
+{% extends 'site/partials/layout.html' %}
+
+
+{% block title %}
+your booked packages
+{% endblock title %}
+
+{% block customcss %}
+{% endblock customcss %}
+
+{% block header %}
+{% include 'site/partials/header.html' %}
+{% endblock header %}
+
+{% block slider %}
+<section class="hot-page2-alp hot-page2-pa-sp-top">
+    <div class="container">
+        <div class="row inner_banner inner_banner_3 bg-none">
+            <div class="hot-page2-alp-tit">
+                <h1>Your packages</h1>
+                <ul>
+                    <li><a href="#inner-page-title">Home</a> </li>
+                    <li><i class="fa fa-angle-right" aria-hidden="true"></i> </li>
+                    <li><a href="#inner-page-title" class="bread-acti">Your Booked Packages</a> </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="hot-page2-alp-con">
+                <div class="col-md-12 hot-page2-alp-con-right">
+                    <div class="hot-page2-alp-con-right-1">
+                        <!--LISTINGS-->
+                        <div class="row">
+                            {% for i in my_pack %}
+                            <div class="hot-page2-alp-r-list">
+                                <div class="col-md-3 hot-page2-alp-r-list-re-sp">
+                                    <a href="javascript:void(0);">
+                                        <div class="hotel-list-score">4.5</div>
+                                        <div class="hot-page2-hli-1"> <img
+                                                src="{{ i.package.image.url }}" alt=""> </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="trav-list-bod">
+                                        <a href="tour-details.html">
+                                            <h3>{{ i.package.title }}</h3>
+                                        </a>
+                                        <p>{{ i.package.description|safe|truncatechars:250 }}</p>
+                                        <span>Duration:{{ i.package.duration }}</span>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="hot-page2-alp-ri-p3 tour-alp-ri-p3">
+                                        <span class="hot-list-p3-1">Prices Starting</span> <span
+                                            class="hot-list-p3-2">${{ i.package.price }}</span><span class="hot-list-p3-4">
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <!--END RIGHT LISTINGS-->
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock slider %}
+
+{% block footer %}
+{% include 'site/partials/footer.html' %}
+{% endblock footer %}
+
+{% block script %}
+{% include 'site/partials/script.html' %}
+{% endblock script %}

@@ -58,6 +58,8 @@
                             {% if request.user.is_authenticated %}
                                 <li><a href="{% url 'userlogoutprocess' %}">Logout</a>
                                 </li>
+                                <li><a href="{% url 'userprofile'%}">Profile</a>
+                                </li>
                             {% else %}
                                 <li><a href="{% url 'userlogin' %}">Sign In</a>
                                 </li>

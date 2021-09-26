@@ -41,7 +41,7 @@
 						{% if request.user.is_authenticated %}
 						<li class="dl4"><a href="{% url 'bookingpackages' i.id %}">Book Now</a> </li>
 						{% else %}
-						<li class="dl4"><a href="{% url 'userlogin' %}">Book Now</a> </li>
+						<li class="dl4"><a href="{% url 'userlogin' %}"></a> </li>
 						{% endif %}
 					</ul>
 				</div>
@@ -147,11 +147,11 @@
 					<div class="tour_right head_right tour_social tour-ri-com">
 						<h3>Share This Package</h3>
 						<ul>
-							<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
-							<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a> </li>
-							<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a> </li>
-							<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a> </li>
-							<li><a href="#"><i class="fa fa-whatsapp" aria-hidden="true"></i></a> </li>
+							<li><a href="https://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1:8000/packages_details/{{i.id}}" target="_blank" rel="nofollow"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+							<li><a href="https://plus.google.com/share?url=http://127.0.0.1:8000/packages_details/{{i.id}}"target="_blank" rel="nofollow"><i class="fa fa-google-plus" aria-hidden="true"></i></a> </li>
+							<li><a href="https://twitter.com/share?url=http://127.0.0.1:8000/packages_details/{{i.id}}"target="_blank" rel="nofollow"><i class="fa fa-twitter" aria-hidden="true"></i></a> </li>
+							<li><a href="https://www.linkedin.com/shareArticle?mini=true&url=http://127.0.0.1:8000/packages_details/{{i.id}}"target="_blank" rel="nofollow"><i class="fa fa-linkedin" aria-hidden="true"></i></a> </li>
+							<li><a href="https://wa.me/?text=http://127.0.0.1:8000/packages_details/{{i.id}}"><i class="fa fa-whatsapp" aria-hidden="true"></i></a> </li>
 						</ul>
 					</div>
 					<!--====== HELP PACKAGE ==========-->

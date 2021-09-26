@@ -63,6 +63,7 @@ class Blogs(models.Model):
     def __str__(self):
         return self.title
 
+    
 #MODELS FOR IMAGE SLIDER
 class SliderImage(models.Model):
     title = models.CharField(max_length=255)

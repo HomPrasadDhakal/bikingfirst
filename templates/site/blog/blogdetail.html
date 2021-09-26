@@ -42,11 +42,14 @@ Welcome to Biking First
 							<h5><span class="post_author">Author:{{ detailblog.author.get_full_name }}</span><span class="post_date">Published Date:{{ detailblog.created_at }}</span></h5>
 							<div class="post-btn">
 								<ul>
-									<li><a href="#"><i class="fa fa-facebook fb1"></i> Share On Facebook</a>
+									<li><a href="https://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1:8000/detail_blog/{{ detailblog.pk }}"
+   										target="_blank" rel="nofollow"><i class="fa fa-facebook fb1"></i> Share On Facebook</a>
 									</li>
-									<li><a href="#"><i class="fa fa-twitter tw1"></i> Share On Twitter</a>
+									<li><a href="https://twitter.com/share?url=http://127.0.0.1:8000/detail_blog/{{ detailblog.pk }}"
+   										target="_blank" rel="nofollow"><i class="fa fa-twitter tw1"></i> Share On Twitter</a>
 									</li>
-									<li><a href="#"><i class="fa fa-google-plus gp1"></i> Share On Google Plus</a>
+									<li><a href="https://plus.google.com/share?url=http://127.0.0.1:8000/detail_blog/{{ detailblog.pk }}"
+   										target="_blank" rel="nofollow"><i class="fa fa-google-plus gp1"></i> Share On Google Plus</a>
 									</li>
 								</ul>
 							</div>							

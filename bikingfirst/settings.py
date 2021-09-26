@@ -147,3 +147,16 @@ CKEDITOR_CONFIGS = {
         'width': 1030,
     },
 }
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = "smtp.mailtrap.io"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'type your email here !!!'
+EMAIL_HOST_PASSWORD = 'Types your password here!!!'
+
+# EMAIL_HOST = 'smtp.mailtrap.io'
+# EMAIL_HOST_USER = '1af8cb0fc42ecb'
+# EMAIL_HOST_PASSWORD = '3cff3d12f45cbd'
+# EMAIL_PORT = '2525'

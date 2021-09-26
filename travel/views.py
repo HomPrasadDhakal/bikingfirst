@@ -17,6 +17,8 @@ from travel.forms import (
     BookingPackages,
     Registrationform,
     GenralInqueryForm,
+    UserProfileUpdateForm,
+    UserupadateFrom,
 )
 from travel.models import (
     Blogs,
@@ -198,16 +200,38 @@ def UserRegistration(request):
     return render(request,"site/user/registration.html", context)
 
 
-# def Inquery(request):
-#     form = GenralInqueryForm()
-#     if request.method =="POST":
-#         form = GenralInqueryForm(request.POST):
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request,"your inquiry has been send admin will reply you as soon as possible!!!")
-#             return redirect("frontendhome")
-#     context = {'form':form}
-#     return render(request,"site/partials/blogs.html", context)
+def UserProfile(request):
+    pk = request.user.id
+    userprofile = user.objects.get(id=pk)
+    contactlist = ContactDetail.objects.all()
+    context = {"contactlist":contactlist, "userprofile":userprofile}
+    return render(request,"site/userprofile/profile.html", context)
+
+
+def UserProfileUpdate(request):
+    pk = request.user.id
+    userprofile = user.objects.get(id=pk)
+    if request.method =="POST":
+        u_form = UserupadateFrom(request.POST, instance=request.user)
+        p_form = UserProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request,"congratulation you have successfully updated your profile")
+            return redirect('frontendhome')
+    else:
+        u_form = UserupadateFrom(instance=request.user)
+        p_form = UserProfileUpdateForm(instance=request.user.profile)
+    context = {"u_form":u_form, "p_form":p_form, "userprofile":userprofile}
+    return render(request,"site/userprofile/profileupdate.html", context)
+
+
+def MyPackView(request):
+    my_pack = BookPackages.objects.all()
+    contactlist = ContactDetail.objects.all()
+    context = {"my_pack":my_pack,"contactlist":contactlist}
+    return render(request,"site/userprofile/mypack.html", context)
+
 
 #########################################################################################################
 #########################################################################################################

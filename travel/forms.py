@@ -16,7 +16,7 @@ from travel.models import (
     BookPackages,
     GenralInquery,
 )
-from accounts.models import user
+from accounts.models import user, Profile
 from django.contrib.auth.forms import UserCreationForm
 from ckeditor.widgets import CKEditorWidget
 
@@ -324,6 +324,25 @@ class Registrationform(UserCreationForm):
     class Meta:
         model = user
         fields = ['first_name','last_name','email','mobile','password1','password2']
+
+class UserupadateFrom(forms.ModelForm):
+
+    class Meta:
+        model = user
+        fields = ["first_name","last_name","mobile"]
+
+
+class UserProfileUpdateForm(forms.ModelForm):
+    
+    class Meta:
+        model = Profile
+        fields = ["address","dob","gender","profile_pic"]
+
+        widgets = {
+        'dob': DateInput(),
+        'profile_pic': forms.ClearableFileInput(),
+        }
+
 
     
 class GenralInqueryForm(forms.ModelForm):

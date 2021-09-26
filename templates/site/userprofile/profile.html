@@ -1,0 +1,145 @@
+{% extends 'site/partials/layout.html' %}
+
+
+{% block title %}
+user profile
+{% endblock title %}
+
+{% block customcss %}
+{% endblock customcss %}
+
+{% block header %}
+{% include 'site/partials/header.html' %}
+{% endblock header %}
+
+{% block slider %}
+<!--DASHBOARD-->
+	<section>
+		<div class="db">
+			<!--LEFT SECTION-->
+			<div class="db-l">
+				<div class="db-l-2">
+					<ul>
+					{% if request.user.profile.profile_pic %}
+						<li><img src="{{ userprofile.profile.profile_pic.url }}" alt="" /></li>
+						{% else %}
+						<li><img src="/static/dist/img/avtar.png" alt="" /></li>
+						{% endif %}
+						<li><strong>Name:</strong> {{ userprofile.get_full_name }}</li>
+						{% if request.user.profile.address %}
+						<li><strong>Address:</strong>{{userprofile.profile.address }}</li>
+						{% else %}
+						<li><strong>Address:</strong>NOT-SET</li>
+						{% endif %}
+                        <li><strong>Email:</strong>{{ userprofile.email }}</li>
+						<li><strong>Mobile:</strong>{{ userprofile.mobile }}</li>
+					</ul>
+				</div>
+				<div class="db-l-2">
+					<ul>
+                        <li><a href="#"><img src="/static/images/icon/dbl6.png" alt="" /> My Profile</a></li>
+						<li><a href="{% url 'mypack' %}"><img src="/static/images/icon/dbl1.png" alt="" /> All Bookings</a></li>						
+					</ul>
+				</div>
+			</div>
+			<!--CENTER SECTION-->
+			<div class="db-2">
+				<div class="db-2-com db-2-main">
+					<h4>My Profile</h4>
+					<div class="db-2-main-com db-2-main-com-table">
+						<table class="responsive-table">
+							<tbody>
+								<tr>
+									<td>Name</td>
+									<td>:</td>
+									<td>{{ userprofile.get_full_name }}</td>
+								</tr>
+								<tr>
+									<td>Eamil</td>
+									<td>:</td>
+									<td>{{ userprofile.email }}</td>
+								</tr>
+								<tr>
+									<td>Mobile</td>
+									<td>:</td>
+									<td>{{ userprofile.mobile }}</td>
+								</tr>
+								{% if request.user.profile.dob %}
+								<tr>
+									<td>Date of birth</td>
+									<td>:</td>
+									<td>{{	userprofile.profile.dob  }}</td>
+								</tr>
+								{% else %}
+								<tr>
+									<td>Date of birth</td>
+									<td>:</td>
+									<td>NOT-SET</td>
+								</tr>
+								{% endif %}
+								{% if request.user.profile.address %}
+								<tr>
+									<td>Address</td>
+									<td>:</td>
+									<td>{{ userprofile.profile.address }}</td>
+								</tr>
+								{% else %}
+								<tr>
+									<td>Address</td>
+									<td>:</td>
+									<td>NOT-SET</td>
+								</tr>
+								{% endif %}
+								{% if request.user.profile.gender %}
+								<tr>
+									<td>Gender</td>
+									<td>:</td>
+									<td>{{ userprofile.profile.gender }}</td>
+								</tr>
+								{% else %}
+								<tr>
+									<td>Gender</td>
+									<td>:</td>
+									<td>NOT-SET</td>
+								</tr>
+								{% endif %}
+								<tr>
+									<td>Status</td>
+									<td>:</td>
+                                    {% if request.user.is_authenticated %}
+									<td><span class="db-done">Active</span>
+                                    {% else %}
+									<td><span class="db-done">Not Active</span>
+                                    {% endif %}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="db-mak-pay-bot">
+							<a href="{% url 'updateuserprofile' %}" class="waves-effect waves-light btn-large">Edit my profile</a> </div>
+					</div>
+				</div>
+			</div>
+			<!--RIGHT SECTION-->
+			<div class="db-3">
+				<h4>Notifications</h4>
+				<ul>
+					<li>
+						<a href="#!"> <img src="/static/images/kathmandu-valley-cycling-holidays.jpg" alt="" />
+							<h5>Great Himalaya Cycling Tour</h5>
+							<p>New Cylcing adventures in nepal, book now and get discount</p>
+						</a>
+					</li>	
+				</ul>
+			</div>
+		</div>
+	</section>
+{% endblock slider %}
+    
+{% block footer %}
+{% include 'site/partials/footer.html' %}
+{% endblock footer %}
+
+{% block script %}
+{% include 'site/partials/script.html' %}
+{% endblock script %}
